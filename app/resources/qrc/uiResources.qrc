@@ -1,0 +1,18 @@
+<RCC>
+  <qresource prefix="icons">
+    <file alias="connectedIcon">../icons/connectedIcon.png</file>
+    <file alias="copoIcon">../icons/copoIcon.png</file>
+    <file alias="copoLogo">../icons/copoLogo.png</file>
+    <file alias="disconnectedIcon">../icons/disconnectedIcon.png</file>
+    <file alias="pauseIcon">../icons/pauseIcon.png</file>
+    <file alias="playIcon">../icons/playIcon.png</file>
+    <file alias="portugalIcon">../icons/portugalIcon.png</file>
+    <file alias="sendIcon">../icons/sendIcon.png</file>
+    <file alias="spainIcon">../icons/spainIcon.png</file>
+    <file alias="ukIcon">../icons/ukIcon.png</file>
+    <file alias="updateIcon">../icons/updateIcon.png</file>
+  </qresource>
+  <qresource prefix="translations">
+    <file alias="es_ES">../translation/mainWindow_es_ES.qm</file>
+  </qresource>
+</RCC>

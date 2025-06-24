@@ -1,0 +1,30 @@
+[app]
+name = "CopoPotentiostat"
+version = "0.0.1"
+theme = "copoTheme"
+loggingLevel = "Debug"
+
+[plot]
+colors = [
+    "00FF00",
+    "FF0000",
+    "0000FF",
+    "FFFF00",
+    "FF00FF",
+    "00FFFF",
+]
+lineWidth = 20
+updateInterval = 200
+maxPoints = 120
+[plot.lines]
+voltage = "Voltage"
+current = "Current"
+
+[serial]
+baudRate = 115200
+dataBits = 8
+parity = 0
+stopBits = 1
+endCharacter = "\\r\\n"
+
+[serial.commands]

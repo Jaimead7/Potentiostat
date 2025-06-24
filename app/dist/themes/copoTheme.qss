@@ -1,0 +1,369 @@
+QMainWindow {
+	background-color: #152e49;
+	font: 25 12pt "ITC Avant Garde Std Md";
+}
+
+[objectName^="line"] {
+	border: 0px;
+	background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QStatusBar {
+	color: #ffffff;
+	font: 25 10pt "ITC Avant Garde Std Bk";
+}
+
+QToolBar {
+	background-color: #47576e;
+	border-right: 1px solid qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QToolBar::separator {
+	margin: 2px;
+	height: 1px;
+	background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QStatusBar {
+	background-color: #47576e;
+	border-top: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:0, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QPushButton {
+	font: 20 12pt "ITC Avant Garde Std Md";
+	color: #ffffff;
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: #33fba76a;
+	border: 1px solid #ed7a18;
+}
+
+QPushButton:pressed {
+	background-color: #33fba76a;
+	border: 1px solid #ed7a18;
+	padding: 1px -1px -1px 1px;
+}
+
+QToolButton {
+	border-radius: 2px;
+}
+
+QToolButton:hover {
+	background-color: #33fba76a;
+	border: 1px solid #ed7a18;
+}
+
+QToolButton:pressed {
+	background-color: #33fba76a;
+	border: 1px solid #ed7a18;
+	padding: 1px -1px -1px 1px;
+}
+
+QTabWidget {
+	font: 25 12pt "ITC Avant Garde Std Md";
+}
+
+QTabWidget::pane {
+	border-radius: 2px;
+    border: 1px solid qlineargradient(x1:0, y1:0, x2:1, y2:1, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QTabBar::tab {
+	margin-top: 5px;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 2px;
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop: 0 #47576e, stop: 0.25 #788395, stop: 1.0 #929baa);
+	color: #ffffff;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+QTabBar::tab:pressed {
+	padding: 1px -1px -1px 1px;
+}
+
+QTabBar::tab:hover {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop: 0 #152e49, stop: 0.5 #47576e, stop: 1.0 #5f6d82);
+}
+
+QTabBar::tab:selected {
+	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop: 0 #152e49, stop: 0.5 #47576e, stop: 1.0 #5f6d82);
+	border: 1px solid qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #fba76a, stop: 1.0 #ed7a18);
+}
+
+QLabel {
+	font: 25 12pt "ITC Avant Garde Std Md";
+	color: #ffffff;
+	background-color: #152e49;
+}
+
+QSpinBox {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	qproperty-alignment: AlignCenter;
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QSpinBox::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QSpinBox::focus {
+	border: 1px solid #ffc49a;
+}
+
+QDoubleSpinBox {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	qproperty-alignment: AlignCenter;
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QDoubleSpinBox::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QDoubleSpinBox::focus {
+	border: 1px solid #ffc49a;
+}
+
+QDateEdit {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QDateEdit::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QDateEdit::focus {
+	border: 1px solid #ffc49a;
+}
+
+QTimeEdit {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QTimeEdit::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QTimeEdit::focus {
+	border: 1px solid #ffc49a;
+}
+
+QLineEdit {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QLineEdit::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QLineEdit::focus {
+	border: 1px solid #ffc49a;
+}
+
+QTabWidget QLineEdit {
+	qproperty-alignment: AlignCenter;
+}
+
+#customCmdValue {
+	qproperty-alignment: AlignLeft;
+}
+
+QTextEdit {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QTextEdit::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QTextEdit::focus {
+	border: 1px solid #ffc49a;
+}
+
+QPlainTextEdit {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 10pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QPlainTextEdit::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QComboBox {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	border: 0px solid #ffc49a;
+	border-radius: 4px;
+	background-color: #47576e;
+	color: #ffffff;
+}
+
+QComboBox::disabled {
+	background-color: #929baa;
+	color: #444444;
+}
+
+QComboBox::focus {
+	border: 1px solid #ffc49a;
+}
+
+
+QAbstractItemView { /* Items on ComboBox */
+	color: #152e49;
+	selection-color: #152e49;
+    selection-background-color: #ffc49a;
+}
+
+QTableView {
+	border-radius: 2px;
+	font: 25 10pt "ITC Avant Garde Std Bk";
+	color: #ffffff;
+	background-color: #5f6d82;
+	alternate-background-color: #929baa;
+	border: 0px solid #ffc49a;
+	border-right: 1px solid #ffc49a;
+	border-bottom: 1px solid #ffc49a;
+}
+
+QTableView:disabled {
+	border-radius: 2px;
+	font: 25 10pt "ITC Avant Garde Std Bk";
+	background-color: #707280;
+	color: #444444;
+	alternate-background-color: #9e9fa8;
+	border: 0px solid #ffc49a;
+	border-right: 1px solid #ffc49a;
+	border-bottom: 1px solid #ffc49a;
+}
+
+QTableView QTableCornerButton::section {
+	background-color: #152e49;
+}
+
+QHeaderView {
+	border: 1px solid #ffc49a;
+	background-color: #47576e;
+}
+
+QHeaderView:section {
+	color: #ffffff;
+	font: 25 12pt "ITC Avant Garde Std Md";
+	background-color: #47576e;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+QHeaderView:disabled {
+	border: 1px solid #ffc49a;
+	background-color: #464859;
+}
+
+QHeaderView:section:disabled {
+	color: #ffffff;
+	font: 25 12pt "ITC Avant Garde Std Md";
+	background-color: #464859;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+QLCDNumber {
+	background-color: #000000;
+	color: #f79851;
+	border: 1px solid #f79851;
+	border-radius: 2px;
+}
+
+QProgressBar {
+	border: 1px solid #f79851;
+	text-align: center;
+	font: 25 12pt "ITC Avant Garde Std Bk";
+	color: #ffffff;
+	background-color: #152e49;
+}
+
+QSlider::groove:horizontal {
+	border: 3px solid #47576e;
+	background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #2f425b, stop:0.2 #2f425b, stop:0.5 #47576e, stop:0.8 #2f425b, stop:1 #2f425b);
+}
+
+QSlider::handle:horizontal {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ed7a18, stop:0.2 #ed7a18, stop:0.5 #f79851, stop:0.8 #ed7a18, stop:1 #ed7a18);
+	width: 5px;
+}
+
+QSlider::sub-page:horizontal {
+	background: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 #ed7a18, stop:0.2 #ed7a18, stop:0.5 #f79851, stop:0.8 #ed7a18, stop:1 #ed7a18);
+	margin: 3px;
+}

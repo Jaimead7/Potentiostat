@@ -1,0 +1,47 @@
+#include  "Commands.h"
+#include  "Board.h"
+#include  "Circuit.h"
+
+
+class Potentiometry {
+  public:
+    Potentiometry(Circuit &myCircuit);
+    bool        run =             false;
+    void        cycle();
+    void        processCmd(String &cmd);
+  private:
+    bool        started =         false;
+    uint16_t    taskDelay =       50;               // ms
+    float       voltageSP =       0.6;              // V
+    uint32_t    duration =        120000;           // ms
+    float       startThreshold =  50;
+    uint32_t    initTime;
+    uint16_t    lastRead;
+    Circuit     pCircuit;
+    void        checkStart();
+};
+
+
+class CyclicVoltammetry {
+  public:
+    CyclicVoltammetry(Circuit &myCircuit);
+    bool        run =             false;
+    void        cycle();
+    void        processCmd(String &cmd);
+  private:
+    bool        started =         false;
+    uint16_t    taskDelay =       50;               // ms
+    uint8_t     currentCycle =    0;
+    uint8_t     totalCycles =     1;
+    float       slewRate =        100.0;            // mV/s
+    float       startVoltage =    -0.5;             // V
+    float       peakVoltage =     0.9;              // V
+    float       stopVoltage =     -0.5;             // V
+    float       currentVoltage =  0.0;
+    int8_t      direction =       1;                // 1 positive slewRate, -1 negative slewRate
+    uint32_t    lastVoltChange;
+    Circuit     pCircuit;
+    void        setStartConditions();
+    void        checkEnd();
+    void        changeVoltage();
+};

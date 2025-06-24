@@ -1,0 +1,33 @@
+[project]
+    name = "grupo-copo-potentiostat"
+    version = "0.0.1"
+    description = "Grupo Copo project for a simple potentiostat."
+    authors = [
+        {name = "Jaime Álvarez", email = "jadiaz@grupocopo.com"},
+    ]
+    maintainers = [
+        {name = "Jaime Álvarez", email = "jadiaz@grupocopo.com"},
+    ]
+    readme = {file = "README.md", content-type = "text/markdown"}
+    license = "MIT"
+    license-files = [
+        "LICENSE",
+    ]
+    keywords = [
+        "Potentiostat",
+    ]
+    classifiers = [
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.10",
+    ]
+    dependencies = [
+        "PyQt5 >= 5.12.9",
+        "pyqt5-tools >= 5.15.9",
+        "pyqtgraph >= 0.13.3",
+        "jaimead7-pyutils >= 0.0.14"
+    ]
+    requires-python = ">=3.10"
+
+    [project.urls]
+        Homepage = "https://github.com/Jaime-CET/Potentiostat"
+        Repository = "https://github.com/Jaime-CET/Potentiostat"
