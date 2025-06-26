@@ -73,6 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def enableSend(self, flag: bool) -> None:
         self.serialManager.enableSend(flag)
+        ...
 
     def changeLanguage(self, language: str = 'es_ES') -> None:
         if self.translator.load(language, ':/translations'):

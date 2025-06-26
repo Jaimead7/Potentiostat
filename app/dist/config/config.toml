@@ -26,5 +26,31 @@ dataBits = 8
 parity = 0
 stopBits = 1
 endCharacter = "\\r\\n"
-
 [serial.commands]
+potentiometry = "$PT"
+cyclicVoltammetry = "$CV"
+start = "$START"
+stop = "$STOP"
+end = "$END"
+timestamp = "$TS:"
+voltage = "$V:"
+current = "$A:"
+cycle = "$CC:"
+taskDelay = "$TD:"
+voltageSP = "$VSP:"
+duration = "$D:"
+threshold = "$TH:"
+
+[cycles]
+[cycles.potentiometry]
+taskDelay = 50
+voltageSP = 0.6
+duration = 120000
+threshold = 50
+[cycles.cyclicVoltammetry]
+taskDelay = 50
+cycles = 1
+slewRate = 100
+startVoltage = -0.5
+peakVoltage = 0.9
+stopVoltage = -0.5

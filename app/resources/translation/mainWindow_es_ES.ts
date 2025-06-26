@@ -29,128 +29,128 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="186"/>
+        <location filename="../ui/mainWindow.ui" line="188"/>
         <source>Potentiometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="218"/>
-        <source>Duration:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="260"/>
+        <location filename="../ui/mainWindow.ui" line="299"/>
         <source>Start threshold (uA):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="635"/>
+        <location filename="../ui/mainWindow.ui" line="716"/>
         <source>Task delay (ms):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="357"/>
+        <location filename="../ui/mainWindow.ui" line="393"/>
         <source>Voltage set point (V):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="508"/>
+        <location filename="../ui/mainWindow.ui" line="560"/>
         <source>Cyclic voltammetry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="521"/>
+        <location filename="../ui/mainWindow.ui" line="575"/>
         <source>Cyclic voltametry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="621"/>
+        <location filename="../ui/mainWindow.ui" line="702"/>
         <source>Start voltage (V):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="628"/>
-        <source>Slew rate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="642"/>
+        <location filename="../ui/mainWindow.ui" line="723"/>
         <source>Stop voltage (V):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="799"/>
+        <location filename="../ui/mainWindow.ui" line="870"/>
         <source>Total cycles:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="806"/>
+        <location filename="../ui/mainWindow.ui" line="877"/>
         <source>Peak voltage (V):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="960"/>
+        <location filename="../ui/mainWindow.ui" line="1069"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="984"/>
+        <location filename="../ui/mainWindow.ui" line="1093"/>
         <source>Serial:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1090"/>
+        <location filename="../ui/mainWindow.ui" line="1199"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1130"/>
+        <location filename="../ui/mainWindow.ui" line="1239"/>
         <source>Update devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1149"/>
+        <location filename="../ui/mainWindow.ui" line="1258"/>
         <source>Connect device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1158"/>
+        <location filename="../ui/mainWindow.ui" line="1267"/>
         <source>Español</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1161"/>
+        <location filename="../ui/mainWindow.ui" line="1270"/>
         <source>Cambiar a Español</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1170"/>
+        <location filename="../ui/mainWindow.ui" line="1279"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1173"/>
+        <location filename="../ui/mainWindow.ui" line="1282"/>
         <source>Change to English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1182"/>
+        <location filename="../ui/mainWindow.ui" line="1291"/>
         <source>Português</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1185"/>
+        <location filename="../ui/mainWindow.ui" line="1294"/>
         <source>Mudar para português</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1073"/>
+        <location filename="../ui/mainWindow.ui" line="1182"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1077"/>
+        <location filename="../ui/mainWindow.ui" line="1186"/>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="257"/>
+        <source>Duration (ms):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="709"/>
+        <source>Slew rate (mV/s):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
