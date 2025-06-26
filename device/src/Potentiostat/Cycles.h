@@ -16,7 +16,7 @@ class Potentiometry {
     uint32_t    duration =        120000;           // ms
     float       startThreshold =  50;
     uint32_t    initTime;
-    uint16_t    lastRead;
+    uint32_t    lastRead;
     Circuit     pCircuit;
     void        checkStart();
 };

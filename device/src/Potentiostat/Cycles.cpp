@@ -13,15 +13,16 @@
     Cycle loop for the potentiometry.
     Call it cyclically on the main loop.
     */
+    uint32_t now = millis();
     if (run) {
       if (!started) {
         pCircuit.setWEVoltage(voltageSP);
         checkStart();
       } else {
-        if (millis() - initTime < duration) {
-          if (taskDelay <= millis() - lastRead) {
+        if (now - initTime < duration) {
+          if (taskDelay <= now - lastRead) {
             pCircuit.readAndTransmit(PT_CMD);
-            lastRead = millis();
+            lastRead = now;
           }
         } else {
           pCircuit.setWEVoltage(0.0);
