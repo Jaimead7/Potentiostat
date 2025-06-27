@@ -495,7 +495,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.comSelector.setCurrentIndex(-1)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

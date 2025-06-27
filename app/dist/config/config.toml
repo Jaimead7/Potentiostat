@@ -40,6 +40,11 @@ taskDelay = "$TD:"
 voltageSP = "$VSP:"
 duration = "$D:"
 threshold = "$TH:"
+totalCycle = "$TC:"
+slewRate = "$SR:"
+startVoltage = "$SRTV:"
+peakVoltage = "$PV:"
+stopVoltage = "$STPV:"
 
 [cycles]
 [cycles.potentiometry]
