@@ -14,7 +14,7 @@ class Potentiometry {
     uint16_t    taskDelay =       50;               // ms
     float       voltageSP =       0.6;              // V
     uint32_t    duration =        120000;           // ms
-    float       startThreshold =  50;
+    float       startThreshold =  50.;
     uint32_t    initTime;
     uint32_t    lastRead;
     Circuit     pCircuit;

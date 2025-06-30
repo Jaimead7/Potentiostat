@@ -21,10 +21,10 @@ void readSerial() {
     while (Serial.available() > 0) {
       serialInput = Serial.readString();
     }
-    if (serialInput.substring(0, PT_CMD.length()) == PT_CMD) {          // Potentiometry commands
+    if (serialInput.substring(0, PT_CMD.length()) == PT_CMD) {
       pt.processCmd(serialInput);
     }
-    if (serialInput.substring(0, CV_CMD.length()) == CV_CMD) {          // Cyclic voltammetry commands
+    if (serialInput.substring(0, CV_CMD.length()) == CV_CMD) {
       cv.processCmd(serialInput);
     }
   }

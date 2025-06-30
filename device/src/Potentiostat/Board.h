@@ -47,4 +47,17 @@
     return (float(adcValue) * float(BOARD_VCC)) / float(ADC_MAX_VALUE);
   }
 
+  static inline  __attribute__((always_inline))
+  float parseDecimal(String &str) {
+    int charPos = str.indexOf('$');
+    if (charPos == -1) {
+      float number = str.toFloat();
+      str = "";
+      return number;
+    }
+    float number = str.substring(0, charPos).toFloat();
+    str = str.substring(charPos);
+    return number;
+  }
+
 #endif  //#ifndef   BOARD_H
