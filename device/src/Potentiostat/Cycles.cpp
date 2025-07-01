@@ -52,42 +52,45 @@
     Process potentiometry commands.
     Ex: $PT$START
     */
+    String result = "";
     if (cmd.substring(0, PT_CMD.length()) == PT_CMD) {
       cmd = cmd.substring(PT_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
         run = true;
         cmd = cmd.substring(START_CMD.length());
-        Serial.println("$OK->" + PT_CMD + START_CMD);
+        result += "$OK->" + PT_CMD + START_CMD + "\n";
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
         run = false;
         cmd = cmd.substring(STOP_CMD.length());
-        Serial.println("$OK->" + PT_CMD + STOP_CMD);
+        result += "$OK->" + PT_CMD + STOP_CMD + "\n";
       }
       if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
         cmd = cmd.substring(TASK_DELAY_CMD.length());
         taskDelay = (uint16_t)parseDecimal(cmd);
-        Serial.println("$OK->" + PT_CMD + TASK_DELAY_CMD + String(taskDelay));
+        result += "$OK->" + PT_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
       }
       if (cmd.substring(0, VOLTAGE_SETPOINT_CMD.length()) == VOLTAGE_SETPOINT_CMD) {
         cmd = cmd.substring(VOLTAGE_SETPOINT_CMD.length());
         voltageSP = parseDecimal(cmd);
-        Serial.println("$OK->" + PT_CMD + VOLTAGE_SETPOINT_CMD + String(voltageSP));
+        result += "$OK->" + PT_CMD + VOLTAGE_SETPOINT_CMD + String(voltageSP) + "\n";
       }
       if (cmd.substring(0, DURATION_CMD.length()) == DURATION_CMD) {
         cmd = cmd.substring(DURATION_CMD.length());
         duration = (uint32_t)parseDecimal(cmd);
-        Serial.println("$OK->" + PT_CMD + DURATION_CMD + String(duration));
+        result += "$OK->" + PT_CMD + DURATION_CMD + String(duration) + "\n";
       }
       if (cmd.substring(0, THRESHOLD_CMD.length()) == THRESHOLD_CMD) {
         cmd = cmd.substring(THRESHOLD_CMD.length());
         startThreshold = parseDecimal(cmd);
-        Serial.println("$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold));
+        result += "$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
+        Serial.println("$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold));
         cmd = cmd.substring(PARAMS_CMD.length());
-        Serial.println(PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold));
+        result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold) + "\n";
       }
+      Serial.print(result);
     }
   }
 
@@ -123,52 +126,54 @@
     Process cyclic voltammetry commands.
     Ex: $CV$START
     */
+    String result = "";
     if (cmd.substring(0, CV_CMD.length()) == CV_CMD) {
       cmd = cmd.substring(CV_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
         run = true;
         cmd = cmd.substring(START_CMD.length());
-        Serial.println("$OK->" + CV_CMD + START_CMD);
+        result += "$OK->" + CV_CMD + START_CMD + "\n";
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
         run = false;
         cmd = cmd.substring(STOP_CMD.length());
-        Serial.println("$OK->" + CV_CMD + STOP_CMD);
+        result += "$OK->" + CV_CMD + STOP_CMD + "\n";
       }
       if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
         cmd = cmd.substring(TASK_DELAY_CMD.length());
         taskDelay = (uint16_t)parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + TASK_DELAY_CMD + String(taskDelay));
+        result += "$OK->" + CV_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
       }
       if (cmd.substring(0, TOTAL_CYCLES_CMD.length()) == TOTAL_CYCLES_CMD) {
         cmd = cmd.substring(TOTAL_CYCLES_CMD.length());
         totalCycles = (uint8_t)parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + TOTAL_CYCLES_CMD + String(totalCycles));
+        result += "$OK->" + CV_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + "\n";
       }
       if (cmd.substring(0, SLEW_RATE_CMD.length()) == SLEW_RATE_CMD) {
         cmd = cmd.substring(SLEW_RATE_CMD.length());
         slewRate = parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + SLEW_RATE_CMD + String(slewRate));
+        result += "$OK->" + CV_CMD + SLEW_RATE_CMD + String(slewRate) + "\n";
       }
       if (cmd.substring(0, START_VOLTAGE_CMD.length()) == START_VOLTAGE_CMD) {
         cmd = cmd.substring(START_VOLTAGE_CMD.length());
         startVoltage = parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + START_VOLTAGE_CMD + String(startVoltage));
+        result += "$OK->" + CV_CMD + START_VOLTAGE_CMD + String(startVoltage) + "\n";
       }
       if (cmd.substring(0, PEAK_VOLTAGE_CMD.length()) == PEAK_VOLTAGE_CMD) {
         cmd = cmd.substring(PEAK_VOLTAGE_CMD.length());
         peakVoltage = parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + PEAK_VOLTAGE_CMD + String(peakVoltage));
+        result += "$OK->" + CV_CMD + PEAK_VOLTAGE_CMD + String(peakVoltage) + "\n";
       }
       if (cmd.substring(0, STOP_VOLTAGE_CMD.length()) == STOP_VOLTAGE_CMD) {
         cmd = cmd.substring(STOP_VOLTAGE_CMD.length());
         stopVoltage = parseDecimal(cmd);
-        Serial.println("$OK->" + CV_CMD + STOP_VOLTAGE_CMD + String(stopVoltage));
+        result += "$OK->" + CV_CMD + STOP_VOLTAGE_CMD + String(stopVoltage) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        Serial.println(CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate) + START_VOLTAGE_CMD + String(startVoltage) + PEAK_VOLTAGE_CMD + String(peakVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage));
+        result += CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate) + START_VOLTAGE_CMD + String(startVoltage) + PEAK_VOLTAGE_CMD + String(peakVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + "\n";
       }
+      Serial.print(result);
     }
   }
 
