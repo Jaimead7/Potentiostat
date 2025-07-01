@@ -91,11 +91,11 @@ class SerialManager:
             self.statusBar.setText('')
 
     def serialPortReadyRead(self) -> None:
-        if not self.serialPort.canReadLine(): return
-        rcvStr: str = f'{self.serialPort.readLine()}'.replace("b'", "").replace("'", "").strip(self.cfg.endCharacter)
-        self.parent.debug(self.tr(f'Received from {self.serialPort.portName()}: {rcvStr}'))
-        self.addLineToRcvCmds(rcvStr)
-        self.parent.strReceived.emit(rcvStr)
+        while self.serialPort.canReadLine():
+            rcvStr: str = f'{self.serialPort.readLine()}'.replace("b'", "").replace("'", "").strip(self.cfg.endCharacter)
+            self.parent.debug(self.tr(f'Received from {self.serialPort.portName()}: {rcvStr}'))
+            self.addLineToRcvCmds(rcvStr)
+            self.parent.strReceived.emit(rcvStr)
 
     def serialPortErrorOccurred(self, error: QSerialPort.SerialPortError) -> None:
         if error != QSerialPort.SerialPortError.NoError:

@@ -84,7 +84,7 @@ class PotentiometryManager:
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
-        #self.sendButton.setEnabled(flag)   #TODO: Check why arduino only send one OK at a time
+        self.sendButton.setEnabled(flag)
         self.taskDelayButton.setEnabled(flag)
         self.voltageButton.setEnabled(flag)
         self.durationButton.setEnabled(flag)
@@ -306,7 +306,7 @@ class CyclicVoltammetryManager:
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
-        #self.sendButton.setEnabled(flag)   #TODO: Check why arduino only send one OK at a time
+        self.sendButton.setEnabled(flag)
         self.taskDelayButton.setEnabled(flag)
         self.cyclesButton.setEnabled(flag)
         self.slewRateButton.setEnabled(flag)
