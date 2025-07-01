@@ -64,6 +64,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ptThresholdValue,
                 self.ptThresholdButton,
                 self.ptPlayButton,
+                self.ptSaveButton,
+                self.ptLoadButton,
+                self.ptCloseButton,
                 self.ptPlotView
             ),
             'cyclicVoltammetry': CyclicVoltammetryManager(
@@ -82,6 +85,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cvStopVValue,
                 self.cvStopVButton,
                 self.cvPlayButton,
+                self.cvSaveButton,
+                self.cvLoadButton,
+                self.cvCloseButton,
                 self.cvPlotView
             )
         }

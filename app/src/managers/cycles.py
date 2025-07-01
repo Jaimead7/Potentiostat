@@ -3,12 +3,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import partial
 from numbers import Number
+from pathlib import Path
+from pickle import dump, load
 from typing import TYPE_CHECKING, Callable, ClassVar, Optional
 
 from PyQt5.QtCore import QCoreApplication, QTimer
-from PyQt5.QtWidgets import QDoubleSpinBox, QGridLayout, QPushButton, QSpinBox
-from pyqtgraph import (DateAxisItem, LabelItem, LegendItem, PlotCurveItem,
-                       PlotWidget)
+from PyQt5.QtWidgets import (QDoubleSpinBox, QFileDialog, QGridLayout,
+                             QPushButton, QSpinBox)
+from pyqtgraph import LegendItem, PlotCurveItem, PlotWidget
 from pyUtils import ConfigDict, ConfigFileManager, ProjectPathsDict, ppaths
 
 if TYPE_CHECKING:
@@ -28,6 +30,9 @@ class PotentiometryManager:
     thresholdValue: QDoubleSpinBox
     thresholdButton: QPushButton
     playButton: QPushButton
+    saveButton: QPushButton
+    loadButton: QPushButton
+    closeButton: QPushButton
     plotView: QGridLayout
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'PotentiometryManager')
 
@@ -76,6 +81,9 @@ class PotentiometryManager:
         self.durationButton.clicked.connect(lambda _: self._send(self.getDCmd()))
         self.thresholdButton.clicked.connect(lambda _: self._send(self.getThCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
+        self.saveButton.clicked.connect(lambda _: self.saveButtonClicked())
+        self.loadButton.clicked.connect(lambda _: self.loadButtonClicked())
+        self.closeButton.clicked.connect(lambda _: self.closeButtonClicked())
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
@@ -85,6 +93,7 @@ class PotentiometryManager:
         self.durationButton.setEnabled(flag)
         self.thresholdButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
+        self.saveButton.setEnabled(flag)
 
     def getConfigCmd(
         self,
@@ -129,19 +138,22 @@ class PotentiometryManager:
         self.playButton.setChecked(True)
         self.resetPlot()
         self.plotTimer.start(self.pltCfg.updateInterval)
+        self.loadButton.setEnabled(False)
+        self.closeButton.setEnabled(False)
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
+        self.loadButton.setEnabled(True)
+        self.closeButton.setEnabled(True)
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
-        ... #TODO: Save test
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
@@ -227,6 +239,32 @@ class PotentiometryManager:
             self.measures['current']
         )
 
+    def saveButtonClicked(self) -> None:
+        fileName = Path(
+            QFileDialog.getSaveFileName(
+                caption = self.tr('Save test data'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr('Data (*.pt)')
+            )[0]
+        )
+        with open(fileName, 'wb') as f:
+            dump(self.measures, f)
+
+    def loadButtonClicked(self) -> None:
+        fileName = Path(
+            QFileDialog.getOpenFileName(
+                caption = self.tr('Load test data'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr('Data (*.pt)')
+            )[0]
+        )
+        with open(fileName, 'rb') as f:
+            self.measures = load(f)
+        self.plotTimerTimeout()
+
+    def closeButtonClicked(self) -> None:
+        self.resetPlot()
+
 
 @dataclass
 class CyclicVoltammetryManager:
@@ -245,6 +283,9 @@ class CyclicVoltammetryManager:
     stopVoltageValue: QDoubleSpinBox
     stopVoltageButton: QPushButton
     playButton: QPushButton
+    saveButton: QPushButton
+    loadButton: QPushButton
+    closeButton: QPushButton
     plotView: QGridLayout
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'CyclicVoltammetryManager')
 
@@ -297,6 +338,9 @@ class CyclicVoltammetryManager:
         self.peakVoltageButton.clicked.connect(lambda _: self._send(self.getPeakVCmd()))
         self.stopVoltageButton.clicked.connect(lambda _: self._send(self.getStopVCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
+        self.saveButton.clicked.connect(lambda _: self.saveButtonClicked())
+        self.loadButton.clicked.connect(lambda _: self.loadButtonClicked())
+        self.closeButton.clicked.connect(lambda _: self.closeButtonClicked())
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
@@ -308,6 +352,7 @@ class CyclicVoltammetryManager:
         self.peakVoltageButton.setEnabled(flag)
         self.stopVoltageButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
+        self.saveButton.setEnabled(flag)
 
     def getConfigCmd(
         self,
@@ -358,19 +403,22 @@ class CyclicVoltammetryManager:
         self.playButton.setChecked(True)
         self.resetPlot()
         self.plotTimer.start(self.pltCfg.updateInterval)
+        self.loadButton.setEnabled(False)
+        self.closeButton.setEnabled(False)
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
+        self.loadButton.setEnabled(True)
+        self.closeButton.setEnabled(True)
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
-        ... #TODO: Save test
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
@@ -461,3 +509,30 @@ class CyclicVoltammetryManager:
             self.measures['voltage'],
             self.measures['current']
         )
+
+    def saveButtonClicked(self) -> None:
+        fileName = Path(
+            QFileDialog.getSaveFileName(
+                caption = self.tr('Save test data'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr('Data (*.cv)')
+            )[0]
+        )
+        with open(fileName, 'wb') as f:
+            dump(self.measures, f)
+
+    def loadButtonClicked(self) -> None:
+        fileName = Path(
+            QFileDialog.getOpenFileName(
+                caption = self.tr('Load test data'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr('Data (*.cv)')
+            )[0]
+        )
+        
+        with open(fileName, 'rb') as f:
+            self.measures = load(f)
+        self.plotTimerTimeout()
+
+    def closeButtonClicked(self) -> None:
+        self.resetPlot()
