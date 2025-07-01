@@ -15,10 +15,6 @@ colors = [
 ]
 lineWidth = 20
 updateInterval = 200
-maxPoints = 120
-[plot.lines]
-voltage = "Voltage"
-current = "Current"
 
 [serial]
 baudRate = 115200
@@ -26,7 +22,9 @@ dataBits = 8
 parity = 0
 stopBits = 1
 endCharacter = "\\r\\n"
+
 [serial.commands]
+ok = "$OK->"
 potentiometry = "$PT"
 cyclicVoltammetry = "$CV"
 start = "$START"
@@ -46,16 +44,16 @@ startVoltage = "$SRTV:"
 peakVoltage = "$PV:"
 stopVoltage = "$STPV:"
 
-[cycles]
 [cycles.potentiometry]
-taskDelay = 50
+taskDelay = 200
 voltageSP = 0.6
 duration = 120000
-threshold = 50
+threshold = 9.99
+
 [cycles.cyclicVoltammetry]
 taskDelay = 50
 cycles = 1
-slewRate = 100
+slewRate = 100.0
 startVoltage = -0.5
 peakVoltage = 0.9
 stopVoltage = -0.5

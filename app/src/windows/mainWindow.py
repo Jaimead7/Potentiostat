@@ -1,6 +1,7 @@
 from typing import Any, Callable, NoReturn
 
-from managers import PlotManager, SerialManager
+from managers import (CyclicVoltammetryManager, PotentiometryManager,
+                      SerialManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from pyUtils import (ConfigDict, ConfigFileManager, ProjectPathsDict, debugLog,
@@ -33,7 +34,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def initWidgets(self) -> None:
         self.initSerialManager()
-        self.initPlotManager()
+        self.initCyclesManager()
 
     def initSerialManager(self) -> None:
         self.serialManager = SerialManager(
@@ -49,12 +50,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.serialManager.init()
         self.sendCmd: Callable = self.serialManager.sendCmd
 
-    def initPlotManager(self) -> None:
-        self.plotManager = PlotManager(
-            self,
-            self.ptPlotView
-        )
-        self.plotManager.init()
+    def initCyclesManager(self) -> None:
+        self.cycles: dict = {
+            'potentiometry': PotentiometryManager(
+                self,
+                self.ptButton,
+                self.ptTDValue,
+                self.ptTDButton,
+                self.ptSPValue,
+                self.ptSPButton,
+                self.ptTimeValue,
+                self.ptTimeButton,
+                self.ptThresholdValue,
+                self.ptThresholdButton,
+                self.ptPlayButton,
+                self.ptPlotView
+            ),
+            'cyclicVoltammetry': CyclicVoltammetryManager(
+                self,
+                self.cvButton,
+                self.cvTDValue,
+                self.cvTDButton,
+                self.cvTCValue,
+                self.cvTCButton,
+                self.cvSRValue,
+                self.cvSRButton,
+                self.cvStartVValue,
+                self.cvStartVButton,
+                self.cvPVValue,
+                self.cvPVButton,
+                self.cvStopVValue,
+                self.cvStopVButton,
+                self.cvPlayButton,
+                self.cvPlotView
+            )
+        }
+        for cycle in self.cycles.values():
+            cycle.init()
 
     def setCallbacks(self) -> None:
         self.strReceived.connect(lambda rcvStr: self.parseCmd(rcvStr))
@@ -67,12 +99,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def parseCmd(self, rcvStr: str) -> None:
         cmds: ConfigDict = self.cfg.serial.commands
-        # while rcvStr.startswith(''): #TODO
-        #     rcvStr = rcvStr[len(' '):]
-        #     ...
+        while rcvStr.startswith(cmds.ok):
+            rcvStr = rcvStr[len(cmds.ok):]
+        while rcvStr.startswith(cmds.potentiometry):
+            rcvStr = rcvStr[len(cmds.potentiometry):]
+            self.cycles['potentiometry'].processCmd(rcvStr)
+        while rcvStr.startswith(cmds.cyclicVoltammetry):
+            rcvStr = rcvStr[len(cmds.cyclicVoltammetry):]
+            self.cycles['cyclicVoltammetry'].processCmd(rcvStr)
 
     def enableSend(self, flag: bool) -> None:
         self.serialManager.enableSend(flag)
+        for cycle in self.cycles.values():
+            cycle.enableSend(flag)
         ...
 
     def changeLanguage(self, language: str = 'es_ES') -> None:
@@ -81,4 +120,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.app.removeTranslator(self.translator)
         self.retranslateUi(self)
-        self.plotManager.setLabels(['Voltage', 'Current']) #FIXME
