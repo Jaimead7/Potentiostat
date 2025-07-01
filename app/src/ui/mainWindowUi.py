@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1065, 614)
+        MainWindow.resize(1048, 601)
         MainWindow.setMinimumSize(QtCore.QSize(400, 300))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icon"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -184,7 +184,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.line)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        spacerItem4 = QtWidgets.QSpacerItem(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        spacerItem4 = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem4)
         self.ptPlayButton = QtWidgets.QPushButton(self.ptTab)
         self.ptPlayButton.setMinimumSize(QtCore.QSize(45, 45))
@@ -507,7 +507,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.tabWidget, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1065, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1048, 21))
         self.menubar.setObjectName("menubar")
         self.menuTools = QtWidgets.QMenu(self.menubar)
         self.menuTools.setObjectName("menuTools")
@@ -567,7 +567,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.comSelector.setCurrentIndex(-1)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.tabWidget, self.ptTDValue)
         MainWindow.setTabOrder(self.ptTDValue, self.ptSPValue)
@@ -583,17 +583,16 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "GRUPO COPO OCS"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Potentiostat"))
         self.comStatusLabel.setText(_translate("MainWindow", "Status:"))
         self.comLabel.setText(_translate("MainWindow", "Device:"))
-        self.comSelector.setPlaceholderText(_translate("MainWindow", "Seleccionar dispositivo"))
         self.sensor0Label.setText(_translate("MainWindow", "Potentiometry"))
         self.label_4.setText(_translate("MainWindow", "Duration (ms):"))
         self.label_17.setText(_translate("MainWindow", "Start threshold (uA):"))
         self.label_2.setText(_translate("MainWindow", "Task delay (ms):"))
         self.label_3.setText(_translate("MainWindow", "Voltage set point (V):"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ptTab), _translate("MainWindow", "Potentiometry"))
-        self.sensor2Label.setText(_translate("MainWindow", "Cyclic voltametry"))
+        self.sensor2Label.setText(_translate("MainWindow", "Cyclic voltammetry"))
         self.label_19.setText(_translate("MainWindow", "Start voltage (V):"))
         self.label_12.setText(_translate("MainWindow", "Slew rate (mV/s):"))
         self.label_11.setText(_translate("MainWindow", "Task delay (ms):"))
