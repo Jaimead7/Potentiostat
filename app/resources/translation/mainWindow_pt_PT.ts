@@ -4,17 +4,17 @@
 <context>
     <name>CyclicVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="289"/>
+        <location filename="../../src/managers/cycles.py" line="284"/>
         <source>Current (uA)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="289"/>
+        <location filename="../../src/managers/cycles.py" line="284"/>
         <source>Voltage (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="452"/>
+        <location filename="../../src/managers/cycles.py" line="450"/>
         <source>Voltage/Current</source>
         <translation type="unfinished"></translation>
     </message>
@@ -52,6 +52,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ui/mainWindow.ui" line="257"/>
+        <source>Duration (ms):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ui/mainWindow.ui" line="299"/>
         <source>Start threshold (uA):</source>
         <translation type="unfinished"></translation>
@@ -82,6 +87,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ui/mainWindow.ui" line="715"/>
+        <source>Slew rate (mV/s):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ui/mainWindow.ui" line="729"/>
         <source>Stop voltage (V):</source>
         <translation type="unfinished"></translation>
@@ -104,6 +114,16 @@
     <message>
         <location filename="../ui/mainWindow.ui" line="1099"/>
         <source>Serial:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1188"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1192"/>
+        <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -151,51 +171,31 @@
         <source>Mudar para português</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="1188"/>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="1192"/>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="257"/>
-        <source>Duration (ms):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="715"/>
-        <source>Slew rate (mV/s):</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>PotentiometryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="67"/>
-        <source>Time (ms)</source>
+        <location filename="../../src/managers/cycles.py" line="63"/>
+        <source>Time (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="67"/>
+        <location filename="../../src/managers/cycles.py" line="63"/>
         <source>Voltage (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="67"/>
+        <location filename="../../src/managers/cycles.py" line="63"/>
         <source>Current (uA)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="207"/>
+        <location filename="../../src/managers/cycles.py" line="202"/>
         <source>Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="215"/>
+        <location filename="../../src/managers/cycles.py" line="210"/>
         <source>Current</source>
         <translation type="unfinished"></translation>
     </message>

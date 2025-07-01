@@ -45,7 +45,7 @@ peakVoltage = "$PV:"
 stopVoltage = "$STPV:"
 
 [cycles.potentiometry]
-taskDelay = 200
+taskDelay = 50
 voltageSP = 0.6
 duration = 120000
 threshold = 9.99

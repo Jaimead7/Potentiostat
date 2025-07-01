@@ -56,16 +56,12 @@ class PotentiometryManager:
         self.setPlot()
 
     def setPlot(self) -> None:
-        self.plot: PlotWidget = PlotWidget(
-            axisItems= {
-                'bottom': DateAxisItem(utcOffet= 0)
-            }
-        )
+        self.plot: PlotWidget = PlotWidget()
         self.plot.showGrid(x= True, y= True)
         self.plot.showAxis('left')
         self.plot.showAxis('right')
         self.plot.setLabels(
-            bottom= self.tr('Time (ms)'),
+            bottom= self.tr('Time (s)'),
             left= self.tr('Voltage (V)'),
             right= self.tr('Current (uA)')
         )
@@ -80,7 +76,6 @@ class PotentiometryManager:
         self.durationButton.clicked.connect(lambda _: self._send(self.getDCmd()))
         self.thresholdButton.clicked.connect(lambda _: self._send(self.getThCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
-        self.playButton.toggled.connect(lambda: self.playButtonToggled())
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
@@ -109,17 +104,8 @@ class PotentiometryManager:
         self.playButton.setChecked(not checked)
         if checked:
             self._send(f'{self.cmds.potentiometry}{self.cmds.start}')
-            self.resetPlot()
-            self.plotTimer.start(self.pltCfg.updateInterval)
         else:
             self._send(f'{self.cmds.potentiometry}{self.cmds.stop}')
-
-    def playButtonToggled(self) -> None:
-        if self.playButton.isChecked():
-            self.resetPlot()
-            self.plotTimer.start(self.pltCfg.updateInterval)
-        else:
-            self.plotTimer.stop()
 
     def processCmd(self, rcvStr: str) -> str:
         options: dict = {
@@ -141,28 +127,36 @@ class PotentiometryManager:
     def processStart(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.start):]
         self.playButton.setChecked(True)
+        self.resetPlot()
+        self.plotTimer.start(self.pltCfg.updateInterval)
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
+        self.plotTimer.stop()
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
+        self.plotTimer.stop()
         ... #TODO: Save test
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.timestamp):]
-        ts: str = rcvStr.split('$')[0]
+        ts: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(ts + self.cmds.voltage) + 1:]
-        voltage: str = rcvStr.split('$')[0]
+        voltage: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
-        current: str = rcvStr.split('$')[0]
+        current: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(current):]
-        ... #TODO: save measure and plot
+        if len(self.measures['timestamp']) == 0:
+            self.startTimestamp = int(ts)            
+        self.measures['timestamp'].append((int(ts) - self.startTimestamp) / 1000.0)
+        self.measures['voltage'].append(float(voltage))
+        self.measures['current'].append(float(current))
         return rcvStr
 
     def saveTaskDelay(self, rcvStr: str) -> str:
@@ -203,6 +197,7 @@ class PotentiometryManager:
             'voltage': [],
             'current': []
         }
+        self.plot.clear()
         self.lines: list[PlotCurveItem] = {
             'voltage' : self.plot.plot(
                 self.measures['timestamp'],
@@ -302,7 +297,6 @@ class CyclicVoltammetryManager:
         self.peakVoltageButton.clicked.connect(lambda _: self._send(self.getPeakVCmd()))
         self.stopVoltageButton.clicked.connect(lambda _: self._send(self.getStopVCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
-        self.playButton.toggled.connect(lambda: self.playButtonToggled())
         self.plotTimer.timeout.connect(lambda: self.plotTimerTimeout())
 
     def enableSend(self, flag: bool = True) -> None:
@@ -340,19 +334,12 @@ class CyclicVoltammetryManager:
         else:
             self._send(f'{self.cmds.cyclicVoltammetry}{self.cmds.stop}')
 
-    def playButtonToggled(self) -> None:
-        if self.playButton.isChecked():
-            self.resetPlot()
-            self.plotTimer.start(self.pltCfg.updateInterval)
-        else:
-            self.plotTimer.stop()
-
     def processCmd(self, rcvStr: str) -> str:
         options: dict = {
             self.cmds.start: self.processStart,
             self.cmds.stop: self.processStop,
             self.cmds.end: self.processEnd,
-            self.cmds.timestamp: self.processMeasure,
+            self.cmds.cycle: self.processMeasure,
             self.cmds.taskDelay: self.saveTaskDelay,
             self.cmds.totalCycle: self.saveTotalCycle,
             self.cmds.slewRate: self.saveSlewRate,
@@ -369,30 +356,39 @@ class CyclicVoltammetryManager:
     def processStart(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.start):]
         self.playButton.setChecked(True)
+        self.resetPlot()
+        self.plotTimer.start(self.pltCfg.updateInterval)
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
+        self.plotTimer.stop()
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
+        self.plotTimer.stop()
         ... #TODO: Save test
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
-        rcvStr = rcvStr[len(self.cmds.timestamp):]
-        ts: str = rcvStr.split('$')[0]
-        self.measures['timestamp'].append(int(ts))
+        rcvStr = rcvStr[len(self.cmds.cycle):]
+        cc: str = rcvStr.split('$')[0][:-1]
+        rcvStr = rcvStr[len(cc + self.cmds.timestamp) + 1:]
+        ts: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(ts + self.cmds.voltage) + 1:]
-        voltage: str = rcvStr.split('$')[0]
-        self.measures['voltage'].append(float(voltage))
+        voltage: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
-        current: str = rcvStr.split('$')[0]
-        self.measures['current'].append(float(current))
+        current: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(current):]
+        if len(self.measures['timestamp']) == 0:
+            self.startTimestamp = int(ts)            
+        self.measures['cycle'].append(int(cc))
+        self.measures['timestamp'].append((int(ts) - self.startTimestamp) / 1000.0)
+        self.measures['voltage'].append(float(voltage))
+        self.measures['current'].append(float(current))
         return rcvStr
 
     def saveTaskDelay(self, rcvStr: str) -> str:
@@ -445,10 +441,12 @@ class CyclicVoltammetryManager:
 
     def resetPlot(self) -> None:
         self.measures: dict[list[Optional[Number]]] = {
+            'cycle': [],
             'timestamp': [],
             'voltage': [],
             'current': []
         }
+        self.plot.clear()
         self.line: PlotCurveItem = self.plot.plot(
             self.measures['voltage'],
             self.measures['current'],
