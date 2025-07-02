@@ -138,6 +138,12 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
           <width>400</width>
@@ -160,7 +166,7 @@
     <item row="2" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="ptTab">
        <attribute name="title">
@@ -1434,8 +1440,23 @@
      <addaction name="actionSpanish"/>
      <addaction name="actionPortugues"/>
     </widget>
+    <widget class="QMenu" name="menuDevice">
+     <property name="title">
+      <string>Device</string>
+     </property>
+     <addaction name="actionUpdateDevices"/>
+     <addaction name="actionConnectDevice"/>
+    </widget>
+    <addaction name="menuDevice"/>
     <addaction name="menuLanguage"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExport"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1467,6 +1488,8 @@
    <addaction name="separator"/>
    <addaction name="actionUpdateDevices"/>
    <addaction name="actionConnectDevice"/>
+   <addaction name="separator"/>
+   <addaction name="actionExport"/>
    <addaction name="separator"/>
    <addaction name="actionSpanish"/>
    <addaction name="actionPortugues"/>
@@ -1537,6 +1560,18 @@
    </property>
    <property name="toolTip">
     <string>Mudar para português</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="icon">
+    <iconset resource="../qrc/uiResources.qrc">
+     <normaloff>:/icons/exportIcon</normaloff>:/icons/exportIcon</iconset>
+   </property>
+   <property name="text">
+    <string>Export</string>
+   </property>
+   <property name="toolTip">
+    <string>Export data</string>
    </property>
   </action>
  </widget>

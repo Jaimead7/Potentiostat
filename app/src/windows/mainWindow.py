@@ -1,12 +1,17 @@
+import csv
+from pathlib import Path
+from pickle import load
 from typing import Any, Callable, NoReturn
 
 from managers import (CyclicVoltammetryManager, PotentiometryManager,
                       SerialManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from pyUtils import (ConfigDict, ConfigFileManager, ProjectPathsDict, debugLog,
                      infoLog, ppaths)
 from ui import Ui_MainWindow
+from xlsxwriter import Workbook
+from xlsxwriter.worksheet import Worksheet
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -99,6 +104,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionSpanish.triggered.connect(lambda: self.changeLanguage('es_ES'))
         self.actionPortugues.triggered.connect(lambda: self.changeLanguage('pt_PT'))
         self.actionEnglish.triggered.connect(lambda: self.changeLanguage('en_GB'))
+        self.actionExport.triggered.connect(lambda: self.actionExportTriggered())
 
     def sendInitCmds(self) -> None:
         ...
@@ -126,3 +132,49 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.app.removeTranslator(self.translator)
         self.retranslateUi(self)
+
+    def actionExportTriggered(self) -> None:
+        dataFile = Path(
+            QFileDialog.getOpenFileName(
+                caption = self.tr('Select test to export'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr(f'Data (*.pt; *.cv)')
+            )[0]
+        )
+        exportFile = Path(
+            QFileDialog.getSaveFileName(
+                caption = self.tr('Export file'),
+                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                filter = self.tr(f'(*.csv);;(*.xlsx)')
+            )[0]
+        )
+        self.exportData(dataFile, exportFile)
+
+    def exportData(self, dataFile: Path, exportFile: Path) -> None:
+        with open(dataFile, 'rb') as f:
+            data: dict = load(f)
+        match exportFile.suffix:
+            case '.csv':
+                self.exportCSV(data, exportFile)
+            case '.xlsx':
+                self.exportXLSX(data, exportFile)
+        self.debug(self.tr('Data exported'), infoLog)
+
+    def exportCSV(self, data: dict, exportFile: Path) -> None:
+        with open(exportFile,
+                  mode= 'w',
+                  newline= '',
+                  encoding= 'utf-8') as file:
+            writer: csv.Writer = csv.writer(file)
+            writer.writerow(data.keys())
+            writer.writerows(zip(*data.values()))
+
+    def exportXLSX(self, data: dict, exportFile: Path) -> None:
+        wb = Workbook(exportFile)
+        ws: Worksheet = wb.add_worksheet('Data')
+        for col, key in enumerate(data.keys()):
+            ws.write(0, col, key)
+        for col, values in enumerate(data.values()):
+            for row, value in enumerate(values):
+                ws.write(row + 1, col, value)
+        wb.close()

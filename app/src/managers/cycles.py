@@ -35,6 +35,7 @@ class PotentiometryManager:
     closeButton: QPushButton
     plotView: QGridLayout
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'PotentiometryManager')
+    dataFileExtension: ClassVar[str] = '.pt'
 
     def __post_init__(self) -> None:
         cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
@@ -265,6 +266,9 @@ class PotentiometryManager:
     def closeButtonClicked(self) -> None:
         self.resetPlot()
 
+    def exportData(self, file: Path) -> None:
+        ...
+
 
 @dataclass
 class CyclicVoltammetryManager:
@@ -288,6 +292,7 @@ class CyclicVoltammetryManager:
     closeButton: QPushButton
     plotView: QGridLayout
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'CyclicVoltammetryManager')
+    dataFileExtension: ClassVar[str] = '.cv'
 
     def __post_init__(self) -> None:
         cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
@@ -529,7 +534,6 @@ class CyclicVoltammetryManager:
                 filter = self.tr('Data (*.cv)')
             )[0]
         )
-        
         with open(fileName, 'rb') as f:
             self.measures = load(f)
         self.plotTimerTimeout()

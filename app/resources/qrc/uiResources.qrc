@@ -5,6 +5,7 @@
     <file alias="copoIcon">../icons/copoIcon.png</file>
     <file alias="copoLogo">../icons/copoLogo.png</file>
     <file alias="disconnectedIcon">../icons/disconnectedIcon.png</file>
+    <file alias="exportIcon">../icons/exportIcon.png</file>
     <file alias="loadIcon">../icons/loadIcon.png</file>
     <file alias="pauseIcon">../icons/pauseIcon.png</file>
     <file alias="playIcon">../icons/playIcon.png</file>
