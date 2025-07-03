@@ -21,6 +21,9 @@ void readSerial() {
     while (Serial.available() > 0) {
       serialInput = Serial.readString();
     }
+    if (serialInput.substring(0, CIR_CMD.length()) == CIR_CMD) {
+      myCircuit.processCmd(serialInput);
+    }
     if (serialInput.substring(0, PT_CMD.length()) == PT_CMD) {
       pt.processCmd(serialInput);
     }

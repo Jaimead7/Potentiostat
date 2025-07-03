@@ -53,6 +53,78 @@
     Serial.println();
   }
 
+  void Circuit::processCmd(String &cmd) {
+    /*
+    Process circuit commands.
+    Ex: $CIR$R1:10000
+    */
+    String result = "";
+    if (cmd.substring(0, CIR_CMD.length()) == CIR_CMD) {
+      cmd = cmd.substring(CIR_CMD.length());
+      if (cmd.substring(0, R1_CMD.length()) == R1_CMD) {
+        cmd = cmd.substring(R1_CMD.length());
+        R1 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R1_CMD + String(R1) + "\n";
+      }
+      if (cmd.substring(0, R2_CMD.length()) == R2_CMD) {
+        cmd = cmd.substring(R2_CMD.length());
+        R2 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R2_CMD + String(R2) + "\n";
+      }
+      if (cmd.substring(0, R3_CMD.length()) == R3_CMD) {
+        cmd = cmd.substring(R3_CMD.length());
+        R3 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R3_CMD + String(R3) + "\n";
+      }
+      if (cmd.substring(0, R4_CMD.length()) == R4_CMD) {
+        cmd = cmd.substring(R4_CMD.length());
+        R4 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R4_CMD + String(R4) + "\n";
+      }
+      if (cmd.substring(0, R5_CMD.length()) == R5_CMD) {
+        cmd = cmd.substring(R5_CMD.length());
+        R5 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R5_CMD + String(R5) + "\n";
+      }
+      if (cmd.substring(0, R6_CMD.length()) == R6_CMD) {
+        cmd = cmd.substring(R6_CMD.length());
+        R6 = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + R6_CMD + String(R6) + "\n";
+      }
+      if (cmd.substring(0, VB1_CMD.length()) == VB1_CMD) {
+        cmd = cmd.substring(VB1_CMD.length());
+        Vb1 = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + VB1_CMD + String(Vb1) + "\n";
+      }
+      if (cmd.substring(0, VB2_CMD.length()) == VB2_CMD) {
+        cmd = cmd.substring(VB2_CMD.length());
+        Vb2 = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + VB2_CMD + String(Vb2) + "\n";
+      }
+      if (cmd.substring(0, OPAMP_VCC_P_CMD.length()) == OPAMP_VCC_P_CMD) {
+        cmd = cmd.substring(OPAMP_VCC_P_CMD.length());
+        opAmpVccP = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + OPAMP_VCC_P_CMD + String(opAmpVccP) + "\n";
+      }
+      if (cmd.substring(0, OPAMP_VCC_N_CMD.length()) == OPAMP_VCC_N_CMD) {
+        cmd = cmd.substring(OPAMP_VCC_N_CMD.length());
+        opAmpVccN = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + OPAMP_VCC_N_CMD + String(opAmpVccN) + "\n";
+      }
+      if (cmd.substring(0, OPAMP_HR_CMD.length()) == OPAMP_HR_CMD) {
+        cmd = cmd.substring(OPAMP_HR_CMD.length());
+        opAmpHeadroom = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + OPAMP_HR_CMD + String(opAmpHeadroom) + "\n";
+      }
+      if (cmd.substring(0, OPAMP_BR_CMD.length()) == OPAMP_BR_CMD) {
+        cmd = cmd.substring(OPAMP_BR_CMD.length());
+        opAmpBottomroom = parseDecimal(cmd);
+        result += "$OK->" + CIR_CMD + OPAMP_BR_CMD + String(opAmpBottomroom) + "\n";
+      }
+      Serial.print(result);
+    }
+  }
+
   /**************** PRIVATE ****************/
 
   float Circuit::ceVoltageToPWMVoltage(float ceVoltage) {

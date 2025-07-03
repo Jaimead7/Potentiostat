@@ -37,8 +37,8 @@
       uint32_t    R4 =              DEFAULT_R4;
       uint32_t    R5 =              DEFAULT_R5;
       uint32_t    R6 =              DEFAULT_R6;
-      int8_t      Vb1 =             DEFAULT_VB1;
-      int8_t      Vb2 =             DEFAULT_VB2;
+      float       Vb1 =             DEFAULT_VB1;
+      float       Vb2 =             DEFAULT_VB2;
       float       opAmpVccP =       DEFAULT_OPAMP_VCC_P;
       float       opAmpVccN =       DEFAULT_OPAMP_VCC_N;
       float       opAmpHeadroom =   DEFAULT_OPAMP_HR;
@@ -50,6 +50,7 @@
       void        setWEVoltage(float voltage);
       float       readWECurrent();
       void        readAndTransmit(String header);
+      void        processCmd(String &cmd);
     private:
       uint8_t     pwmPin;
       uint8_t     adcPin;
