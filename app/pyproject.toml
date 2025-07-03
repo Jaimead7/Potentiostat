@@ -20,7 +20,7 @@
         "Programming Language :: Python :: 3.10",
     ]
     dependencies = [
-        "PyQt5 >= 5.12.9",
+        "PyQt5 >= 5.15.9",
         "pyqt5-tools >= 5.15.9",
         "pyqtgraph >= 0.13.3",
         "jaimead7-pyutils >= 0.0.14"

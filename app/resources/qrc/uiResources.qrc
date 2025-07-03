@@ -18,5 +18,6 @@
   </qresource>
   <qresource prefix="translations">
     <file alias="es_ES">../translation/mainWindow_es_ES.qm</file>
+    <file alias="pt_PT">../translation/mainWindow_pt_PT.qm</file>
   </qresource>
 </RCC>
