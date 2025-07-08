@@ -58,6 +58,30 @@ opampVccN = "$OPAMP_VCC_N:"
 opampHR = "$OPAMP_HR:"
 opampBR = "$OPAMP_BR:"
 
+[boards.arduino]
+vcc = 5.0
+pwmRes = 8
+adcRes = 10
+
+[boards.esp32]
+vcc = 3.3
+pwmRes = 10
+adcRes = 12
+
+[circuit]
+r1 = 10000
+r2 = 510
+r3 = 1000
+r4 = 220
+r5 = 24000
+r6 = 12000
+vb1 = -5.0
+vb2 = -5.0
+opampVccP = 12.0
+opampVccN = -12.0
+opampHR = 1.5
+opampBR = 0.002
+
 [cycles.potentiometry]
 taskDelay = 50
 voltageSP = 0.6

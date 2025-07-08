@@ -7,12 +7,16 @@ pylupdate5 `
     .\resources\ui\mainWindow.ui `
     .\src\managers\serial.py `
     .\src\managers\cycles.py `
+    .\src\managers\circuit.py `
+    .\src\managers\calculator.py `
     -ts .\resources\translation\mainWindow_es_ES.ts
 pylupdate5 `
     .\src\windows\mainWindow.py `
     .\resources\ui\mainWindow.ui `
     .\src\managers\serial.py `
     .\src\managers\cycles.py `
+    .\src\managers\circuit.py `
+    .\src\managers\calculator.py `
     -ts .\resources\translation\mainWindow_pt_PT.ts
 
 qt5-tools lrelease .\resources\translation\mainWindow_es_ES.ts -qm .\resources\translation\mainWindow_es_ES.qm

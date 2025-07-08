@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1042</width>
-    <height>702</height>
+    <width>1031</width>
+    <height>718</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -20,8 +20,8 @@
    <string>Potentiostat</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/icons/icon</normaloff>:/icons/icon</iconset>
+   <iconset resource="../qrc/uiResources.qrc">
+    <normaloff>:/icons/copoIcon</normaloff>:/icons/copoIcon</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -216,7 +216,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -285,7 +285,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -327,7 +327,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -369,7 +369,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -411,7 +411,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -515,7 +515,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/playIcon</normaloff>
                   <normalon>:/icons/pauseIcon</normalon>:/icons/playIcon</iconset>
                 </property>
@@ -554,7 +554,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/saveIcon</normaloff>:/icons/saveIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -589,7 +589,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/loadIcon</normaloff>:/icons/loadIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -624,7 +624,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/closeIcon</normaloff>:/icons/closeIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -730,7 +730,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -802,7 +802,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -878,7 +878,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -913,7 +913,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -948,7 +948,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -983,7 +983,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -1032,7 +1032,7 @@
                  <string/>
                 </property>
                 <property name="icon">
-                 <iconset resource="../resources/uiResources.qrc">
+                 <iconset resource="../qrc/uiResources.qrc">
                   <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
                 </property>
                 <property name="iconSize">
@@ -1144,7 +1144,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/playIcon</normaloff>
                 <normalon>:/icons/pauseIcon</normalon>:/icons/playIcon</iconset>
               </property>
@@ -1183,7 +1183,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/saveIcon</normaloff>:/icons/saveIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1218,7 +1218,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/loadIcon</normaloff>:/icons/loadIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1253,7 +1253,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/closeIcon</normaloff>:/icons/closeIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1391,7 +1391,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1420,6 +1420,13 @@
         <string>Circuit</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
+        <item row="1" column="1">
+         <widget class="Line" name="line_8">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
@@ -1432,7 +1439,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="cvButton_2">
+             <widget class="QPushButton" name="circuitButton">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -1455,7 +1462,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1514,7 +1521,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1556,7 +1563,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1591,7 +1598,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1636,7 +1643,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1678,7 +1685,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1785,7 +1792,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1820,7 +1827,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1855,7 +1862,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1867,7 +1874,7 @@
              </widget>
             </item>
             <item row="5" column="2">
-             <widget class="QPushButton" name="r6VButton">
+             <widget class="QPushButton" name="r6Button">
               <property name="minimumSize">
                <size>
                 <width>30</width>
@@ -1890,7 +1897,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1925,7 +1932,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -1970,7 +1977,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -2036,7 +2043,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../resources/uiResources.qrc">
+               <iconset resource="../qrc/uiResources.qrc">
                 <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
               </property>
               <property name="iconSize">
@@ -2053,10 +2060,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2069,10 +2076,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2085,10 +2092,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2101,10 +2108,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2117,10 +2124,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2133,10 +2140,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2153,9 +2160,48 @@
            </widget>
           </item>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QLabel" name="label_34">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Board:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="boardSelector">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>400</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+              <property name="currentIndex">
+               <number>-1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QLabel" name="sensor2Label_3">
             <property name="text">
-             <string>Voltage range:</string>
+             <string>Voltage range (V):</string>
             </property>
            </widget>
           </item>
@@ -2186,10 +2232,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2205,10 +2251,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-99.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>99.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2236,7 +2282,7 @@
           <item>
            <widget class="QLabel" name="sensor2Label_4">
             <property name="text">
-             <string>Current range:</string>
+             <string>Current range (uA):</string>
             </property>
            </widget>
           </item>
@@ -2267,10 +2313,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-999.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>999.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2278,7 +2324,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QDoubleSpinBox" name="vb1Value_5">
+             <widget class="QDoubleSpinBox" name="cRangeMaxValue">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -2286,10 +2332,10 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
               <property name="minimum">
-               <double>-9.000000000000000</double>
+               <double>-999.000000000000000</double>
               </property>
               <property name="maximum">
-               <double>9.000000000000000</double>
+               <double>999.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.010000000000000</double>
@@ -2329,7 +2375,7 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="1">
+        <item row="1" column="3">
          <spacer name="horizontalSpacer_7">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -2342,6 +2388,394 @@
           </property>
          </spacer>
         </item>
+        <item row="1" column="2">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="sensor2Label_5">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Calculator</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QLabel" name="label_36">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Board:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="calcBoardSelector">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>400</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+              <property name="currentIndex">
+               <number>-1</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="sensor2Label_6">
+            <property name="text">
+             <string>Voltage range (V):</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <spacer name="horizontalSpacer_12">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="vCalcMinValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <double>-99.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>99.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="vCalcMaxValue">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <double>-99.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>99.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <property name="horizontalSpacing">
+             <number>5</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_16">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>R2 (ohm):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>R3 (ohm):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="r3CalcValue">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>99999999</number>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="r2CalcValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>99999999</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_18">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>R4 (ohm):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QSpinBox" name="r4CalcValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>99999999</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="sensor2Label_7">
+            <property name="text">
+             <string>Current range (uA):</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <spacer name="horizontalSpacer_14">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="cCalcMinValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <double>-999.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="cCalcMaxValue">
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <double>-999.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>999.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.010000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_15">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Preferred</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <property name="horizontalSpacing">
+             <number>5</number>
+            </property>
+            <property name="verticalSpacing">
+             <number>0</number>
+            </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_35">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>R6 (ohm):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QSpinBox" name="r6CalcValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>99999999</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_41">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>R5 (ohm):</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QSpinBox" name="r5CalcValue">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="maximum">
+               <number>99999999</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </widget>
@@ -2353,7 +2787,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1042</width>
+     <width>1031</width>
      <height>21</height>
     </rect>
    </property>
@@ -2426,7 +2860,7 @@
   </widget>
   <action name="actionUpdateDevices">
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/updateIcon</normaloff>:/icons/updateIcon</iconset>
    </property>
    <property name="text">
@@ -2444,7 +2878,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/disconnectedIcon</normaloff>
      <normalon>:/icons/connectedIcon</normalon>:/icons/disconnectedIcon</iconset>
    </property>
@@ -2457,7 +2891,7 @@
   </action>
   <action name="actionSpanish">
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/spainIcon</normaloff>:/icons/spainIcon</iconset>
    </property>
    <property name="text">
@@ -2469,7 +2903,7 @@
   </action>
   <action name="actionEnglish">
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/ukIcon</normaloff>:/icons/ukIcon</iconset>
    </property>
    <property name="text">
@@ -2481,7 +2915,7 @@
   </action>
   <action name="actionPortugues">
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/portugalIcon</normaloff>:/icons/portugalIcon</iconset>
    </property>
    <property name="text">
@@ -2493,7 +2927,7 @@
   </action>
   <action name="actionExport">
    <property name="icon">
-    <iconset resource="../resources/uiResources.qrc">
+    <iconset resource="../qrc/uiResources.qrc">
      <normaloff>:/icons/exportIcon</normaloff>:/icons/exportIcon</iconset>
    </property>
    <property name="text">
@@ -2519,7 +2953,7 @@
   <tabstop>customCmdValue</tabstop>
  </tabstops>
  <resources>
-  <include location="../resources/uiResources.qrc"/>
+  <include location="../qrc/uiResources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -4,7 +4,7 @@ from pickle import load
 from typing import Any, Callable, NoReturn
 
 from managers import (CyclicVoltammetryManager, PotentiometryManager,
-                      SerialManager)
+                      SerialManager, CircuitManager, CalculatorManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from pyUtils import (ConfigDict, ConfigFileManager, ProjectPathsDict, debugLog,
@@ -40,6 +40,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def initWidgets(self) -> None:
         self.initSerialManager()
         self.initCyclesManager()
+        self.initCircuitManager()
+        self.initCalculatorManager()
 
     def initSerialManager(self) -> None:
         self.serialManager = SerialManager(
@@ -98,6 +100,58 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         }
         for cycle in self.cycles.values():
             cycle.init()
+
+    def initCircuitManager(self) -> None:
+        self.circuitManager = CircuitManager(
+            self,
+            self.circuitButton,
+            self.r1Value,
+            self.r1Button,
+            self.r2Value,
+            self.r2Button,
+            self.r3Value,
+            self.r3Button,
+            self.r4Value,
+            self.r4Button,
+            self.r5Value,
+            self.r5Button,
+            self.r6Value,
+            self.r6Button,
+            self.vb1Value,
+            self.vb1Button,
+            self.vb2Value,
+            self.vb2Button,
+            self.opampVccPValue,
+            self.opampVccPButton,
+            self.opampVccNValue,
+            self.opampVccNButton,
+            self.opampHRValue,
+            self.opampHRButton,
+            self.opampBRValue,
+            self.opampBRButton,
+            self.vRangeMinValue,
+            self.vRangeMaxValue,
+            self.cRangeMinValue,
+            self.cRangeMaxValue,
+            self.boardSelector
+        )
+        self.circuitManager.init()
+
+    def initCalculatorManager(self) -> None:
+        self.calculatorManager = CalculatorManager(
+            self,
+            self.vCalcMinValue,
+            self.vCalcMaxValue,
+            self.r2CalcValue,
+            self.r3CalcValue,
+            self.r4CalcValue,
+            self.cCalcMinValue,
+            self.cCalcMaxValue,
+            self.r5CalcValue,
+            self.r6CalcValue,
+            self.calcBoardSelector
+        )
+        self.calculatorManager.init()
 
     def setCallbacks(self) -> None:
         self.strReceived.connect(lambda rcvStr: self.parseCmd(rcvStr))
