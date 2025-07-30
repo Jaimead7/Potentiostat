@@ -158,7 +158,7 @@
     Return the current (A) on the WE from the voltage.
     The opAmp combinates a current to voltage converter with an inverting summing amplifier mode (Vb2 + iWE).
     */
-    return - (float(Vb2) / float(R5)) - (float(voltage) / float(R6));
+    return -(- (float(Vb2) / float(R5)) - (float(voltage) / float(R6)));
   }
 
   float Circuit::weCurrentToVoltage(float current) {

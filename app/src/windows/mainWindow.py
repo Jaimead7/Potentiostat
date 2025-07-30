@@ -3,8 +3,9 @@ from pathlib import Path
 from pickle import load
 from typing import Any, Callable, NoReturn
 
-from managers import (CyclicVoltammetryManager, PotentiometryManager,
-                      SerialManager, CircuitManager, CalculatorManager)
+from managers import (CalculatorManager, CircuitManager,
+                      CyclicVoltammetryManager, PotentiometryManager,
+                      SerialManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from pyUtils import (ConfigDict, ConfigFileManager, ProjectPathsDict, debugLog,
@@ -178,7 +179,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.serialManager.enableSend(flag)
         for cycle in self.cycles.values():
             cycle.enableSend(flag)
-        ...
+        self.circuitManager.enableSend(flag)
 
     def changeLanguage(self, language: str = 'es_ES') -> None:
         if self.translator.load(language, ':/translations'):

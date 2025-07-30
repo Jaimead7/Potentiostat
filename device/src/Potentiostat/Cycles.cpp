@@ -5,7 +5,7 @@
   /**************** POTENTIOMETRY ****************/
 
   Potentiometry::Potentiometry(Circuit &myCircuit) {
-    pCircuit = myCircuit;
+    pCircuit = &myCircuit;
   }
 
   void Potentiometry::cycle() {
@@ -16,16 +16,16 @@
     uint32_t now = millis();
     if (run) {
       if (!started) {
-        pCircuit.setWEVoltage(voltageSP);
+        pCircuit->setWEVoltage(voltageSP);
         checkStart();
       } else {
         if (now - initTime < duration) {
           if (taskDelay <= now - lastRead) {
-            pCircuit.readAndTransmit(PT_CMD);
+            pCircuit->readAndTransmit(PT_CMD);
             lastRead = now;
           }
         } else {
-          pCircuit.setWEVoltage(0.0);
+          pCircuit->setWEVoltage(0.0);
           run = false;
           Serial.println(PT_CMD + END_CMD);
         }
@@ -40,7 +40,7 @@
     Check if the sample is on the sensor.
     If there is any sample, the current will flow.
     */
-    if (abs(pCircuit.readWECurrent()) > startThreshold) {
+    if (abs(pCircuit->readWECurrent()) > startThreshold) {
       initTime = millis();
       started = true;
       Serial.println(PT_CMD + START_CMD);
@@ -97,7 +97,7 @@
   /**************** CYCLIC VOLTAMMETRY ****************/
 
   CyclicVoltammetry::CyclicVoltammetry(Circuit &myCircuit) {
-    pCircuit = myCircuit;
+    pCircuit = &myCircuit;
   }
 
   void CyclicVoltammetry::cycle() {
@@ -111,7 +111,7 @@
         started = true;
       } else {
         if (taskDelay <= millis() - lastVoltChange && currentCycle < totalCycles) {
-          pCircuit.readAndTransmit(CV_CMD + CURRENT_CYCLE_CMD + String(currentCycle + 1) + ",");
+          pCircuit->readAndTransmit(CV_CMD + CURRENT_CYCLE_CMD + String(currentCycle + 1) + ",");
           changeVoltage();
         }
         checkEnd();
@@ -185,7 +185,7 @@
     direction = 1;
     lastVoltChange = millis();
     currentVoltage = startVoltage;
-    pCircuit.setWEVoltage(currentVoltage);
+    pCircuit->setWEVoltage(currentVoltage);
   }
 
   void  CyclicVoltammetry::checkEnd() {
@@ -193,7 +193,7 @@
     Check the conditions os the end of the cyclic voltammetry.
     */
     if (currentCycle >= totalCycles) {
-      pCircuit.setWEVoltage(0.0);
+      pCircuit->setWEVoltage(0.0);
       run = false;
       started = false;
       Serial.println(CV_CMD + END_CMD);
@@ -215,7 +215,7 @@
       direction = 1;
       currentCycle += 1;
     }
-    pCircuit.setWEVoltage(currentVoltage);
+    pCircuit->setWEVoltage(currentVoltage);
     lastVoltChange = currentTime;
   }
 

@@ -147,7 +147,7 @@ class PotentiometryManager:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
-        self.loadButton.setEnabled(True)
+        self.loadButton.setEnabled(True) #FIXME: This never happends
         self.closeButton.setEnabled(True)
         return rcvStr
 
@@ -416,7 +416,7 @@ class CyclicVoltammetryManager:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
-        self.loadButton.setEnabled(True)
+        self.loadButton.setEnabled(True) #FIXME: This never happends
         self.closeButton.setEnabled(True)
         return rcvStr
 

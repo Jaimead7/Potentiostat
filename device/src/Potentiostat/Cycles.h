@@ -17,7 +17,7 @@ class Potentiometry {
     float       startThreshold =  50.;
     uint32_t    initTime;
     uint32_t    lastRead;
-    Circuit     pCircuit;
+    Circuit*    pCircuit;
     void        checkStart();
 };
 
@@ -40,7 +40,7 @@ class CyclicVoltammetry {
     float       currentVoltage =  0.0;
     int8_t      direction =       1;                // 1 positive slewRate, -1 negative slewRate
     uint32_t    lastVoltChange;
-    Circuit     pCircuit;
+    Circuit*    pCircuit;
     void        setStartConditions();
     void        checkEnd();
     void        changeVoltage();
