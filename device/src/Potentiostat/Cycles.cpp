@@ -86,7 +86,6 @@
         result += "$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
-        Serial.println("$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold));
         cmd = cmd.substring(PARAMS_CMD.length());
         result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold) + "\n";
       }
@@ -217,6 +216,162 @@
     }
     pCircuit->setWEVoltage(currentVoltage);
     lastVoltChange = currentTime;
+  }
+
+  /**************** SQUARE WAVE VOLTAMMETRY ****************/
+
+  SquareWaveVoltammetry::SquareWaveVoltammetry(Circuit &myCircuit) {
+    pCircuit = &myCircuit;
+  }
+
+  void SquareWaveVoltammetry::cycle() {
+    /*
+    Cycle loop for the squarer wave voltammetry.
+    Call it cyclically on the main loop.
+    */
+    if (run) {
+      if (!started) {
+        setStartConditions();
+      } else {
+        changeVoltage();
+        checkEnd();
+      }
+    } else {
+      started = false;
+    }
+  }
+
+  void  SquareWaveVoltammetry::processCmd(String &cmd) {
+    /*
+    Process square wave voltammetry commands.
+    Ex: $SWV$START
+    */
+    String result = "";
+    if (cmd.substring(0, SWV_CMD.length()) == SWV_CMD) {
+      cmd = cmd.substring(SWV_CMD.length());
+      if (cmd.substring(0, START_CMD.length()) == START_CMD) {
+        run = true;
+        initTime = millis();
+        cmd = cmd.substring(START_CMD.length());
+        result += "$OK->" + SWV_CMD + START_CMD + "\n";
+      }
+      if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
+        run = false;
+        cmd = cmd.substring(STOP_CMD.length());
+        result += "$OK->" + SWV_CMD + STOP_CMD + "\n";
+      }
+      if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
+        cmd = cmd.substring(TASK_DELAY_CMD.length());
+        taskDelay = (uint16_t)parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
+      }
+      if (cmd.substring(0, START_VOLTAGE_CMD.length()) == START_VOLTAGE_CMD) {
+        cmd = cmd.substring(START_VOLTAGE_CMD.length());
+        startVoltage = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + START_VOLTAGE_CMD + String(startVoltage) + "\n";
+      }
+      if (cmd.substring(0, STOP_VOLTAGE_CMD.length()) == STOP_VOLTAGE_CMD) {
+        cmd = cmd.substring(STOP_VOLTAGE_CMD.length());
+        stopVoltage = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + DURATION_CMD + String(stopVoltage) + "\n";
+      }
+      if (cmd.substring(0, STEP_SIZE_CMD.length()) == STEP_SIZE_CMD) {
+        cmd = cmd.substring(STEP_SIZE_CMD.length());
+        stepSize = (uint16_t)parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + STEP_SIZE_CMD + String(stepSize) + "\n";
+      }
+      if (cmd.substring(0, PULSE_AMPLITUDE_CMD.length()) == PULSE_AMPLITUDE_CMD) {
+        cmd = cmd.substring(PULSE_AMPLITUDE_CMD.length());
+        pulseAmplitude = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + "\n";
+      }
+      if (cmd.substring(0, FREQUENCY_CMD.length()) == FREQUENCY_CMD) {
+        cmd = cmd.substring(FREQUENCY_CMD.length());
+        frequency = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + FREQUENCY_CMD + String(frequency) + "\n";
+      }
+      if (cmd.substring(0, MAX_CURRENT_CMD.length()) == MAX_CURRENT_CMD) {
+        cmd = cmd.substring(MAX_CURRENT_CMD.length());
+        maxCurrent = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + MAX_CURRENT_CMD + String(maxCurrent) + "\n";
+      }
+      if (cmd.substring(0, EQUIL_TIME_CMD.length()) == EQUIL_TIME_CMD) {
+        cmd = cmd.substring(EQUIL_TIME_CMD.length());
+        equilTime = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + EQUIL_TIME_CMD + String(equilTime) + "\n";
+      }
+      if (cmd.substring(0, COMP_RESISTOR_CMD.length()) == COMP_RESISTOR_CMD) {
+        cmd = cmd.substring(COMP_RESISTOR_CMD.length());
+        irComp = (uint32_t)parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + COMP_RESISTOR_CMD + String(irComp) + "\n";
+      }
+      if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
+        cmd = cmd.substring(PARAMS_CMD.length());
+        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + COMP_RESISTOR_CMD + String(irComp) + "\n";
+      }
+      Serial.print(result);
+    }
+  }
+
+  void  SquareWaveVoltammetry::setStartConditions() {
+    /*
+    Set the conditions for the start of the square wave voltammetry.
+    */
+    if ((millis() - initTime) >= (equilTime * 1000.)) {
+      started = true;
+    }
+    currentVoltage = startVoltage;
+    pCircuit->setWEVoltage(currentVoltage);
+  }
+
+  void  SquareWaveVoltammetry::checkEnd() {
+    /*
+    Check the conditions os the end of the square wave voltammetry.
+    */
+    if (currentVoltage >= stopVoltage || iFordward >= maxCurrent || iReverse >= maxCurrent) {
+      pCircuit->setWEVoltage(0.0);
+      run = false;
+      started = false;
+      Serial.println(SWV_CMD + END_CMD);
+    }
+  }
+
+  void  SquareWaveVoltammetry::changeVoltage() {
+    /*
+    Calculate next step and change voltage.
+    */
+    uint32_t now = millis();
+    float vStair = (float)stepSize * float(int(((float)now - (float)initTime + (equilTime * 1000.)) / ((1. / frequency) * 1000.)));
+    float vPulse = (float)pulseAmplitude * float(int(((float)now - (float)initTime + (equilTime * 1000.)) / ((1. / frequency / 2) * 1000.)) % 2);
+    if (currentVoltage > vStair + vPulse) {
+      iFordward = pCircuit->readWECurrent();
+      vFordward = currentVoltage;
+      Serial.print(SWV_CMD);
+      Serial.print(TIMESTAMP_CMD);
+      Serial.print(millis());
+      Serial.print(",");
+      Serial.print(FORDWARD_VOLTAGE_CMD);
+      Serial.print(vFordward);
+      Serial.print(",");
+      Serial.print(FORDWARD_CURRENT_CMD);
+      Serial.print(iFordward);
+      Serial.print(",");
+      Serial.print(REVERSE_VOLTAGE_CMD);
+      Serial.print(vReverse);
+      Serial.print(",");
+      Serial.print(REVERSE_CURRENT_CMD);
+      Serial.print(iReverse);
+      Serial.print(",");
+      Serial.print(DIFF_CURRENT_CMD);
+      Serial.print(iFordward - iReverse);
+      Serial.println();
+    }
+    if (currentVoltage < vStair + vPulse) {
+      iReverse = pCircuit->readWECurrent();
+      vReverse = currentVoltage;
+    }
+    currentVoltage = vStair + vPulse;
+    pCircuit->setWEVoltage(currentVoltage);
   }
 
 #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)

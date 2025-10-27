@@ -7,9 +7,10 @@
 #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
 
 
-Circuit             myCircuit = Circuit();
-Potentiometry       pt = Potentiometry(myCircuit);
-CyclicVoltammetry   cv = CyclicVoltammetry(myCircuit);
+Circuit                 myCircuit = Circuit();
+Potentiometry           pt = Potentiometry(myCircuit);
+CyclicVoltammetry       cv = CyclicVoltammetry(myCircuit);
+SquareWaveVoltammetry   swv = SquareWaveVoltammetry(myCircuit);
 
 
 void readSerial() {
@@ -30,6 +31,9 @@ void readSerial() {
     if (serialInput.substring(0, CV_CMD.length()) == CV_CMD) {
       cv.processCmd(serialInput);
     }
+    if (serialInput.substring(0, SWV_CMD.length()) == SWV_CMD) {
+      swv.processCmd(serialInput);
+    }
   }
 }
 
@@ -44,4 +48,5 @@ void loop() {
   readSerial();
   pt.cycle();
   cv.cycle();
+  swv.cycle();
 }

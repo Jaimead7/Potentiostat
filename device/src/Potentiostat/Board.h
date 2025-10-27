@@ -49,6 +49,9 @@
 
   static inline  __attribute__((always_inline))
   float parseDecimal(String &str) {
+    /*
+    Extract decimal number from string
+    */
     int charPos = str.indexOf('$');
     if (charPos == -1) {
       float number = str.toFloat();

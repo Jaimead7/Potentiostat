@@ -45,3 +45,32 @@ class CyclicVoltammetry {
     void        checkEnd();
     void        changeVoltage();
 };
+
+class SquareWaveVoltammetry {
+  public:
+    SquareWaveVoltammetry(Circuit &myCircuit);
+    bool        run =             false;
+    void        cycle();
+    void        processCmd(String &cmd);
+  private:
+    bool        started =         false;
+    uint16_t    taskDelay =       50;               // ms
+    float       startVoltage =    -0.2;             // V
+    float       stopVoltage =     1.0;              // V
+    uint16_t    stepSize =        5;                // mV
+    uint32_t    pulseAmplitude =  50;               // mV
+    float       frequency =       2.0;              // Hz
+    float       maxCurrent =      1.0;              // mA
+    float       equilTime =       5.0;              // s
+    uint32_t    irComp =          50;               // ohm
+    float       currentVoltage =  0.0;
+    float       vFordward =       0.0;              // V
+    float       iFordward =       0.0;              // uA
+    float       vReverse =        0.0;              // V
+    float       iReverse =        0.0;              // uA
+    uint32_t    initTime;
+    Circuit*    pCircuit;
+    void        setStartConditions();
+    void        checkEnd();
+    void        changeVoltage();
+};
