@@ -59,7 +59,7 @@ class SquareWaveVoltammetry {
     uint16_t    stepSize =        5;                // mV
     uint32_t    pulseAmplitude =  50;               // mV
     float       frequency =       2.0;              // Hz
-    float       maxCurrent =      1.0;              // mA
+    float       maxCurrent =      1000.0;           // uA
     float       equilTime =       5.0;              // s
     uint32_t    irComp =          50;               // ohm
     float       currentVoltage =  0.0;
