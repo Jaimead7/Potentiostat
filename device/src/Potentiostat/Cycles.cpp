@@ -260,11 +260,6 @@
         cmd = cmd.substring(STOP_CMD.length());
         result += "$OK->" + SWV_CMD + STOP_CMD + "\n";
       }
-      if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
-        cmd = cmd.substring(TASK_DELAY_CMD.length());
-        taskDelay = (uint16_t)parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
-      }
       if (cmd.substring(0, START_VOLTAGE_CMD.length()) == START_VOLTAGE_CMD) {
         cmd = cmd.substring(START_VOLTAGE_CMD.length());
         startVoltage = parseDecimal(cmd);

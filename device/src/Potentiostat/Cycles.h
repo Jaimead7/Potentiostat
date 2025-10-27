@@ -54,7 +54,6 @@ class SquareWaveVoltammetry {
     void        processCmd(String &cmd);
   private:
     bool        started =         false;
-    uint16_t    taskDelay =       50;               // ms
     float       startVoltage =    -0.2;             // V
     float       stopVoltage =     1.0;              // V
     uint16_t    stepSize =        5;                // mV
