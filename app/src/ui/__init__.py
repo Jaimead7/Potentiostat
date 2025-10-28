@@ -1,5 +1,6 @@
-from pyUtils import Styles, debugLog
+from pyUtils import Styles
+from utils import my_logger
 
 from .mainWindowUi import *
 
-debugLog('Module loaded: ui', Styles.GREEN)
+my_logger.debug('Module loaded: ui', Styles.GREEN)

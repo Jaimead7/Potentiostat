@@ -5,8 +5,9 @@ from functools import partial
 from typing import TYPE_CHECKING, Callable, ClassVar
 
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QComboBox, QSpinBox, QDoubleSpinBox
-from pyUtils import ConfigDict, ConfigFileManager, ProjectPathsDict, ppaths
+from PyQt5.QtWidgets import QComboBox, QDoubleSpinBox, QSpinBox
+from pyUtils import ConfigDict
+from utils import MY_CFG
 
 if TYPE_CHECKING:
     from ..windows import MainWindow
@@ -28,9 +29,8 @@ class CalculatorManager:
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'CalculatorManager')
 
     def __post_init__(self) -> None:
-        cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
-        self.cfg: ConfigDict = cfg.circuit
-        self.boards: ConfigDict = cfg.boards
+        self.cfg: ConfigDict = MY_CFG.circuit
+        self.boards: ConfigDict = MY_CFG.boards
         self._send: Callable = self.parent.sendCmd
 
     def init(self) -> None:

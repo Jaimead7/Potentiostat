@@ -145,7 +145,7 @@
         <translation>Voltamperometría cíclica</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1475"/>
+        <location filename="../ui/mainWindow.ui" line="1599"/>
         <source>Start voltage (V):</source>
         <translation>Voltaje de inicio (V):</translation>
     </message>
@@ -155,7 +155,7 @@
         <translation>Tasa de cambio (mV/s):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1482"/>
+        <location filename="../ui/mainWindow.ui" line="1430"/>
         <source>Stop voltage (V):</source>
         <translation>Voltaje de fin (V):</translation>
     </message>
@@ -170,57 +170,57 @@
         <translation>Voltaje de pico (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3518"/>
+        <location filename="../ui/mainWindow.ui" line="3466"/>
         <source>Tools</source>
         <translation>Herramientas</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3522"/>
+        <location filename="../ui/mainWindow.ui" line="3470"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3550"/>
+        <location filename="../ui/mainWindow.ui" line="3498"/>
         <source>toolBar</source>
         <translation>Barra de herramientas</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3592"/>
+        <location filename="../ui/mainWindow.ui" line="3540"/>
         <source>Update devices</source>
         <translation>Actualizar dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3611"/>
+        <location filename="../ui/mainWindow.ui" line="3559"/>
         <source>Connect device</source>
         <translation>Conectar dispositivo</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3620"/>
+        <location filename="../ui/mainWindow.ui" line="3568"/>
         <source>Español</source>
         <translation>Español</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3623"/>
+        <location filename="../ui/mainWindow.ui" line="3571"/>
         <source>Cambiar a Español</source>
         <translation>Cambiar a Español</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3632"/>
+        <location filename="../ui/mainWindow.ui" line="3580"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3635"/>
+        <location filename="../ui/mainWindow.ui" line="3583"/>
         <source>Change to English</source>
         <translation>Change to English</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3644"/>
+        <location filename="../ui/mainWindow.ui" line="3592"/>
         <source>Português</source>
         <translation>Português</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3647"/>
+        <location filename="../ui/mainWindow.ui" line="3595"/>
         <source>Mudar para português</source>
         <translation>Mudar para portiguês</translation>
     </message>
@@ -230,7 +230,7 @@
         <translation>Potenciostato</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3656"/>
+        <location filename="../ui/mainWindow.ui" line="3604"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
@@ -250,7 +250,7 @@
         <translation>Archivo a exportar</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3659"/>
+        <location filename="../ui/mainWindow.ui" line="3607"/>
         <source>Export data</source>
         <translation>Exportar datos</translation>
     </message>
@@ -260,12 +260,12 @@
         <translation>(*.csv);;(*.xlsx)</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3530"/>
+        <location filename="../ui/mainWindow.ui" line="3478"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3540"/>
+        <location filename="../ui/mainWindow.ui" line="3488"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
@@ -275,97 +275,97 @@
         <translation>Datos exportados</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2066"/>
+        <location filename="../ui/mainWindow.ui" line="2014"/>
         <source>Serial</source>
         <translation>Comunicación serie</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2142"/>
+        <location filename="../ui/mainWindow.ui" line="2090"/>
         <source>Circuit</source>
         <translation>Circuito</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2159"/>
+        <location filename="../ui/mainWindow.ui" line="2107"/>
         <source>Circuit params</source>
         <translation>Parámetros de circuito</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3278"/>
+        <location filename="../ui/mainWindow.ui" line="3226"/>
         <source>R2 (ohm):</source>
         <translation>R2 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3327"/>
+        <location filename="../ui/mainWindow.ui" line="3275"/>
         <source>R4 (ohm):</source>
         <translation>R4 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3441"/>
+        <location filename="../ui/mainWindow.ui" line="3389"/>
         <source>R6 (ohm):</source>
         <translation>R6 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2424"/>
+        <location filename="../ui/mainWindow.ui" line="2372"/>
         <source>OpAmp - (V):</source>
         <translation>OpAmp - (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2451"/>
+        <location filename="../ui/mainWindow.ui" line="2399"/>
         <source>R1 (ohm):</source>
         <translation>R1 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2458"/>
+        <location filename="../ui/mainWindow.ui" line="2406"/>
         <source>OpAmp HeadRoom (V):</source>
         <translation>OpAmp HeadRoom (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2465"/>
+        <location filename="../ui/mainWindow.ui" line="2413"/>
         <source>Vb2 (V):</source>
         <translation>Vb2 (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3291"/>
+        <location filename="../ui/mainWindow.ui" line="3239"/>
         <source>R3 (ohm):</source>
         <translation>R3 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3467"/>
+        <location filename="../ui/mainWindow.ui" line="3415"/>
         <source>R5 (ohm):</source>
         <translation>R5 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2726"/>
+        <location filename="../ui/mainWindow.ui" line="2674"/>
         <source>Vb1 (V):</source>
         <translation>Vb1 (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2733"/>
+        <location filename="../ui/mainWindow.ui" line="2681"/>
         <source>OpAmp + (V):</source>
         <translation>OpAmp + (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2740"/>
+        <location filename="../ui/mainWindow.ui" line="2688"/>
         <source>OpAmp BottomRoom (V):</source>
         <translation>OpAmp BottomRoom (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3155"/>
+        <location filename="../ui/mainWindow.ui" line="3103"/>
         <source>Board:</source>
         <translation>Placa:</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3186"/>
+        <location filename="../ui/mainWindow.ui" line="3134"/>
         <source>Voltage range (V):</source>
         <translation>Rango de voltaje (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3349"/>
+        <location filename="../ui/mainWindow.ui" line="3297"/>
         <source>Current range (uA):</source>
         <translation>Rango de corriente (uA):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3133"/>
+        <location filename="../ui/mainWindow.ui" line="3081"/>
         <source>Calculator</source>
         <translation>Calculadora</translation>
     </message>
@@ -375,32 +375,27 @@
         <translation>Voltamperometría de onda cuadrada</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1433"/>
+        <location filename="../ui/mainWindow.ui" line="1725"/>
         <source>Pulse amplitude (mV):</source>
         <translation>Amplitud de pulso( mV):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1499"/>
+        <location filename="../ui/mainWindow.ui" line="1479"/>
         <source>Max curent (uA):</source>
         <translation>Corriente máxima (uA):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1506"/>
+        <location filename="../ui/mainWindow.ui" line="1521"/>
         <source>Equil time (s):</source>
         <translation>Tiempo de estabilización (s):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1555"/>
+        <location filename="../ui/mainWindow.ui" line="1472"/>
         <source>Frequency (Hz):</source>
         <translation>Frequencia (Hz):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1627"/>
-        <source>PF Corr (ohm):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="1513"/>
+        <location filename="../ui/mainWindow.ui" line="1606"/>
         <source>Step size (mV):</source>
         <translation>Alto de escalón (mV):</translation>
     </message>

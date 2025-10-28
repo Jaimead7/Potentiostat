@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import partial
-from numbers import Number
 from pathlib import Path
 from pickle import dump, load
 from typing import TYPE_CHECKING, Callable, ClassVar, Optional
@@ -11,7 +10,8 @@ from PyQt5.QtCore import QCoreApplication, QTimer
 from PyQt5.QtWidgets import (QDoubleSpinBox, QFileDialog, QGridLayout,
                              QPushButton, QSpinBox)
 from pyqtgraph import LegendItem, PlotCurveItem, PlotWidget
-from pyUtils import ConfigDict, ConfigFileManager, ProjectPathsDict, ppaths
+from pyUtils import ConfigDict
+from utils import MY_APP, MY_CFG
 
 if TYPE_CHECKING:
     from ..windows import MainWindow
@@ -38,10 +38,9 @@ class PotentiometryManager:
     dataFileExtension: ClassVar[str] = '.pt'
 
     def __post_init__(self) -> None:
-        cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
-        self.cfg: ConfigDict = cfg.cycles.potentiometry
-        self.cmds: ConfigDict = cfg.serial.commands
-        self.pltCfg: ConfigDict = cfg.plot
+        self.cfg: ConfigDict = MY_CFG.cycles.potentiometry
+        self.cmds: ConfigDict = MY_CFG.serial.commands
+        self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
         self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False)
         self.getVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False)
@@ -147,7 +146,7 @@ class PotentiometryManager:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
-        self.loadButton.setEnabled(True) #FIXME: This never happends
+        self.loadButton.setEnabled(True)
         self.closeButton.setEnabled(True)
         return rcvStr
 
@@ -166,7 +165,7 @@ class PotentiometryManager:
         current: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(current):]
         if len(self.measures['timestamp']) == 0:
-            self.startTimestamp = int(ts)            
+            self.startTimestamp = int(ts)
         self.measures['timestamp'].append((int(ts) - self.startTimestamp) / 1000.0)
         self.measures['voltage'].append(float(voltage))
         self.measures['current'].append(float(current))
@@ -205,13 +204,13 @@ class PotentiometryManager:
         return rcvStr
 
     def resetPlot(self) -> None:
-        self.measures: dict[list[Optional[Number]]] = {
+        self.measures: dict[str, list[Optional[int | float | complex]]] = {
             'timestamp': [],
             'voltage': [],
             'current': []
         }
         self.plot.clear()
-        self.lines: list[PlotCurveItem] = {
+        self.lines: dict[str, PlotCurveItem] = {
             'voltage' : self.plot.plot(
                 self.measures['timestamp'],
                 self.measures['voltage'],
@@ -244,7 +243,7 @@ class PotentiometryManager:
         fileName = Path(
             QFileDialog.getSaveFileName(
                 caption = self.tr('Save test data'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr('Data (*.pt)')
             )[0]
         )
@@ -255,7 +254,7 @@ class PotentiometryManager:
         fileName = Path(
             QFileDialog.getOpenFileName(
                 caption = self.tr('Load test data'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr('Data (*.pt)')
             )[0]
         )
@@ -295,10 +294,9 @@ class CyclicVoltammetryManager:
     dataFileExtension: ClassVar[str] = '.cv'
 
     def __post_init__(self) -> None:
-        cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
-        self.cfg: ConfigDict = cfg.cycles.cyclicVoltammetry
-        self.cmds: ConfigDict = cfg.serial.commands
-        self.pltCfg: ConfigDict = cfg.plot
+        self.cfg: ConfigDict = MY_CFG.cycles.cyclicVoltammetry
+        self.cmds: ConfigDict = MY_CFG.serial.commands
+        self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
         self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False)
         self.getTCCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False)
@@ -493,7 +491,7 @@ class CyclicVoltammetryManager:
         return rcvStr
 
     def resetPlot(self) -> None:
-        self.measures: dict[list[Optional[Number]]] = {
+        self.measures: dict[str, list[Optional[int | float | complex]]] = {
             'cycle': [],
             'timestamp': [],
             'voltage': [],
@@ -519,7 +517,7 @@ class CyclicVoltammetryManager:
         fileName = Path(
             QFileDialog.getSaveFileName(
                 caption = self.tr('Save test data'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr('Data (*.cv)')
             )[0]
         )
@@ -530,7 +528,7 @@ class CyclicVoltammetryManager:
         fileName = Path(
             QFileDialog.getOpenFileName(
                 caption = self.tr('Load test data'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr('Data (*.cv)')
             )[0]
         )
@@ -540,3 +538,30 @@ class CyclicVoltammetryManager:
 
     def closeButtonClicked(self) -> None:
         self.resetPlot()
+
+
+@dataclass
+class SquareWaveVoltammetryManager:
+    parent: MainWindow
+    sendButton: QPushButton
+    startVoltageValue: QDoubleSpinBox
+    startVoltageButton: QPushButton
+    stopVoltageValue: QDoubleSpinBox
+    stopVoltageButton: QPushButton
+    stepSizeValue: QSpinBox
+    stepSizeButton: QPushButton
+    pulseAmplitudeValue: QSpinBox
+    pulseAmplitudeButton: QPushButton
+    frequencyValue: QSpinBox
+    frequencyButton: QPushButton
+    maxCurrentValue: QSpinBox
+    maxCurrentButton: QPushButton
+    equilTimeValue: QSpinBox
+    equilTimeButton: QPushButton
+    playButton: QPushButton
+    saveButton: QPushButton
+    loadButton: QPushButton
+    closeButton: QPushButton
+    plotView: QGridLayout
+    tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'SquareWaveVoltammetryManager')
+    dataFileExtension: ClassVar[str] = '.swv'

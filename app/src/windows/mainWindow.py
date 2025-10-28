@@ -8,34 +8,33 @@ from managers import (CalculatorManager, CircuitManager,
                       SerialManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
-from pyUtils import (ConfigDict, ConfigFileManager, ProjectPathsDict, debugLog,
-                     infoLog, ppaths)
+from pyUtils import ConfigDict
 from ui import Ui_MainWindow
+from utils import MY_APP, MY_CFG, my_logger
 from xlsxwriter import Workbook
 from xlsxwriter.worksheet import Worksheet
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
-    strReceived = pyqtSignal(str, name= 'strReceived', arguments= ['string'])
+    strReceived = pyqtSignal(str, name= 'strReceived')
     
     def __init__(self, *args, **kwargs) -> None:
         QMainWindow.__init__(self, *args, **kwargs)
         self.app: QCoreApplication = QApplication.instance()
         self.translator = QTranslator(self.app)
-        debugLog('Creating main window')
-        self.cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
+        my_logger.debug('Creating main window')
         self.setupUi(self)
         self.initWidgets()
         self.setCallbacks()
-        self.debug(f'{self.cfg.app.name}-V{self.cfg.app.version}', infoLog)
+        self.debug(f'{MY_CFG.app.name}-V{MY_CFG.app.version}', my_logger.info)
 
     def _exit(self) -> NoReturn:
-        self.debug(self.tr('Exit program...'), infoLog)
+        self.debug(self.tr('Exit program...'), my_logger.info)
         exit(0)
 
-    def debug(self, msg: Any, lvl: Callable = debugLog) -> None:
+    def debug(self, msg: Any, lvl: Callable = my_logger.debug) -> None:
         lvl(msg)
-        if lvl == infoLog:
+        if lvl == my_logger.info:
             self.statusbar.showMessage(str(msg))
 
     def initWidgets(self) -> None:
@@ -165,7 +164,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ...
 
     def parseCmd(self, rcvStr: str) -> None:
-        cmds: ConfigDict = self.cfg.serial.commands
+        cmds: ConfigDict = MY_CFG.serial.commands
         while rcvStr.startswith(cmds.ok):
             rcvStr = rcvStr[len(cmds.ok):]
         while rcvStr.startswith(cmds.potentiometry):
@@ -192,14 +191,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dataFile = Path(
             QFileDialog.getOpenFileName(
                 caption = self.tr('Select test to export'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr(f'Data (*.pt; *.cv)')
             )[0]
         )
         exportFile = Path(
             QFileDialog.getSaveFileName(
                 caption = self.tr('Export file'),
-                directory = str(ppaths[ProjectPathsDict.DIST_PATH] / 'data'),
+                directory = str(MY_APP['DATA']),
                 filter = self.tr(f'(*.csv);;(*.xlsx)')
             )[0]
         )
@@ -213,14 +212,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.exportCSV(data, exportFile)
             case '.xlsx':
                 self.exportXLSX(data, exportFile)
-        self.debug(self.tr('Data exported'), infoLog)
+        self.debug(self.tr('Data exported'), my_logger.info)
 
     def exportCSV(self, data: dict, exportFile: Path) -> None:
         with open(exportFile,
                   mode= 'w',
                   newline= '',
                   encoding= 'utf-8') as file:
-            writer: csv.Writer = csv.writer(file)
+            writer = csv.writer(file)
             writer.writerow(data.keys())
             writer.writerows(zip(*data.values()))
 

@@ -1388,19 +1388,13 @@
               <property name="verticalSpacing">
                <number>0</number>
               </property>
-              <item row="0" column="2">
-               <widget class="QDoubleSpinBox" name="swvStartVValue">
+              <item row="3" column="2">
+               <widget class="QSpinBox" name="swvPAValue">
                 <property name="buttonSymbols">
                  <enum>QAbstractSpinBox::NoButtons</enum>
                 </property>
-                <property name="minimum">
-                 <double>-9.000000000000000</double>
-                </property>
                 <property name="maximum">
-                 <double>9.000000000000000</double>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
+                 <number>1000</number>
                 </property>
                </widget>
               </item>
@@ -1420,59 +1414,13 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="2">
-               <widget class="QDoubleSpinBox" name="swvETValue">
+              <item row="2" column="2">
+               <widget class="QSpinBox" name="swvSSValue">
                 <property name="buttonSymbols">
                  <enum>QAbstractSpinBox::NoButtons</enum>
                 </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_21">
-                <property name="text">
-                 <string>Pulse amplitude (mV):</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="3">
-               <widget class="QPushButton" name="swvSSButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="focusPolicy">
-                 <enum>Qt::ClickFocus</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../qrc/uiResources.qrc">
-                  <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_37">
-                <property name="text">
-                 <string>Start voltage (V):</string>
+                <property name="maximum">
+                 <number>1000</number>
                 </property>
                </widget>
               </item>
@@ -1483,39 +1431,8 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="2">
-               <widget class="QDoubleSpinBox" name="swvFQValue">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="singleStep">
-                 <double>0.010000000000000</double>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_38">
-                <property name="text">
-                 <string>Max curent (uA):</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_76">
-                <property name="text">
-                 <string>Equil time (s):</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_31">
-                <property name="text">
-                 <string>Step size (mV):</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="3">
-               <widget class="QPushButton" name="swvETButton">
+              <item row="4" column="3">
+               <widget class="QPushButton" name="swvFQButton">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1556,18 +1473,15 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
-               <widget class="QSpinBox" name="swvSSValue">
-                <property name="buttonSymbols">
-                 <enum>QAbstractSpinBox::NoButtons</enum>
-                </property>
-                <property name="maximum">
-                 <number>1000</number>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_38">
+                <property name="text">
+                 <string>Max curent (uA):</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="3">
-               <widget class="QPushButton" name="swvFQButton">
+              <item row="1" column="3">
+               <widget class="QPushButton" name="swvStopVButton">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1601,6 +1515,13 @@
                 </property>
                </widget>
               </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_76">
+                <property name="text">
+                 <string>Equil time (s):</string>
+                </property>
+               </widget>
+              </item>
               <item row="5" column="2">
                <widget class="QDoubleSpinBox" name="swvMCValue">
                 <property name="buttonSymbols">
@@ -1611,35 +1532,83 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="2">
-               <widget class="QSpinBox" name="swvPAValue">
+              <item row="0" column="2">
+               <widget class="QDoubleSpinBox" name="swvStartVValue">
                 <property name="buttonSymbols">
                  <enum>QAbstractSpinBox::NoButtons</enum>
                 </property>
+                <property name="minimum">
+                 <double>-9.000000000000000</double>
+                </property>
                 <property name="maximum">
-                 <number>1000</number>
+                 <double>9.000000000000000</double>
+                </property>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_77">
+              <item row="5" column="3">
+               <widget class="QPushButton" name="swvMCButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="focusPolicy">
+                 <enum>Qt::ClickFocus</enum>
+                </property>
                 <property name="text">
-                 <string>PF Corr (ohm):</string>
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset resource="../qrc/uiResources.qrc">
+                  <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
                 </property>
                </widget>
               </item>
-              <item row="7" column="2">
-               <widget class="QSpinBox" name="swvRCValue">
+              <item row="4" column="2">
+               <widget class="QDoubleSpinBox" name="swvFQValue">
                 <property name="buttonSymbols">
                  <enum>QAbstractSpinBox::NoButtons</enum>
                 </property>
-                <property name="maximum">
-                 <number>100000</number>
+                <property name="singleStep">
+                 <double>0.010000000000000</double>
                 </property>
                </widget>
               </item>
-              <item row="7" column="3">
-               <widget class="QPushButton" name="swvRCButton">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_37">
+                <property name="text">
+                 <string>Start voltage (V):</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_31">
+                <property name="text">
+                 <string>Step size (mV):</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QPushButton" name="swvPAButton">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1708,8 +1677,8 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="3">
-               <widget class="QPushButton" name="swvStopVButton">
+              <item row="6" column="3">
+               <widget class="QPushButton" name="swvETButton">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>
@@ -1743,43 +1712,22 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="3">
-               <widget class="QPushButton" name="swvPAButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="focusPolicy">
-                 <enum>Qt::ClickFocus</enum>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../qrc/uiResources.qrc">
-                  <normaloff>:/icons/sendIcon</normaloff>:/icons/sendIcon</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
+              <item row="6" column="2">
+               <widget class="QDoubleSpinBox" name="swvETValue">
+                <property name="buttonSymbols">
+                 <enum>QAbstractSpinBox::NoButtons</enum>
                 </property>
                </widget>
               </item>
-              <item row="5" column="3">
-               <widget class="QPushButton" name="swvMCButton">
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>Pulse amplitude (mV):</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QPushButton" name="swvSSButton">
                 <property name="minimumSize">
                  <size>
                   <width>30</width>

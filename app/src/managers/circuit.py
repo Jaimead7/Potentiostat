@@ -5,9 +5,9 @@ from functools import partial
 from typing import TYPE_CHECKING, Callable, ClassVar
 
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import (QComboBox,
-                             QPushButton, QSpinBox, QDoubleSpinBox)
-from pyUtils import ConfigDict, ConfigFileManager, ProjectPathsDict, ppaths
+from PyQt5.QtWidgets import QComboBox, QDoubleSpinBox, QPushButton, QSpinBox
+from pyUtils import ConfigDict
+from utils import MY_CFG
 
 if TYPE_CHECKING:
     from ..windows import MainWindow
@@ -49,10 +49,9 @@ class CircuitManager:
     tr: ClassVar[Callable] = partial(QCoreApplication.translate, 'CircuitManager')
 
     def __post_init__(self) -> None:
-        cfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
-        self.cfg: ConfigDict = cfg.circuit
-        self.cmds: ConfigDict = cfg.serial.commands
-        self.boards: ConfigDict = cfg.boards
+        self.cfg: ConfigDict = MY_CFG.circuit
+        self.cmds: ConfigDict = MY_CFG.serial.commands
+        self.boards: ConfigDict = MY_CFG.boards
         self.getR1Cmd: Callable = partial(self.getConfigCmd, True, False, False, False, False, False, False, False, False, False, False, False)
         self.getR2Cmd: Callable = partial(self.getConfigCmd, True, True, False, False, False, False, False, False, False, False, False, False)
         self.getR3Cmd: Callable = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False, False, False, False)
@@ -162,7 +161,7 @@ class CircuitManager:
         opampBR: str = f'{self.cmds.opampBR}{self.opampBRValue.value()}' * opampBRFlag
         return f'{header}{r1}{r2}{r3}{r4}{r5}{r6}{vb1}{vb2}{opampVccP}{opampVccN}{opampHR}{opampBR}'
 
-    def saveR1(self, rcvStr: str) -> None:
+    def saveR1(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r1):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -171,7 +170,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R1 set to {self.cfg.r1} ohm"))
         return rcvStr
         
-    def saveR2(self) -> None:
+    def saveR2(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r2):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -180,7 +179,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R2 set to {self.cfg.r2} ohm"))
         return rcvStr
 
-    def saveR3(self) -> None:
+    def saveR3(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r3):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -189,7 +188,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R3 set to {self.cfg.r3} ohm"))
         return rcvStr
 
-    def saveR4(self) -> None:
+    def saveR4(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r4):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -198,7 +197,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R4 set to {self.cfg.r4} ohm"))
         return rcvStr
 
-    def saveR5(self) -> None:
+    def saveR5(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r5):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -207,7 +206,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R5 set to {self.cfg.r5} ohm"))
         return rcvStr
 
-    def saveR6(self) -> None:
+    def saveR6(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r6):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -216,7 +215,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"R6 set to {self.cfg.r6} ohm"))
         return rcvStr
 
-    def saveVB1(self) -> None:
+    def saveVB1(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.vb1):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -225,7 +224,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"Vb1 set to {self.cfg.vb1} V"))
         return rcvStr
 
-    def saveVB2(self) -> None:
+    def saveVB2(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.vb2):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -234,7 +233,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"Vb2 set to {self.cfg.vb2} V"))
         return rcvStr
 
-    def saveOpampVccP(self) -> None:
+    def saveOpampVccP(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.opampVccP):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -243,7 +242,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"OpampVcc+ set to {self.cfg.opampVccP} V"))
         return rcvStr
 
-    def saveOpampVccN(self) -> None:
+    def saveOpampVccN(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.opampVccN):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -252,7 +251,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"OpampVcc- set to {self.cfg.opampVccN} V"))
         return rcvStr
 
-    def saveOpampHR(self) -> None:
+    def saveOpampHR(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.opampHR):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -261,7 +260,7 @@ class CircuitManager:
         self.parent.debug(self.tr(f"OpampHeadRoom set to {self.cfg.opampHR} V"))
         return rcvStr
 
-    def saveOpampBR(self) -> None:
+    def saveOpampBR(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.opampBR):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
@@ -271,38 +270,38 @@ class CircuitManager:
         return rcvStr
         
     def opampLimits(self, voltage: float) -> float:
-        opampVccP = self.opampVccPValue.value()
-        opampVccN = self.opampVccNValue.value()
-        opampHR = self.opampHRValue.value()
-        opampBR = self.opampBRValue.value()
-        return min(max(voltage, opampVccN + opampBR), opampVccP - opampHR)
+        opampVccP: int | float = self.opampVccPValue.value()
+        opampVccN: int | float = self.opampVccNValue.value()
+        opampHR: int | float = self.opampHRValue.value()
+        opampBR: int | float = self.opampBRValue.value()
+        return float(min(max(voltage, opampVccN + opampBR), opampVccP - opampHR))
 
     def boardVToCEV(self, voltage: float) -> float:
-        vi = self.opampLimits(voltage)
-        r2 = self.r2Value.value()
-        r3 = self.r3Value.value()
-        r4 = self.r4Value.value()
-        vb1 = self.vb1Value.value()
-        vo: float = - r4 * ((vi / r2 ) + (vb1 / r3))
+        vi: float = self.opampLimits(voltage)
+        r2: int | float = self.r2Value.value()
+        r3: int | float = self.r3Value.value()
+        r4: int | float = self.r4Value.value()
+        vb1: int | float = self.vb1Value.value()
+        vo: float = float(- r4 * ((vi / r2 ) + (vb1 / r3)))
         return self.opampLimits(vo)
 
     def boardVToWECurrent(self, voltage: float) -> float:
-        r5 = self.r5Value.value()
-        r6 = self.r6Value.value()
-        vb2 = self.vb2Value.value()
-        v = self.opampLimits(voltage)
-        return - ((vb2 / r5) + (v / r6)) * 1000000
+        r5: int | float = self.r5Value.value()
+        r6: int | float = self.r6Value.value()
+        vb2: int | float = self.vb2Value.value()
+        v: float = self.opampLimits(voltage)
+        return float(- ((vb2 / r5) + (v / r6)) * 1000000)
 
     def updateRanges(self) -> None:
         self.updateVoltageRange()
         self.updateCurrentRange()
 
     def updateVoltageRange(self) -> None:
-        board = self.boards[self.boardSelector.currentText()]
+        board: dict = self.boards[self.boardSelector.currentText()]
         self.vRangeMinValue.setValue(self.boardVToCEV(board['vcc']))
         self.vRangeMaxValue.setValue(self.boardVToCEV(0))
 
     def updateCurrentRange(self) -> None:
-        board = self.boards[self.boardSelector.currentText()]
+        board: dict = self.boards[self.boardSelector.currentText()]
         self.cRangeMinValue.setValue(self.boardVToWECurrent(board['vcc']))
         self.cRangeMaxValue.setValue(self.boardVToWECurrent(0))

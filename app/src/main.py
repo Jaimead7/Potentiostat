@@ -1,14 +1,13 @@
 from sys import argv
 
 from PyQt5.QtWidgets import QApplication
-from pyUtils import ConfigFileManager, ProjectPathsDict, ppaths
-from windows import *
+from utils import MY_APP, MY_CFG
+from windows import MainWindow
 
 
 def main() -> None:
     app = QApplication(argv)
-    myCfg = ConfigFileManager(ppaths[ProjectPathsDict.CONFIG_FILE_PATH])
-    styleSheetFile: str = ppaths[ProjectPathsDict.DIST_PATH] / 'themes' / f'{myCfg.app.theme}.qss'
+    styleSheetFile: str = MY_APP['THEMES'] / f'{MY_CFG.app.theme}.qss'
     with open(styleSheetFile, 'r') as f:
         _style: str = f.read()
         app.setStyleSheet(_style)
