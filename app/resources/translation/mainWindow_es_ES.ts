@@ -4,62 +4,62 @@
 <context>
     <name>CircuitManager</name>
     <message>
-        <location filename="../../src/managers/circuit.py" line="171"/>
+        <location filename="../../src/managers/circuit.py" line="170"/>
         <source>R1 set to {self.cfg.r1} ohm</source>
         <translation>R1 establecido en {self.cfg.r1} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="180"/>
+        <location filename="../../src/managers/circuit.py" line="179"/>
         <source>R2 set to {self.cfg.r2} ohm</source>
         <translation>R2 establecido en {self.cfg.r2} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="189"/>
+        <location filename="../../src/managers/circuit.py" line="188"/>
         <source>R3 set to {self.cfg.r3} ohm</source>
         <translation>R3 establecido en {self.cfg.r3} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="198"/>
+        <location filename="../../src/managers/circuit.py" line="197"/>
         <source>R4 set to {self.cfg.r4} ohm</source>
         <translation>R4 establecido en {self.cfg.r4} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="207"/>
+        <location filename="../../src/managers/circuit.py" line="206"/>
         <source>R5 set to {self.cfg.r5} ohm</source>
         <translation>R5 establecido en {self.cfg.r5} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="216"/>
+        <location filename="../../src/managers/circuit.py" line="215"/>
         <source>R6 set to {self.cfg.r6} ohm</source>
         <translation>R6 establecido en {self.cfg.r6} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="225"/>
+        <location filename="../../src/managers/circuit.py" line="224"/>
         <source>Vb1 set to {self.cfg.vb1} V</source>
         <translation>Vb1 establecido en {self.cfg.vb1} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="234"/>
+        <location filename="../../src/managers/circuit.py" line="233"/>
         <source>Vb2 set to {self.cfg.vb2} V</source>
         <translation>Vb2 establecido en {self.cfg.vb2} ohm</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="243"/>
+        <location filename="../../src/managers/circuit.py" line="242"/>
         <source>OpampVcc+ set to {self.cfg.opampVccP} V</source>
         <translation>OpampVcc+ establecido en {self.cfg.opampVccP} V</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="252"/>
+        <location filename="../../src/managers/circuit.py" line="251"/>
         <source>OpampVcc- set to {self.cfg.opampVccN} V</source>
         <translation>OpampVcc- establecido en {self.cfg.opampVccN} V</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="261"/>
+        <location filename="../../src/managers/circuit.py" line="260"/>
         <source>OpampHeadRoom set to {self.cfg.opampHR} V</source>
         <translation>OpampHeadRoom establecido en {self.cfg.opampHR} V</translation>
     </message>
     <message>
-        <location filename="../../src/managers/circuit.py" line="270"/>
+        <location filename="../../src/managers/circuit.py" line="269"/>
         <source>OpampBottomRoom set to {self.cfg.opampBR} V</source>
         <translation>OpampBottomRoom establecido en {self.cfg.opampBR} V</translation>
     </message>
@@ -67,32 +67,32 @@
 <context>
     <name>CyclicVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="330"/>
+        <location filename="../../src/managers/cycles.py" line="328"/>
         <source>Current (uA)</source>
         <translation>Corriente (uA)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="330"/>
+        <location filename="../../src/managers/cycles.py" line="328"/>
         <source>Voltage (V)</source>
         <translation>Voltaje (V)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="503"/>
+        <location filename="../../src/managers/cycles.py" line="501"/>
         <source>Voltage/Current</source>
         <translation>Voltaje/Corriente</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="519"/>
+        <location filename="../../src/managers/cycles.py" line="517"/>
         <source>Save test data</source>
         <translation>Guardar datos de test</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="530"/>
+        <location filename="../../src/managers/cycles.py" line="528"/>
         <source>Data (*.cv)</source>
         <translation>Datos (*.cv)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="530"/>
+        <location filename="../../src/managers/cycles.py" line="528"/>
         <source>Load test data</source>
         <translation>Cargar datos de test</translation>
     </message>
@@ -100,7 +100,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="33"/>
+        <location filename="../../src/windows/mainWindow.py" line="32"/>
         <source>Exit program...</source>
         <translation>Cerrando programa...</translation>
     </message>
@@ -145,7 +145,7 @@
         <translation>Voltamperometría cíclica</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1599"/>
+        <location filename="../ui/mainWindow.ui" line="1589"/>
         <source>Start voltage (V):</source>
         <translation>Voltaje de inicio (V):</translation>
     </message>
@@ -235,17 +235,17 @@
         <translation>Exportar</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="192"/>
+        <location filename="../../src/windows/mainWindow.py" line="191"/>
         <source>Data (*.pt; *.cv)</source>
         <translation>Datos (*.pt; *.cv)</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="192"/>
+        <location filename="../../src/windows/mainWindow.py" line="191"/>
         <source>Select test to export</source>
         <translation>Seleccionar test a exportar</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="199"/>
+        <location filename="../../src/windows/mainWindow.py" line="198"/>
         <source>Export file</source>
         <translation>Archivo a exportar</translation>
     </message>
@@ -255,7 +255,7 @@
         <translation>Exportar datos</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="199"/>
+        <location filename="../../src/windows/mainWindow.py" line="198"/>
         <source>(*.csv);;(*.xlsx)</source>
         <translation>(*.csv);;(*.xlsx)</translation>
     </message>
@@ -270,7 +270,7 @@
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="216"/>
+        <location filename="../../src/windows/mainWindow.py" line="215"/>
         <source>Data exported</source>
         <translation>Datos exportados</translation>
     </message>
@@ -375,7 +375,7 @@
         <translation>Voltamperometría de onda cuadrada</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1725"/>
+        <location filename="../ui/mainWindow.ui" line="1715"/>
         <source>Pulse amplitude (mV):</source>
         <translation>Amplitud de pulso( mV):</translation>
     </message>
@@ -395,7 +395,7 @@
         <translation>Frequencia (Hz):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1606"/>
+        <location filename="../ui/mainWindow.ui" line="1596"/>
         <source>Step size (mV):</source>
         <translation>Alto de escalón (mV):</translation>
     </message>
@@ -403,42 +403,42 @@
 <context>
     <name>PotentiometryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="69"/>
+        <location filename="../../src/managers/cycles.py" line="68"/>
         <source>Time (s)</source>
         <translation>Tiempo (s)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="69"/>
+        <location filename="../../src/managers/cycles.py" line="68"/>
         <source>Voltage (V)</source>
         <translation>Voltaje (V)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="69"/>
+        <location filename="../../src/managers/cycles.py" line="68"/>
         <source>Current (uA)</source>
         <translation>Corriente (uA)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="215"/>
+        <location filename="../../src/managers/cycles.py" line="214"/>
         <source>Voltage</source>
         <translation>Voltaje</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="223"/>
+        <location filename="../../src/managers/cycles.py" line="222"/>
         <source>Current</source>
         <translation>Corriente</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="244"/>
+        <location filename="../../src/managers/cycles.py" line="243"/>
         <source>Save test data</source>
         <translation>Guardar datos de test</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="255"/>
+        <location filename="../../src/managers/cycles.py" line="254"/>
         <source>Data (*.pt)</source>
         <translation>Datos (*.pt)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="255"/>
+        <location filename="../../src/managers/cycles.py" line="254"/>
         <source>Load test data</source>
         <translation>Cargar datos de test</translation>
     </message>
@@ -446,57 +446,57 @@
 <context>
     <name>SerialManager</name>
     <message>
-        <location filename="../../src/managers/serial.py" line="88"/>
+        <location filename="../../src/managers/serial.py" line="110"/>
         <source>Disconnected</source>
         <translation>Desconectado</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="61"/>
+        <location filename="../../src/managers/serial.py" line="72"/>
         <source>Updating serial devices...</source>
         <translation>Actualizando dispositivos serie...</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="66"/>
+        <location filename="../../src/managers/serial.py" line="77"/>
         <source>Serial devices updated</source>
         <translation>Dispositivos serie actualizados</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="70"/>
+        <location filename="../../src/managers/serial.py" line="81"/>
         <source>Connecting to {self.serialPort.portName()}...</source>
         <translation>Conectando a {self.serialPort.portName()}...</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="73"/>
+        <location filename="../../src/managers/serial.py" line="86"/>
         <source>Connected</source>
         <translation>Conectado</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="74"/>
+        <location filename="../../src/managers/serial.py" line="87"/>
         <source>Configuring {self.serialPort.portName()}...</source>
         <translation>Configurando {self.serialPort.portName()}...</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="76"/>
+        <location filename="../../src/managers/serial.py" line="92"/>
         <source>{self.serialPort.portName()} initialized</source>
         <translation>{self.serialPort.portname()} inicializado</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="81"/>
+        <location filename="../../src/managers/serial.py" line="100"/>
         <source>{self.serialPort.portName()} disconnected</source>
         <translation>{self.serialPort.portname()} desconectado</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="96"/>
+        <location filename="../../src/managers/serial.py" line="121"/>
         <source>Received from {self.serialPort.portName()}: {rcvStr}</source>
         <translation>Recivido desde {self.serialPort.portname()}: {rcvStr}</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="102"/>
+        <location filename="../../src/managers/serial.py" line="129"/>
         <source>Error on serial port: {error}-&gt;{self.serialPort.errorString()}</source>
         <translation>Error en el puerto serie: {error}-&gt;{self.serialPort.errorString()}</translation>
     </message>
     <message>
-        <location filename="../../src/managers/serial.py" line="109"/>
+        <location filename="../../src/managers/serial.py" line="141"/>
         <source>Sended: {cmd}</source>
         <translation>Enviado: {cmd}</translation>
     </message>

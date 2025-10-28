@@ -295,14 +295,9 @@
         equilTime = parseDecimal(cmd);
         result += "$OK->" + SWV_CMD + EQUIL_TIME_CMD + String(equilTime) + "\n";
       }
-      if (cmd.substring(0, COMP_RESISTOR_CMD.length()) == COMP_RESISTOR_CMD) {
-        cmd = cmd.substring(COMP_RESISTOR_CMD.length());
-        irComp = (uint32_t)parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + COMP_RESISTOR_CMD + String(irComp) + "\n";
-      }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + COMP_RESISTOR_CMD + String(irComp) + "\n";
+        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + "\n";
       }
       Serial.print(result);
     }

@@ -61,7 +61,6 @@ class SquareWaveVoltammetry {
     float       frequency =       2.0;              // Hz
     float       maxCurrent =      1000.0;           // uA
     float       equilTime =       5.0;              // s
-    uint32_t    irComp =          50;               // ohm
     float       currentVoltage =  0.0;
     float       vFordward =       0.0;              // V
     float       iFordward =       0.0;              // uA
