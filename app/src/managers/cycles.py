@@ -630,6 +630,7 @@ class SquareWaveVoltammetryManager:
         self.pulseAmplitudeButton.setEnabled(flag)
         self.frequencyButton.setEnabled(flag)
         self.maxCurrentButton.setEnabled(flag)
+        self.equilTimeButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
         self.saveButton.setEnabled(flag)
 

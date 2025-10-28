@@ -5,7 +5,7 @@ from typing import Any, Callable, NoReturn
 
 from managers import (CalculatorManager, CircuitManager,
                       CyclicVoltammetryManager, PotentiometryManager,
-                      SerialManager)
+                      SerialManager, SquareWaveVoltammetryManager)
 from PyQt5.QtCore import QCoreApplication, QTranslator, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow
 from pyUtils import ConfigDict
@@ -96,6 +96,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cvLoadButton,
                 self.cvCloseButton,
                 self.cvPlotView
+            ),
+            'squareWaveVoltammetry': SquareWaveVoltammetryManager(
+                self,
+                self.swvButton,
+                self.swvStartVValue,
+                self.swvStartVButton,
+                self.swvStopVValue,
+                self.swvStopVButton,
+                self.swvSSValue,
+                self.swvSSButton,
+                self.swvPAValue,
+                self.swvPAButton,
+                self.swvFQValue,
+                self.swvFQButton,
+                self.swvMCValue,
+                self.swvMCButton,
+                self.swvETValue,
+                self.swvETButton,
+                self.swvPlayButton,
+                self.swvSaveButton,
+                self.swvLoadButton,
+                self.swvCloseButton,
+                self.swvPlotView
             )
         }
         for cycle in self.cycles.values():
