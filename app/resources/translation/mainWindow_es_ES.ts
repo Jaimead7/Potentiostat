@@ -501,4 +501,37 @@
         <translation>Enviado: {cmd}</translation>
     </message>
 </context>
+<context>
+    <name>SquareWaveVoltammetryManager</name>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="603"/>
+        <source>Current (uA)</source>
+        <translation>Corriente (uA)</translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="603"/>
+        <source>Voltage (V)</source>
+        <translation>Voltaje (V)</translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="797"/>
+        <source>Voltage/Current</source>
+        <translation>Voltaje/Corriente</translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="813"/>
+        <source>Save test data</source>
+        <translation>Guardar datos de test</translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="824"/>
+        <source>Data (*.swv)</source>
+        <translation>Datos (*.swv)</translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="824"/>
+        <source>Load test data</source>
+        <translation>Cargar datos de test</translation>
+    </message>
+</context>
 </TS>
