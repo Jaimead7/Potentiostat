@@ -1,10 +1,6 @@
 // Libraries
 #include  "Cycles.h"
-
-#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
-  #define   PWM_PIN           10
-  #define   ADC_PIN           A0
-#endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+#include  "Board.h"
 
 
 Circuit                 myCircuit = Circuit();
@@ -40,6 +36,8 @@ void readSerial() {
 void setup() {
   Serial.begin(115200);
   myCircuit.begin(PWM_PIN, ADC_PIN);
+  pinMode(13, OUTPUT);
+  pinMode(11, OUTPUT);
   Serial.println("Setup completed.");
   delay(1000);
 }

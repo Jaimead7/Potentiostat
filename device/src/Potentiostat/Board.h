@@ -16,6 +16,11 @@
     #define   ADC_RES           10
     #define   ADC_MAX_VALUE     (pow(2, ADC_RES) - 1)
 
+    #define   PWM_PIN           10
+    #define   ADC_PIN           A0
+    #define   RED_LED_PIN       13
+    #define   GREEN_LED_PIN     11
+
   #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
 
   static inline  __attribute__((always_inline))

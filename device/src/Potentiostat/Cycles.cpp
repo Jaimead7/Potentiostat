@@ -25,6 +25,13 @@
             lastRead = now;
           }
         } else {
+          if (pCircuit->readWECurrent() > 10) {
+            digitalWrite(RED_LED_PIN, HIGH);
+            digitalWrite(GREEN_LED_PIN, LOW);
+          } else {
+            digitalWrite(RED_LED_PIN, LOW);
+            digitalWrite(GREEN_LED_PIN, HIGH);
+          }
           pCircuit->setWEVoltage(0.0);
           run = false;
           Serial.println(PT_CMD + END_CMD);
@@ -192,6 +199,13 @@
     Check the conditions os the end of the cyclic voltammetry.
     */
     if (currentCycle >= totalCycles) {
+      if (pCircuit->readWECurrent() > 10) {
+        digitalWrite(RED_LED_PIN, HIGH);
+        digitalWrite(GREEN_LED_PIN, LOW);
+      } else {
+        digitalWrite(RED_LED_PIN, LOW);
+        digitalWrite(GREEN_LED_PIN, HIGH);
+      }
       pCircuit->setWEVoltage(0.0);
       run = false;
       started = false;
@@ -319,6 +333,13 @@
     Check the conditions os the end of the square wave voltammetry.
     */
     if (currentVoltage >= stopVoltage || iFordward >= maxCurrent || iReverse >= maxCurrent) {
+      if (pCircuit->readWECurrent() > 10) {
+        digitalWrite(RED_LED_PIN, HIGH);
+        digitalWrite(GREEN_LED_PIN, LOW);
+      } else {
+        digitalWrite(RED_LED_PIN, LOW);
+        digitalWrite(GREEN_LED_PIN, HIGH);
+      }
       pCircuit->setWEVoltage(0.0);
       run = false;
       started = false;
