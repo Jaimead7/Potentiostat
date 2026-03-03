@@ -1,57 +1,55 @@
 #include  "Cycles.h"
 
-#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+#if defined(ARDUINO_ESP32_DEV)
 
   /**************** POTENTIOMETRY ****************/
+
+  void ptCycleWrapper(void * arg) {
+    /*
+    Wrapper for the cycle call form xTaskCreate.
+    */
+    Potentiometry* pt = static_cast<Potentiometry*>(arg);
+    pt->cycle();
+  }
 
   Potentiometry::Potentiometry(Circuit &myCircuit) {
     pCircuit = &myCircuit;
   }
 
+  void Potentiometry::begin() {
+    xTaskCreate(ptCycleWrapper, "potentiometry", 4092, this, 2, &task);
+  }
+
   void Potentiometry::cycle() {
     /*
     Cycle loop for the potentiometry.
-    Call it cyclically on the main loop.
     */
-    uint32_t now = millis();
-    if (run) {
-      if (!started) {
-        pCircuit->setWEVoltage(voltageSP);
-        checkStart();
-      } else {
-        if (now - initTime < duration) {
-          if (taskDelay <= now - lastRead) {
-            pCircuit->readAndTransmit(PT_CMD);
-            lastRead = now;
-          }
-        } else {
-          if (pCircuit->readWECurrent() > 10) {
-            digitalWrite(RED_LED_PIN, HIGH);
-            digitalWrite(GREEN_LED_PIN, LOW);
-          } else {
-            digitalWrite(RED_LED_PIN, LOW);
-            digitalWrite(GREEN_LED_PIN, HIGH);
-          }
-          pCircuit->setWEVoltage(0.0);
-          run = false;
-          Serial.println(PT_CMD + END_CMD);
-        }
+    vTaskSuspend(task);
+    while (true) {
+      start();
+      while (millis() - initTime < duration && !stop) {
+        pCircuit->readAndTransmit(PT_CMD);
+        delay(taskDelay);
       }
-    } else {
-      started = false;
+      //TODO: leds
+      stop = false;
+      pCircuit->setWEVoltage(0.0);
+      Serial.println(PT_CMD + END_CMD);
+      vTaskSuspend(task);
     }
   }
 
-  void  Potentiometry::checkStart() {
+  void  Potentiometry::start() {
     /*
     Check if the sample is on the sensor.
     If there is any sample, the current will flow.
     */
-    if (abs(pCircuit->readWECurrent()) > startThreshold) {
-      initTime = millis();
-      started = true;
-      Serial.println(PT_CMD + START_CMD);
+    pCircuit->setWEVoltage(voltageSP);
+    while (abs(pCircuit->readWECurrent()) < startThreshold && !stop) {
+      delay(taskDelay);
     }
+    initTime = millis();
+    Serial.println(PT_CMD + START_CMD);
   }
 
   void  Potentiometry::processCmd(String &cmd) {
@@ -63,12 +61,12 @@
     if (cmd.substring(0, PT_CMD.length()) == PT_CMD) {
       cmd = cmd.substring(PT_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        run = true;
+        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + PT_CMD + START_CMD + "\n";
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
-        run = false;
+        stop = true;
         cmd = cmd.substring(STOP_CMD.length());
         result += "$OK->" + PT_CMD + STOP_CMD + "\n";
       }
@@ -102,31 +100,41 @@
 
   /**************** CYCLIC VOLTAMMETRY ****************/
 
+  void cvCycleWrapper(void * arg) {
+    /*
+    Wrapper for the cycle call form xTaskCreate.
+    */
+    CyclicVoltammetry* cv = static_cast<CyclicVoltammetry*>(arg);
+    cv->cycle();
+  }
+
   CyclicVoltammetry::CyclicVoltammetry(Circuit &myCircuit) {
     pCircuit = &myCircuit;
+  }
+
+  void CyclicVoltammetry::begin() {
+    xTaskCreate(cvCycleWrapper, "cyclicVoltammetry", 4092, this, 2, &task);
   }
 
   void CyclicVoltammetry::cycle() {
     /*
     Cycle loop for the cyclic voltammetry.
-    Call it cyclically on the main loop.
     */
-    if (run) {
-      if (!started) {
-        setStartConditions();
-        started = true;
-      } else {
-        if (taskDelay <= millis() - lastVoltChange && currentCycle < totalCycles) {
-          pCircuit->readAndTransmit(CV_CMD + CURRENT_CYCLE_CMD + String(currentCycle + 1) + ",");
-          changeVoltage();
-        }
-        checkEnd();
+    vTaskSuspend(task);
+    while (true) {
+      start();
+      while (currentCycle < totalCycles && !stop) {
+        pCircuit->readAndTransmit(CV_CMD + CURRENT_CYCLE_CMD + String(currentCycle + 1) + ",");
+        changeVoltage();
+        delay(taskDelay);
       }
-    } else {
-      started = false;
+      //TODO: leds
+      stop = false;
+      pCircuit->setWEVoltage(0.0);
+      Serial.println(CV_CMD + END_CMD);
+      vTaskSuspend(task);
     }
   }
-
   void  CyclicVoltammetry::processCmd(String &cmd) {
     /*
     Process cyclic voltammetry commands.
@@ -136,12 +144,12 @@
     if (cmd.substring(0, CV_CMD.length()) == CV_CMD) {
       cmd = cmd.substring(CV_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        run = true;
+        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + CV_CMD + START_CMD + "\n";
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
-        run = false;
+        stop = true;
         cmd = cmd.substring(STOP_CMD.length());
         result += "$OK->" + CV_CMD + STOP_CMD + "\n";
       }
@@ -183,34 +191,15 @@
     }
   }
 
-  void  CyclicVoltammetry::setStartConditions() {
+  void  CyclicVoltammetry::start() {
     /*
     Set the conditions for the start of the cyclic voltammetry.
     */
     currentCycle = 0;
     direction = 1;
-    lastVoltChange = millis();
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
-  }
-
-  void  CyclicVoltammetry::checkEnd() {
-    /*
-    Check the conditions os the end of the cyclic voltammetry.
-    */
-    if (currentCycle >= totalCycles) {
-      if (pCircuit->readWECurrent() > 10) {
-        digitalWrite(RED_LED_PIN, HIGH);
-        digitalWrite(GREEN_LED_PIN, LOW);
-      } else {
-        digitalWrite(RED_LED_PIN, LOW);
-        digitalWrite(GREEN_LED_PIN, HIGH);
-      }
-      pCircuit->setWEVoltage(0.0);
-      run = false;
-      started = false;
-      Serial.println(CV_CMD + END_CMD);
-    }
+    lastVoltChange = millis();
   }
 
   void  CyclicVoltammetry::changeVoltage() {
@@ -226,6 +215,7 @@
     }
     if (direction == -1 && currentVoltage <= stopVoltage) {
       direction = 1;
+      currentVoltage = startVoltage;
       currentCycle += 1;
     }
     pCircuit->setWEVoltage(currentVoltage);
@@ -234,24 +224,39 @@
 
   /**************** SQUARE WAVE VOLTAMMETRY ****************/
 
+  void swvCycleWrapper(void * arg) {
+    /*
+    Wrapper for the cycle call form xTaskCreate.
+    */
+    SquareWaveVoltammetry* swv = static_cast<SquareWaveVoltammetry*>(arg);
+    swv->cycle();
+  }
+
   SquareWaveVoltammetry::SquareWaveVoltammetry(Circuit &myCircuit) {
     pCircuit = &myCircuit;
   }
 
+  void SquareWaveVoltammetry::begin() {
+    xTaskCreate(swvCycleWrapper, "squareWaveVoltammetry", 4092, this, 2, &task);
+  }
+
   void SquareWaveVoltammetry::cycle() {
     /*
-    Cycle loop for the squarer wave voltammetry.
-    Call it cyclically on the main loop.
+    Cycle loop for the square wave voltammetry.
     */
-    if (run) {
-      if (!started) {
-        setStartConditions();
-      } else {
+    vTaskSuspend(task);
+    while (true) {
+      start();
+      while (!checkEnd() && !stop) {
+        transmit();
         changeVoltage();
-        checkEnd();
+        delay(taskDelay);
       }
-    } else {
-      started = false;
+      //TODO: leds
+      stop = false;
+      pCircuit->setWEVoltage(0.0);
+      Serial.println(SWV_CMD + END_CMD);
+      vTaskSuspend(task);
     }
   }
 
@@ -264,13 +269,12 @@
     if (cmd.substring(0, SWV_CMD.length()) == SWV_CMD) {
       cmd = cmd.substring(SWV_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        run = true;
-        initTime = millis();
+        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + SWV_CMD + START_CMD + "\n";
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
-        run = false;
+        stop = true;
         cmd = cmd.substring(STOP_CMD.length());
         result += "$OK->" + SWV_CMD + STOP_CMD + "\n";
       }
@@ -317,34 +321,17 @@
     }
   }
 
-  void  SquareWaveVoltammetry::setStartConditions() {
+  void  SquareWaveVoltammetry::start() {
     /*
     Set the conditions for the start of the square wave voltammetry.
     */
-    if ((millis() - initTime) >= (equilTime * 1000.)) {
-      started = true;
+    currentVoltage = startVoltage;
+    while ((millis() - initTime) <= (equilTime * 1000.)) {
+      pCircuit->setWEVoltage(startVoltage);
     }
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
-  }
-
-  void  SquareWaveVoltammetry::checkEnd() {
-    /*
-    Check the conditions os the end of the square wave voltammetry.
-    */
-    if (currentVoltage >= stopVoltage || iFordward >= maxCurrent || iReverse >= maxCurrent) {
-      if (pCircuit->readWECurrent() > 10) {
-        digitalWrite(RED_LED_PIN, HIGH);
-        digitalWrite(GREEN_LED_PIN, LOW);
-      } else {
-        digitalWrite(RED_LED_PIN, LOW);
-        digitalWrite(GREEN_LED_PIN, HIGH);
-      }
-      pCircuit->setWEVoltage(0.0);
-      run = false;
-      started = false;
-      Serial.println(SWV_CMD + END_CMD);
-    }
+    initTime = millis();
   }
 
   void  SquareWaveVoltammetry::changeVoltage() {
@@ -352,37 +339,47 @@
     Calculate next step and change voltage.
     */
     uint32_t now = millis();
-    float vStair = (float)stepSize * float(int(((float)now - (float)initTime + (equilTime * 1000.)) / ((1. / frequency) * 1000.)));
-    float vPulse = (float)pulseAmplitude * float(int(((float)now - (float)initTime + (equilTime * 1000.)) / ((1. / frequency / 2) * 1000.)) % 2);
-    if (currentVoltage > vStair + vPulse) {
-      iFordward = pCircuit->readWECurrent();
-      vFordward = currentVoltage;
-      Serial.print(SWV_CMD);
-      Serial.print(TIMESTAMP_CMD);
-      Serial.print(millis());
-      Serial.print(",");
-      Serial.print(FORDWARD_VOLTAGE_CMD);
-      Serial.print(vFordward);
-      Serial.print(",");
-      Serial.print(FORDWARD_CURRENT_CMD);
-      Serial.print(iFordward);
-      Serial.print(",");
-      Serial.print(REVERSE_VOLTAGE_CMD);
-      Serial.print(vReverse);
-      Serial.print(",");
-      Serial.print(REVERSE_CURRENT_CMD);
-      Serial.print(iReverse);
-      Serial.print(",");
-      Serial.print(DIFF_CURRENT_CMD);
-      Serial.print(iFordward - iReverse);
-      Serial.println();
-    }
-    if (currentVoltage < vStair + vPulse) {
+    vStair = (float)stepSize * float(int(((float)now - (float)initTime) / ((1. / frequency) * 1000.)));
+    vPulse = (float)pulseAmplitude * float(int(((float)now - (float)initTime) / ((1. / (frequency * 2)) * 1000.)) % 2);
+    if (currentVoltage < vStair + vPulse + startVoltage) {
       iReverse = pCircuit->readWECurrent();
       vReverse = currentVoltage;
     }
-    currentVoltage = vStair + vPulse;
+    if (currentVoltage > vStair + vPulse + startVoltage) {
+      iFordward = pCircuit->readWECurrent();
+      vFordward = currentVoltage;
+    }
+    currentVoltage = vStair + vPulse + startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
   }
 
-#endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+  void SquareWaveVoltammetry::transmit() {
+    Serial.print(SWV_CMD);
+    Serial.print(TIMESTAMP_CMD);
+    Serial.print(millis());
+    Serial.print(",");
+    Serial.print(FORDWARD_VOLTAGE_CMD);
+    Serial.print(vFordward);
+    Serial.print(",");
+    Serial.print(FORDWARD_CURRENT_CMD);
+    Serial.print(iFordward);
+    Serial.print(",");
+    Serial.print(REVERSE_VOLTAGE_CMD);
+    Serial.print(vReverse);
+    Serial.print(",");
+    Serial.print(REVERSE_CURRENT_CMD);
+    Serial.print(iReverse);
+    Serial.print(",");
+    Serial.print(DIFF_CURRENT_CMD);
+    Serial.print(iFordward - iReverse);
+    Serial.println();
+  }
+
+  bool  SquareWaveVoltammetry::checkEnd() {
+    /*
+    Check the conditions os the end of the square wave voltammetry.
+    */
+    return (currentVoltage >= stopVoltage || iFordward >= maxCurrent || iReverse >= maxCurrent);
+  }
+
+#endif  //#if defined(ARDUINO_ESP32_DEV)

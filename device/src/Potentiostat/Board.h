@@ -2,57 +2,64 @@
 
   #define   BOARD_H
 
-  #if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+  #if defined(ARDUINO_ESP32_DEV)
 
     #include  <math.h>
     #include  <Arduino.h>
+    #include  <esp_adc_cal.h>
 
-    #define   BOARD_VCC         5
+    #define   BOARD_VCC         3.3
     // PWM
-    #define   PWM_RES           8
-    #define   PWM_FREQ          TCCR1B & B11111000 | B00000001
+    #define   PWM_PIN           25
+    #define   PWM_RES           11
+    #define   PWM_CHANNEL       0
+    #define   PWM_FREQ          30000
     #define   PWM_MAX_VALUE     (pow(2, PWM_RES) - 1)
     // ADC
-    #define   ADC_RES           10
+    #define   ADC_PIN           34
+    #define   ADC_WIDTH         ADC_WIDTH_BIT_12
+    #define   ADC_RES           12
     #define   ADC_MAX_VALUE     (pow(2, ADC_RES) - 1)
-
-    #define   PWM_PIN           10
-    #define   ADC_PIN           A0
+    #define   ADC_UNIT          ADC_UNIT_1
+    #define   ADC_CHANNEL       ADC_CHANNEL_6                           // Pin 33
+    #define   ADC_ATTEN         ADC_ATTEN_DB_11
+    #define   ADC_REF_V         1.1
+    // GPIO
     #define   RED_LED_PIN       13
     #define   GREEN_LED_PIN     11
 
-  #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+  #endif  //#if defined(ARDUINO_ESP32_DEV)
 
-  static inline  __attribute__((always_inline))
-  uint16_t  voltageToDutyCycle(float voltage) {
+  static inline __attribute__((always_inline))
+  uint32_t voltageToDutyCycle(float voltage) {
     /*
     Return the duty cycle of the PWM to achive <voltage> when filtered.
     The function limit the voltage on the board PWM range.
     */
-    uint16_t result = uint16_t(voltage * float(PWM_MAX_VALUE) / float(BOARD_VCC));
-    result = (result > PWM_MAX_VALUE) ? uint16_t(PWM_MAX_VALUE) : uint16_t(result);
-    result = (result < 0) ? 0 : uint16_t(result);
+    uint32_t result = uint32_t(voltage * float(PWM_MAX_VALUE) / float(BOARD_VCC));
+    result = (result > PWM_MAX_VALUE) ? uint32_t(PWM_MAX_VALUE) : uint32_t(result);
+    result = (result < 0) ? 0 : uint32_t(result);
     return result;
   }
 
-  static inline  __attribute__((always_inline))
-  float dutyCycleToVoltage(uint16_t dutyCycle) {
+  static inline __attribute__((always_inline))
+  float dutyCycleToVoltage(uint32_t dutyCycle) {
     /*
     Return the voltage output from a PWM duty cycle.
     */
-    dutyCycle = (dutyCycle > PWM_MAX_VALUE) ? uint16_t(PWM_MAX_VALUE) : dutyCycle;
+    dutyCycle = (dutyCycle > PWM_MAX_VALUE) ? uint32_t(PWM_MAX_VALUE) : dutyCycle;
     return float(dutyCycle) * float(BOARD_VCC) / float(PWM_MAX_VALUE);
   }
 
-  static inline  __attribute__((always_inline))
-  float adcToVoltage(uint16_t adcValue) {
+  static inline __attribute__((always_inline))
+  float adcToVoltage(uint32_t adcValue) {
     /*
     Convert ADC value to voltage.
     */
     return (float(adcValue) * float(BOARD_VCC)) / float(ADC_MAX_VALUE);
   }
 
-  static inline  __attribute__((always_inline))
+  static inline __attribute__((always_inline))
   float parseDecimal(String &str) {
     /*
     Extract decimal number from string

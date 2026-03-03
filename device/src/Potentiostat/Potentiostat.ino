@@ -35,16 +35,21 @@ void readSerial() {
 
 void setup() {
   Serial.begin(115200);
-  myCircuit.begin(PWM_PIN, ADC_PIN);
-  pinMode(13, OUTPUT);
-  pinMode(11, OUTPUT);
+  myCircuit.begin();
+  pt.begin();
+  cv.begin();
+  swv.begin();
   Serial.println("Setup completed.");
   delay(1000);
 }
 
 void loop() {
   readSerial();
-  pt.cycle();
-  cv.cycle();
-  swv.cycle();
+  uint32_t  mV;
+  esp_adc_cal_get_voltage(ADC_CHANNEL, &myCircuit.adcChars, &mV);
+  float_t V = float_t(mV)/1000.0;
+  Serial.println("------------");
+  Serial.println(V);
+  Serial.println(myCircuit.voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0);
+  delay(1000);
 }

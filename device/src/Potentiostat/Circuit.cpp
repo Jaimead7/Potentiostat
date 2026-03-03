@@ -1,21 +1,19 @@
 #include  "Circuit.h"
 
-#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+
+#if defined(ARDUINO_ESP32_DEV)
 
   Circuit::Circuit() {}
 
-  void Circuit::begin(
-    uint8_t   sendPin,
-    uint8_t   readPin
-  ) {
+  void Circuit::begin() {
     /*
     Circuit setup.
     */
-    pwmPin = sendPin;
-    adcPin = readPin;
-    TCCR1B = PWM_FREQ;
-    pinMode(pwmPin, OUTPUT);
-    pinMode(adcPin, INPUT);
+    ledcAttachChannel(PWM_PIN, PWM_FREQ, PWM_RES, PWM_CHANNEL);
+    ledcWrite(PWM_PIN, 0);
+    esp_adc_cal_value_t val_type = esp_adc_cal_characterize(ADC_UNIT, ADC_ATTEN, ADC_WIDTH, uint32_t(ADC_REF_V), &adcChars);
+    Serial.print("ADC calibration type: ");
+    Serial.println(val_type);
     setWEVoltage(0.0);
     Serial.println("Circuit setup completed.");
   }
@@ -26,9 +24,8 @@
     The voltage is set on the CE.
     As the WE is set to virtual ground, the voltage set on the CE is set to negative <voltage>.
     */
-    uint16_t dutyCycle  = voltageToDutyCycle(ceVoltageToPWMVoltage(-voltage));
-    lastDutyCycle = dutyCycle;
-    analogWrite(pwmPin, dutyCycle);
+    uint32_t dutyCycle  = voltageToDutyCycle(ceVoltageToPWMVoltage(-voltage));
+    ledcWrite(PWM_PIN, dutyCycle);
   }
 
   float Circuit::readWECurrent() {
@@ -37,7 +34,9 @@
     Positive values indicates that current is flowing from the WE to the CE (oxidation).
     Negative values indicates that current is flowing from the CE to the WE (reduction).
     */
-    return voltageToWECurrent(adcToVoltage(analogRead(adcPin))) * 1000000.0;
+    uint32_t  mV;
+    esp_adc_cal_get_voltage(ADC_CHANNEL, &adcChars, &mV);
+    return voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0;
   }
 
   void Circuit::readAndTransmit(String header) {
@@ -46,7 +45,8 @@
     Serial.print(millis());
     Serial.print(",");
     Serial.print(VOLTAGE_CMD);
-    Serial.print(-pwmVoltageToCEVoltage(dutyCycleToVoltage(lastDutyCycle)));
+    uint32_t currentDuty = ledcRead(PWM_PIN);
+    Serial.print(-pwmVoltageToCEVoltage(dutyCycleToVoltage(currentDuty)));
     Serial.print(",");
     Serial.print(CURRENT_CMD);
     Serial.print(readWECurrent());
@@ -168,4 +168,4 @@
     return - float(R6) * ((float(Vb2) / float(R5)) + current);
   }
 
-#endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
+#endif  //#if defined(ARDUINO_ESP32_DEV)
