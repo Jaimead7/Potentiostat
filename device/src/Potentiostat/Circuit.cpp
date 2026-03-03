@@ -11,9 +11,9 @@
     */
     ledcAttachChannel(PWM_PIN, PWM_FREQ, PWM_RES, PWM_CHANNEL);
     ledcWrite(PWM_PIN, 0);
-    esp_adc_cal_value_t val_type = esp_adc_cal_characterize(ADC_UNIT, ADC_ATTEN, ADC_WIDTH, uint32_t(ADC_REF_V), &adcChars);
-    Serial.print("ADC calibration type: ");
-    Serial.println(val_type);
+    analogSetPinAttenuation(ADC_PIN, ADC_ATTEN);
+    analogSetWidth(ADC_RES);
+    analogReadResolution(ADC_RES);
     setWEVoltage(0.0);
     Serial.println("Circuit setup completed.");
   }
@@ -34,8 +34,7 @@
     Positive values indicates that current is flowing from the WE to the CE (oxidation).
     Negative values indicates that current is flowing from the CE to the WE (reduction).
     */
-    uint32_t  mV;
-    esp_adc_cal_get_voltage(ADC_CHANNEL, &adcChars, &mV);
+    uint32_t  mV = analogReadMilliVolts(ADC_PIN);
     return voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0;
   }
 

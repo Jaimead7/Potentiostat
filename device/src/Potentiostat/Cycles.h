@@ -5,21 +5,28 @@
   #include  "Commands.h"
   #include  "Board.h"
   #include  "Circuit.h"
+  #include  "Leds.h"
 
 
   void ptCycleWrapper(void* arg);
 
   class Potentiometry {
     public:
-      Potentiometry(Circuit &myCircuit);
+      Potentiometry(Circuit &circuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed);
       void          begin();
       void          cycle();
       void          processCmd(String &cmd);
+    private:
       // Common
       Circuit*      pCircuit;
+      MyLed*        gLed;
+      MyLed*        yLed;
+      MyLed*        rLed;
       TaskHandle_t  task;
       uint16_t      taskDelay =       50;               // ms
       bool          stop =            false;
+      float         redLimit =        50;
+      float         yellowLimit =     25;
       // Params
       float         voltageSP =       0.6;              // V
       uint32_t      duration =        120000;           // ms
@@ -28,7 +35,7 @@
       uint32_t      initTime;
       // Func
       void          start();
-    private:
+      void          ledsResult();
   };
 
 
@@ -36,16 +43,21 @@
 
   class CyclicVoltammetry {
     public:
-      CyclicVoltammetry(Circuit &myCircuit);
+      CyclicVoltammetry(Circuit &myCircuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed);
       void          begin();
       void          cycle();
       void          processCmd(String &cmd);
     private:
       // Common
       Circuit*      pCircuit;
+      MyLed*        gLed;
+      MyLed*        yLed;
+      MyLed*        rLed;
       TaskHandle_t  task;
       uint16_t      taskDelay =       50;               // ms
       bool          stop =            false;
+      float         redLimit =        50;
+      float         yellowLimit =     25;
       // Params
       float         slewRate =        100.0;            // mV/s
       uint8_t       totalCycles =     1;
@@ -59,6 +71,7 @@
       uint32_t      lastVoltChange;
       // Func
       void          start();
+      void          ledsResult();
       void          changeVoltage();
   };
 
@@ -67,16 +80,21 @@
 
   class SquareWaveVoltammetry {
     public:
-      SquareWaveVoltammetry(Circuit &myCircuit);
+      SquareWaveVoltammetry(Circuit &myCircuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed);
       void          begin();
       void          cycle();
       void          processCmd(String &cmd);
     private:
-    // Common
+      // Common
       Circuit*      pCircuit;
+      MyLed*        gLed;
+      MyLed*        yLed;
+      MyLed*        rLed;
       TaskHandle_t  task;
       uint16_t      taskDelay =       50;               // ms
       bool          stop =            false;
+      float         redLimit =        50;
+      float         yellowLimit =     25;
       // Params
       float         startVoltage =    -0.2;             // V
       float         stopVoltage =     1.0;              // V
@@ -96,6 +114,7 @@
       uint32_t      initTime;
       // Func
       void          start();
+      void          ledsResult();
       void          changeVoltage();
       bool          checkEnd();
       void          transmit();

@@ -1,12 +1,16 @@
 // Libraries
 #include  "Cycles.h"
 #include  "Board.h"
+#include  "Leds.h"
 
 
 Circuit                 myCircuit = Circuit();
-Potentiometry           pt = Potentiometry(myCircuit);
-CyclicVoltammetry       cv = CyclicVoltammetry(myCircuit);
-SquareWaveVoltammetry   swv = SquareWaveVoltammetry(myCircuit);
+MyLed                   greenLed = MyLed(GREEN_LED_PIN);
+MyLed                   yellowLed = MyLed(YELLOW_LED_PIN);
+MyLed                   redLed = MyLed(RED_LED_PIN);
+Potentiometry           pt = Potentiometry(myCircuit, greenLed, yellowLed, redLed);
+CyclicVoltammetry       cv = CyclicVoltammetry(myCircuit, greenLed, yellowLed, redLed);
+SquareWaveVoltammetry   swv = SquareWaveVoltammetry(myCircuit, greenLed, yellowLed, redLed);
 
 
 void readSerial() {
@@ -35,7 +39,13 @@ void readSerial() {
 
 void setup() {
   Serial.begin(115200);
+  //Circuit
   myCircuit.begin();
+  //Leds
+  greenLed.begin();
+  yellowLed.begin();
+  redLed.begin();
+  //Cycles
   pt.begin();
   cv.begin();
   swv.begin();
@@ -45,11 +55,4 @@ void setup() {
 
 void loop() {
   readSerial();
-  uint32_t  mV;
-  esp_adc_cal_get_voltage(ADC_CHANNEL, &myCircuit.adcChars, &mV);
-  float_t V = float_t(mV)/1000.0;
-  Serial.println("------------");
-  Serial.println(V);
-  Serial.println(myCircuit.voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0);
-  delay(1000);
 }

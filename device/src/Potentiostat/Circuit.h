@@ -48,13 +48,11 @@
       float       readWECurrent();
       void        readAndTransmit(String header);
       void        processCmd(String &cmd);
-      //
-      esp_adc_cal_characteristics_t adcChars;
+    private:
       float       ceVoltageToPWMVoltage(float voltage);
       float       pwmVoltageToCEVoltage(float pwmVoltage);
       float       voltageToWECurrent(float voltage);
       float       weCurrentToVoltage(float current);
-    private:
   };
 
 #endif  //#ifndef CIRCUIT_H

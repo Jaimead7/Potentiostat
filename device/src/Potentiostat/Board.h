@@ -6,7 +6,6 @@
 
     #include  <math.h>
     #include  <Arduino.h>
-    #include  <esp_adc_cal.h>
 
     #define   BOARD_VCC         3.3
     // PWM
@@ -17,16 +16,14 @@
     #define   PWM_MAX_VALUE     (pow(2, PWM_RES) - 1)
     // ADC
     #define   ADC_PIN           34
-    #define   ADC_WIDTH         ADC_WIDTH_BIT_12
     #define   ADC_RES           12
     #define   ADC_MAX_VALUE     (pow(2, ADC_RES) - 1)
-    #define   ADC_UNIT          ADC_UNIT_1
-    #define   ADC_CHANNEL       ADC_CHANNEL_6                           // Pin 33
-    #define   ADC_ATTEN         ADC_ATTEN_DB_11
+    #define   ADC_ATTEN         ADC_11db
     #define   ADC_REF_V         1.1
     // GPIO
-    #define   RED_LED_PIN       13
-    #define   GREEN_LED_PIN     11
+    #define   GREEN_LED_PIN     33
+    #define   YELLOW_LED_PIN    32
+    #define   RED_LED_PIN       26
 
   #endif  //#if defined(ARDUINO_ESP32_DEV)
 

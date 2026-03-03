@@ -4,7 +4,7 @@
 
   /**************** POTENTIOMETRY ****************/
 
-  void ptCycleWrapper(void * arg) {
+  void  ptCycleWrapper(void * arg) {
     /*
     Wrapper for the cycle call form xTaskCreate.
     */
@@ -12,44 +12,39 @@
     pt->cycle();
   }
 
-  Potentiometry::Potentiometry(Circuit &myCircuit) {
-    pCircuit = &myCircuit;
+  Potentiometry::Potentiometry(Circuit &circuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed) {
+    pCircuit = &circuit;
+    gLed = &greenLed;
+    yLed = &yellowLed;
+    rLed = &redLed;
   }
 
-  void Potentiometry::begin() {
+  void  Potentiometry::begin() {
     xTaskCreate(ptCycleWrapper, "potentiometry", 4092, this, 2, &task);
   }
 
-  void Potentiometry::cycle() {
+  void  Potentiometry::cycle() {
     /*
     Cycle loop for the potentiometry.
     */
     vTaskSuspend(task);
     while (true) {
+      stop = false;
       start();
       while (millis() - initTime < duration && !stop) {
         pCircuit->readAndTransmit(PT_CMD);
+        gLed->resetTime();
+        yLed->resetTime();
+        rLed->resetTime();
         delay(taskDelay);
       }
-      //TODO: leds
+      float result = pCircuit->readWECurrent();
+      ledsResult();
       stop = false;
       pCircuit->setWEVoltage(0.0);
-      Serial.println(PT_CMD + END_CMD);
+      Serial.println(PT_CMD + END_CMD + String(result));
       vTaskSuspend(task);
     }
-  }
-
-  void  Potentiometry::start() {
-    /*
-    Check if the sample is on the sensor.
-    If there is any sample, the current will flow.
-    */
-    pCircuit->setWEVoltage(voltageSP);
-    while (abs(pCircuit->readWECurrent()) < startThreshold && !stop) {
-      delay(taskDelay);
-    }
-    initTime = millis();
-    Serial.println(PT_CMD + START_CMD);
   }
 
   void  Potentiometry::processCmd(String &cmd) {
@@ -61,9 +56,9 @@
     if (cmd.substring(0, PT_CMD.length()) == PT_CMD) {
       cmd = cmd.substring(PT_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + PT_CMD + START_CMD + "\n";
+        vTaskResume(task);
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
         stop = true;
@@ -90,17 +85,56 @@
         startThreshold = parseDecimal(cmd);
         result += "$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold) + "\n";
       }
+      if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
+        cmd = cmd.substring(RED_LIMIT_CMD.length());
+        redLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+      }
+      if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
+        cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
+        yellowLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+      }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold) + "\n";
+        result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
       }
       Serial.print(result);
     }
   }
 
+  void  Potentiometry::start() {
+    /*
+    Check if the sample is on the sensor.
+    If there is any sample, the current will flow.
+    */
+    pCircuit->setWEVoltage(voltageSP);
+    yLed->blink(2, (taskDelay * 2) / 1000., 0);
+    while (abs(pCircuit->readWECurrent()) < startThreshold && !stop) {
+      yLed->resetTime();
+      delay(taskDelay);
+    }
+    initTime = millis();
+    rLed->blink(1, (taskDelay * 2) / 1000., 0.);
+    gLed->blink(1, (taskDelay * 2) / 1000., 0.25);
+    yLed->blink(1, (taskDelay * 2) / 1000., 0.5);
+    Serial.println(PT_CMD + START_CMD);
+  }
+
+  void  Potentiometry::ledsResult() {
+    float value = pCircuit->readWECurrent();
+    if (value >= redLimit) {
+      rLed->blink(float(stop * 3), 5., 0.);
+    } else if (value >= yellowLimit) {
+      yLed->blink(float(stop * 3), 5., 0.);
+    } else {
+      gLed->blink(float(stop * 3), 5., 0.);
+    }
+  }
+
   /**************** CYCLIC VOLTAMMETRY ****************/
 
-  void cvCycleWrapper(void * arg) {
+  void  cvCycleWrapper(void * arg) {
     /*
     Wrapper for the cycle call form xTaskCreate.
     */
@@ -108,8 +142,11 @@
     cv->cycle();
   }
 
-  CyclicVoltammetry::CyclicVoltammetry(Circuit &myCircuit) {
+  CyclicVoltammetry::CyclicVoltammetry(Circuit &myCircuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed) {
     pCircuit = &myCircuit;
+    gLed = &greenLed;
+    yLed = &yellowLed;
+    rLed = &redLed;
   }
 
   void CyclicVoltammetry::begin() {
@@ -122,13 +159,17 @@
     */
     vTaskSuspend(task);
     while (true) {
+      stop = false;
       start();
       while (currentCycle < totalCycles && !stop) {
         pCircuit->readAndTransmit(CV_CMD + CURRENT_CYCLE_CMD + String(currentCycle + 1) + ",");
         changeVoltage();
+        gLed->resetTime();
+        yLed->resetTime();
+        rLed->resetTime();
         delay(taskDelay);
       }
-      //TODO: leds
+      ledsResult();
       stop = false;
       pCircuit->setWEVoltage(0.0);
       Serial.println(CV_CMD + END_CMD);
@@ -144,9 +185,9 @@
     if (cmd.substring(0, CV_CMD.length()) == CV_CMD) {
       cmd = cmd.substring(CV_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + CV_CMD + START_CMD + "\n";
+        vTaskResume(task);
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
         stop = true;
@@ -183,9 +224,19 @@
         stopVoltage = parseDecimal(cmd);
         result += "$OK->" + CV_CMD + STOP_VOLTAGE_CMD + String(stopVoltage) + "\n";
       }
+      if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
+        cmd = cmd.substring(RED_LIMIT_CMD.length());
+        redLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+      }
+      if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
+        cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
+        yellowLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+      }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate) + START_VOLTAGE_CMD + String(startVoltage) + PEAK_VOLTAGE_CMD + String(peakVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + "\n";
+        result += CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate) + START_VOLTAGE_CMD + String(startVoltage) + PEAK_VOLTAGE_CMD + String(peakVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
       }
       Serial.print(result);
     }
@@ -197,9 +248,23 @@
     */
     currentCycle = 0;
     direction = 1;
+    rLed->blink(1, (taskDelay * 2) / 1000., 0.);
+    gLed->blink(1, (taskDelay * 2) / 1000., 0.25);
+    yLed->blink(1, (taskDelay * 2) / 1000., 0.5);
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
     lastVoltChange = millis();
+  }
+
+  void  CyclicVoltammetry::ledsResult() {
+    float value = 0;
+    if (value >= redLimit) {
+      rLed->blink(float(stop * 3), 5., 0.);
+    } else if (value >= yellowLimit) {
+      yLed->blink(float(stop * 3), 5., 0.);
+    } else {
+      gLed->blink(float(stop * 3), 5., 0.);
+    }
   }
 
   void  CyclicVoltammetry::changeVoltage() {
@@ -232,8 +297,11 @@
     swv->cycle();
   }
 
-  SquareWaveVoltammetry::SquareWaveVoltammetry(Circuit &myCircuit) {
+  SquareWaveVoltammetry::SquareWaveVoltammetry(Circuit &myCircuit, MyLed &greenLed, MyLed &yellowLed, MyLed &redLed) {
     pCircuit = &myCircuit;
+    gLed = &greenLed;
+    yLed = &yellowLed;
+    rLed = &redLed;
   }
 
   void SquareWaveVoltammetry::begin() {
@@ -246,13 +314,17 @@
     */
     vTaskSuspend(task);
     while (true) {
+      stop = false;
       start();
       while (!checkEnd() && !stop) {
         transmit();
         changeVoltage();
+        gLed->resetTime();
+        yLed->resetTime();
+        rLed->resetTime();
         delay(taskDelay);
       }
-      //TODO: leds
+      ledsResult();
       stop = false;
       pCircuit->setWEVoltage(0.0);
       Serial.println(SWV_CMD + END_CMD);
@@ -269,9 +341,9 @@
     if (cmd.substring(0, SWV_CMD.length()) == SWV_CMD) {
       cmd = cmd.substring(SWV_CMD.length());
       if (cmd.substring(0, START_CMD.length()) == START_CMD) {
-        vTaskResume(task);
         cmd = cmd.substring(START_CMD.length());
         result += "$OK->" + SWV_CMD + START_CMD + "\n";
+        vTaskResume(task);
       }
       if (cmd.substring(0, STOP_CMD.length()) == STOP_CMD) {
         stop = true;
@@ -313,9 +385,19 @@
         equilTime = parseDecimal(cmd);
         result += "$OK->" + SWV_CMD + EQUIL_TIME_CMD + String(equilTime) + "\n";
       }
+      if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
+        cmd = cmd.substring(RED_LIMIT_CMD.length());
+        redLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+      }
+      if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
+        cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
+        yellowLimit = parseDecimal(cmd);
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+      }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + "\n";
+        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
       }
       Serial.print(result);
     }
@@ -326,12 +408,28 @@
     Set the conditions for the start of the square wave voltammetry.
     */
     currentVoltage = startVoltage;
+    yLed->blink(2, equilTime * 1000., 0);
+    initTime = millis();
     while ((millis() - initTime) <= (equilTime * 1000.)) {
       pCircuit->setWEVoltage(startVoltage);
     }
+    rLed->blink(1, (taskDelay * 2) / 1000., 0.);
+    gLed->blink(1, (taskDelay * 2) / 1000., 0.25);
+    yLed->blink(1, (taskDelay * 2) / 1000., 0.5);
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
     initTime = millis();
+  }
+
+  void  SquareWaveVoltammetry::ledsResult() {
+    float value = iFordward - iReverse;
+    if (value >= redLimit) {
+      rLed->blink(float(stop * 3), 5., 0.);
+    } else if (value >= yellowLimit) {
+      yLed->blink(float(stop * 3), 5., 0.);
+    } else {
+      gLed->blink(float(stop * 3), 5., 0.);
+    }
   }
 
   void  SquareWaveVoltammetry::changeVoltage() {
@@ -339,8 +437,8 @@
     Calculate next step and change voltage.
     */
     uint32_t now = millis();
-    vStair = (float)stepSize * float(int(((float)now - (float)initTime) / ((1. / frequency) * 1000.)));
-    vPulse = (float)pulseAmplitude * float(int(((float)now - (float)initTime) / ((1. / (frequency * 2)) * 1000.)) % 2);
+    vStair = ((float)stepSize * float(int(((float)now - (float)initTime) / ((1. / frequency) * 1000.)))) / 1000.;
+    vPulse = ((float)pulseAmplitude * float(int(((float)now - (float)initTime) / ((1. / (frequency * 2)) * 1000.)) % 2)) / 1000.;
     if (currentVoltage < vStair + vPulse + startVoltage) {
       iReverse = pCircuit->readWECurrent();
       vReverse = currentVoltage;
