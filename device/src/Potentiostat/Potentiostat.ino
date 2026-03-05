@@ -49,8 +49,9 @@ void setup() {
   pt.begin();
   cv.begin();
   swv.begin();
-  Serial.println("Setup completed.");
+  //Timeout
   delay(1000);
+  Serial.println("Setup completed.");
 }
 
 void loop() {

@@ -45,10 +45,10 @@
     Serial.print(",");
     Serial.print(VOLTAGE_CMD);
     uint32_t currentDuty = ledcRead(PWM_PIN);
-    Serial.print(-pwmVoltageToCEVoltage(dutyCycleToVoltage(currentDuty)));
+    Serial.print(-pwmVoltageToCEVoltage(dutyCycleToVoltage(currentDuty)), 3);
     Serial.print(",");
     Serial.print(CURRENT_CMD);
-    Serial.print(readWECurrent());
+    Serial.print(readWECurrent(), 3);
     Serial.println();
   }
 
@@ -98,27 +98,27 @@
       if (cmd.substring(0, VB2_CMD.length()) == VB2_CMD) {
         cmd = cmd.substring(VB2_CMD.length());
         Vb2 = parseDecimal(cmd);
-        result += "$OK->" + CIR_CMD + VB2_CMD + String(Vb2) + "\n";
+        result += "$OK->" + CIR_CMD + VB2_CMD + String(Vb2, 3) + "\n";
       }
       if (cmd.substring(0, OPAMP_VCC_P_CMD.length()) == OPAMP_VCC_P_CMD) {
         cmd = cmd.substring(OPAMP_VCC_P_CMD.length());
         opAmpVccP = parseDecimal(cmd);
-        result += "$OK->" + CIR_CMD + OPAMP_VCC_P_CMD + String(opAmpVccP) + "\n";
+        result += "$OK->" + CIR_CMD + OPAMP_VCC_P_CMD + String(opAmpVccP, 3) + "\n";
       }
       if (cmd.substring(0, OPAMP_VCC_N_CMD.length()) == OPAMP_VCC_N_CMD) {
         cmd = cmd.substring(OPAMP_VCC_N_CMD.length());
         opAmpVccN = parseDecimal(cmd);
-        result += "$OK->" + CIR_CMD + OPAMP_VCC_N_CMD + String(opAmpVccN) + "\n";
+        result += "$OK->" + CIR_CMD + OPAMP_VCC_N_CMD + String(opAmpVccN, 3) + "\n";
       }
       if (cmd.substring(0, OPAMP_HR_CMD.length()) == OPAMP_HR_CMD) {
         cmd = cmd.substring(OPAMP_HR_CMD.length());
         opAmpHeadroom = parseDecimal(cmd);
-        result += "$OK->" + CIR_CMD + OPAMP_HR_CMD + String(opAmpHeadroom) + "\n";
+        result += "$OK->" + CIR_CMD + OPAMP_HR_CMD + String(opAmpHeadroom, 3) + "\n";
       }
       if (cmd.substring(0, OPAMP_BR_CMD.length()) == OPAMP_BR_CMD) {
         cmd = cmd.substring(OPAMP_BR_CMD.length());
         opAmpBottomroom = parseDecimal(cmd);
-        result += "$OK->" + CIR_CMD + OPAMP_BR_CMD + String(opAmpBottomroom) + "\n";
+        result += "$OK->" + CIR_CMD + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + "\n";
       }
       Serial.print(result);
     }

@@ -42,7 +42,7 @@
       ledsResult();
       stop = false;
       pCircuit->setWEVoltage(0.0);
-      Serial.println(PT_CMD + END_CMD + String(result));
+      Serial.println(PT_CMD + END_CMD + String(result, 3));
       vTaskSuspend(task);
     }
   }
@@ -67,13 +67,13 @@
       }
       if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
         cmd = cmd.substring(TASK_DELAY_CMD.length());
-        taskDelay = (uint16_t)parseDecimal(cmd);
+        taskDelay = (uint32_t)parseDecimal(cmd);
         result += "$OK->" + PT_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
       }
       if (cmd.substring(0, VOLTAGE_SETPOINT_CMD.length()) == VOLTAGE_SETPOINT_CMD) {
         cmd = cmd.substring(VOLTAGE_SETPOINT_CMD.length());
         voltageSP = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + VOLTAGE_SETPOINT_CMD + String(voltageSP) + "\n";
+        result += "$OK->" + PT_CMD + VOLTAGE_SETPOINT_CMD + String(voltageSP, 3) + "\n";
       }
       if (cmd.substring(0, DURATION_CMD.length()) == DURATION_CMD) {
         cmd = cmd.substring(DURATION_CMD.length());
@@ -83,21 +83,21 @@
       if (cmd.substring(0, THRESHOLD_CMD.length()) == THRESHOLD_CMD) {
         cmd = cmd.substring(THRESHOLD_CMD.length());
         startThreshold = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold) + "\n";
+        result += "$OK->" + PT_CMD + THRESHOLD_CMD + String(startThreshold, 3) + "\n";
       }
       if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
         cmd = cmd.substring(RED_LIMIT_CMD.length());
         redLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit, 3) + "\n";
       }
       if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
         cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
         yellowLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += PT_CMD + PARAMS_CMD + TASK_DELAY_CMD + String(taskDelay) + VOLTAGE_SETPOINT_CMD + String(voltageSP, 3) + DURATION_CMD + String(duration) + THRESHOLD_CMD + String(startThreshold, 3) + RED_LIMIT_CMD + String(redLimit, 3) + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       Serial.print(result);
     }
@@ -196,7 +196,7 @@
       }
       if (cmd.substring(0, TASK_DELAY_CMD.length()) == TASK_DELAY_CMD) {
         cmd = cmd.substring(TASK_DELAY_CMD.length());
-        taskDelay = (uint16_t)parseDecimal(cmd);
+        taskDelay = (uint32_t)parseDecimal(cmd);
         result += "$OK->" + CV_CMD + TASK_DELAY_CMD + String(taskDelay) + "\n";
       }
       if (cmd.substring(0, TOTAL_CYCLES_CMD.length()) == TOTAL_CYCLES_CMD) {
@@ -207,36 +207,36 @@
       if (cmd.substring(0, SLEW_RATE_CMD.length()) == SLEW_RATE_CMD) {
         cmd = cmd.substring(SLEW_RATE_CMD.length());
         slewRate = parseDecimal(cmd);
-        result += "$OK->" + CV_CMD + SLEW_RATE_CMD + String(slewRate) + "\n";
+        result += "$OK->" + CV_CMD + SLEW_RATE_CMD + String(slewRate, 3) + "\n";
       }
       if (cmd.substring(0, START_VOLTAGE_CMD.length()) == START_VOLTAGE_CMD) {
         cmd = cmd.substring(START_VOLTAGE_CMD.length());
         startVoltage = parseDecimal(cmd);
-        result += "$OK->" + CV_CMD + START_VOLTAGE_CMD + String(startVoltage) + "\n";
+        result += "$OK->" + CV_CMD + START_VOLTAGE_CMD + String(startVoltage, 3) + "\n";
       }
       if (cmd.substring(0, PEAK_VOLTAGE_CMD.length()) == PEAK_VOLTAGE_CMD) {
         cmd = cmd.substring(PEAK_VOLTAGE_CMD.length());
         peakVoltage = parseDecimal(cmd);
-        result += "$OK->" + CV_CMD + PEAK_VOLTAGE_CMD + String(peakVoltage) + "\n";
+        result += "$OK->" + CV_CMD + PEAK_VOLTAGE_CMD + String(peakVoltage, 3) + "\n";
       }
       if (cmd.substring(0, STOP_VOLTAGE_CMD.length()) == STOP_VOLTAGE_CMD) {
         cmd = cmd.substring(STOP_VOLTAGE_CMD.length());
         stopVoltage = parseDecimal(cmd);
-        result += "$OK->" + CV_CMD + STOP_VOLTAGE_CMD + String(stopVoltage) + "\n";
+        result += "$OK->" + CV_CMD + STOP_VOLTAGE_CMD + String(stopVoltage, 3) + "\n";
       }
       if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
         cmd = cmd.substring(RED_LIMIT_CMD.length());
         redLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit, 3) + "\n";
       }
       if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
         cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
         yellowLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate) + START_VOLTAGE_CMD + String(startVoltage) + PEAK_VOLTAGE_CMD + String(peakVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += CV_CMD + PARAMS_CMD + TOTAL_CYCLES_CMD + String(totalCycles) + SLEW_RATE_CMD + String(slewRate, 3) + START_VOLTAGE_CMD + String(startVoltage, 3) + PEAK_VOLTAGE_CMD + String(peakVoltage, 3) + STOP_VOLTAGE_CMD + String(stopVoltage, 3) + RED_LIMIT_CMD + String(redLimit, 3) + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       Serial.print(result);
     }
@@ -353,51 +353,51 @@
       if (cmd.substring(0, START_VOLTAGE_CMD.length()) == START_VOLTAGE_CMD) {
         cmd = cmd.substring(START_VOLTAGE_CMD.length());
         startVoltage = parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + START_VOLTAGE_CMD + String(startVoltage) + "\n";
+        result += "$OK->" + SWV_CMD + START_VOLTAGE_CMD + String(startVoltage, 3) + "\n";
       }
       if (cmd.substring(0, STOP_VOLTAGE_CMD.length()) == STOP_VOLTAGE_CMD) {
         cmd = cmd.substring(STOP_VOLTAGE_CMD.length());
         stopVoltage = parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + DURATION_CMD + String(stopVoltage) + "\n";
+        result += "$OK->" + SWV_CMD + DURATION_CMD + String(stopVoltage, 3) + "\n";
       }
       if (cmd.substring(0, STEP_SIZE_CMD.length()) == STEP_SIZE_CMD) {
         cmd = cmd.substring(STEP_SIZE_CMD.length());
-        stepSize = (uint16_t)parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + STEP_SIZE_CMD + String(stepSize) + "\n";
+        stepSize = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + STEP_SIZE_CMD + String(stepSize, 3) + "\n";
       }
       if (cmd.substring(0, PULSE_AMPLITUDE_CMD.length()) == PULSE_AMPLITUDE_CMD) {
         cmd = cmd.substring(PULSE_AMPLITUDE_CMD.length());
-        pulseAmplitude = (uint32_t)parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + "\n";
+        pulseAmplitude = parseDecimal(cmd);
+        result += "$OK->" + SWV_CMD + PULSE_AMPLITUDE_CMD + String(pulseAmplitude, 3) + "\n";
       }
       if (cmd.substring(0, FREQUENCY_CMD.length()) == FREQUENCY_CMD) {
         cmd = cmd.substring(FREQUENCY_CMD.length());
         frequency = parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + FREQUENCY_CMD + String(frequency) + "\n";
+        result += "$OK->" + SWV_CMD + FREQUENCY_CMD + String(frequency, 3) + "\n";
       }
       if (cmd.substring(0, MAX_CURRENT_CMD.length()) == MAX_CURRENT_CMD) {
         cmd = cmd.substring(MAX_CURRENT_CMD.length());
         maxCurrent = parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + MAX_CURRENT_CMD + String(maxCurrent) + "\n";
+        result += "$OK->" + SWV_CMD + MAX_CURRENT_CMD + String(maxCurrent, 3) + "\n";
       }
       if (cmd.substring(0, EQUIL_TIME_CMD.length()) == EQUIL_TIME_CMD) {
         cmd = cmd.substring(EQUIL_TIME_CMD.length());
         equilTime = parseDecimal(cmd);
-        result += "$OK->" + SWV_CMD + EQUIL_TIME_CMD + String(equilTime) + "\n";
+        result += "$OK->" + SWV_CMD + EQUIL_TIME_CMD + String(equilTime, 3) + "\n";
       }
       if (cmd.substring(0, RED_LIMIT_CMD.length()) == RED_LIMIT_CMD) {
         cmd = cmd.substring(RED_LIMIT_CMD.length());
         redLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit) + "\n";
+        result += "$OK->" + PT_CMD + RED_LIMIT_CMD + String(redLimit, 3) + "\n";
       }
       if (cmd.substring(0, YELLOW_LIMIT_CMD.length()) == YELLOW_LIMIT_CMD) {
         cmd = cmd.substring(YELLOW_LIMIT_CMD.length());
         yellowLimit = parseDecimal(cmd);
-        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += "$OK->" + PT_CMD + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
         cmd = cmd.substring(PARAMS_CMD.length());
-        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage) + STOP_VOLTAGE_CMD + String(stopVoltage) + STEP_SIZE_CMD + String(stepSize) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude) + FREQUENCY_CMD + String(frequency) + MAX_CURRENT_CMD + String(maxCurrent) + EQUIL_TIME_CMD + String(equilTime) + RED_LIMIT_CMD + String(redLimit) + YELLOW_LIMIT_CMD + String(yellowLimit) + "\n";
+        result += SWV_CMD + PARAMS_CMD + START_VOLTAGE_CMD + String(startVoltage, 3) + STOP_VOLTAGE_CMD + String(stopVoltage, 3) + STEP_SIZE_CMD + String(stepSize, 3) + PULSE_AMPLITUDE_CMD + String(pulseAmplitude, 3) + FREQUENCY_CMD + String(frequency, 3) + MAX_CURRENT_CMD + String(maxCurrent, 3) + EQUIL_TIME_CMD + String(equilTime, 3) + RED_LIMIT_CMD + String(redLimit, 3) + YELLOW_LIMIT_CMD + String(yellowLimit, 3) + "\n";
       }
       Serial.print(result);
     }
@@ -408,9 +408,9 @@
     Set the conditions for the start of the square wave voltammetry.
     */
     currentVoltage = startVoltage;
-    yLed->blink(2, equilTime * 1000., 0);
+    yLed->blink(2, equilTime, 0);
     initTime = millis();
-    while ((millis() - initTime) <= (equilTime * 1000.)) {
+    while ((millis() - initTime) <= (equilTime)) {
       pCircuit->setWEVoltage(startVoltage);
     }
     rLed->blink(1, (taskDelay * 2) / 1000., 0.);
@@ -437,8 +437,10 @@
     Calculate next step and change voltage.
     */
     uint32_t now = millis();
-    vStair = ((float)stepSize * float(int(((float)now - (float)initTime) / ((1. / frequency) * 1000.)))) / 1000.;
-    vPulse = ((float)pulseAmplitude * float(int(((float)now - (float)initTime) / ((1. / (frequency * 2)) * 1000.)) % 2)) / 1000.;
+    float elapsedTime = float(now - initTime);
+    float msPeriod = (1. / frequency) * 1000.;
+    vStair = float(stepSize) * float(int(elapsedTime / msPeriod));
+    vPulse = float(pulseAmplitude) * float(int(elapsedTime / (msPeriod / 2)) % 2);
     if (currentVoltage < vStair + vPulse + startVoltage) {
       iReverse = pCircuit->readWECurrent();
       vReverse = currentVoltage;
@@ -457,19 +459,19 @@
     Serial.print(millis());
     Serial.print(",");
     Serial.print(FORDWARD_VOLTAGE_CMD);
-    Serial.print(vFordward);
+    Serial.print(vFordward, 3);
     Serial.print(",");
     Serial.print(FORDWARD_CURRENT_CMD);
-    Serial.print(iFordward);
+    Serial.print(iFordward, 3);
     Serial.print(",");
     Serial.print(REVERSE_VOLTAGE_CMD);
-    Serial.print(vReverse);
+    Serial.print(vReverse, 3);
     Serial.print(",");
     Serial.print(REVERSE_CURRENT_CMD);
-    Serial.print(iReverse);
+    Serial.print(iReverse, 3);
     Serial.print(",");
     Serial.print(DIFF_CURRENT_CMD);
-    Serial.print(iFordward - iReverse);
+    Serial.print(iFordward - iReverse, 3);
     Serial.println();
   }
 
