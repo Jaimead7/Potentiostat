@@ -30,7 +30,7 @@
       // Params
       float         voltageSP =       0.6;              // V
       uint32_t      duration =        120000;           // ms
-      float         startThreshold =  50.;              // uA
+      float         startThreshold =  9.;               // uA
       // Vars
       uint32_t      initTime;
       // Func
@@ -102,7 +102,7 @@
       float         pulseAmplitude =  0.05;             // V
       float         frequency =       2.0;              // Hz
       float         maxCurrent =      1000.0;           // uA
-      float         equilTime =       5000;             // ms
+      uint32_t      equilTime =       5000;             // ms
       // Vars
       float         currentVoltage =  0.0;              // V
       float         vStair =          0.0;              // V

@@ -67,32 +67,32 @@
 <context>
     <name>CyclicVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="328"/>
+        <location filename="../../src/managers/cycles.py" line="370"/>
         <source>Current (uA)</source>
         <translation>Corriente (uA)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="328"/>
+        <location filename="../../src/managers/cycles.py" line="370"/>
         <source>Voltage (V)</source>
         <translation>Voltaje (V)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="501"/>
+        <location filename="../../src/managers/cycles.py" line="569"/>
         <source>Voltage/Current</source>
         <translation>Voltaje/Corriente</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="517"/>
+        <location filename="../../src/managers/cycles.py" line="585"/>
         <source>Save test data</source>
         <translation>Guardar datos de test</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="528"/>
+        <location filename="../../src/managers/cycles.py" line="596"/>
         <source>Data (*.cv)</source>
         <translation>Datos (*.cv)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="528"/>
+        <location filename="../../src/managers/cycles.py" line="596"/>
         <source>Load test data</source>
         <translation>Cargar datos de test</translation>
     </message>
@@ -115,112 +115,112 @@
         <translation>Estado:</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="191"/>
+        <location filename="../ui/mainWindow.ui" line="204"/>
         <source>Potentiometry</source>
         <translation>Potenciometría</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="260"/>
+        <location filename="../ui/mainWindow.ui" line="485"/>
         <source>Duration (ms):</source>
         <translation>Duración (ms):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="302"/>
+        <location filename="../ui/mainWindow.ui" line="298"/>
         <source>Start threshold (uA):</source>
         <translation>Nivel de inicio (uA):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="846"/>
+        <location filename="../ui/mainWindow.ui" line="1065"/>
         <source>Task delay (ms):</source>
         <translation>Ciclo de tarea (ms):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="386"/>
+        <location filename="../ui/mainWindow.ui" line="534"/>
         <source>Voltage set point (V):</source>
         <translation>Set point de voltaje (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="705"/>
+        <location filename="../ui/mainWindow.ui" line="821"/>
         <source>Cyclic voltammetry</source>
         <translation>Voltamperometría cíclica</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1589"/>
+        <location filename="../ui/mainWindow.ui" line="1887"/>
         <source>Start voltage (V):</source>
         <translation>Voltaje de inicio (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="839"/>
+        <location filename="../ui/mainWindow.ui" line="1072"/>
         <source>Slew rate (mV/s):</source>
         <translation>Tasa de cambio (mV/s):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1430"/>
+        <location filename="../ui/mainWindow.ui" line="1681"/>
         <source>Stop voltage (V):</source>
         <translation>Voltaje de fin (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1000"/>
+        <location filename="../ui/mainWindow.ui" line="1018"/>
         <source>Total cycles:</source>
         <translation>Ciclos totales:</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1007"/>
+        <location filename="../ui/mainWindow.ui" line="1213"/>
         <source>Peak voltage (V):</source>
         <translation>Voltaje de pico (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3466"/>
+        <location filename="../ui/mainWindow.ui" line="3835"/>
         <source>Tools</source>
         <translation>Herramientas</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3470"/>
+        <location filename="../ui/mainWindow.ui" line="3839"/>
         <source>Language</source>
         <translation>Idioma</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3498"/>
+        <location filename="../ui/mainWindow.ui" line="3867"/>
         <source>toolBar</source>
         <translation>Barra de herramientas</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3540"/>
+        <location filename="../ui/mainWindow.ui" line="3909"/>
         <source>Update devices</source>
         <translation>Actualizar dispositivos</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3559"/>
+        <location filename="../ui/mainWindow.ui" line="3928"/>
         <source>Connect device</source>
         <translation>Conectar dispositivo</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3568"/>
+        <location filename="../ui/mainWindow.ui" line="3937"/>
         <source>Español</source>
         <translation>Español</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3571"/>
+        <location filename="../ui/mainWindow.ui" line="3940"/>
         <source>Cambiar a Español</source>
         <translation>Cambiar a Español</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3580"/>
+        <location filename="../ui/mainWindow.ui" line="3949"/>
         <source>English</source>
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3583"/>
+        <location filename="../ui/mainWindow.ui" line="3952"/>
         <source>Change to English</source>
         <translation>Change to English</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3592"/>
+        <location filename="../ui/mainWindow.ui" line="3961"/>
         <source>Português</source>
         <translation>Português</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3595"/>
+        <location filename="../ui/mainWindow.ui" line="3964"/>
         <source>Mudar para português</source>
         <translation>Mudar para portiguês</translation>
     </message>
@@ -230,215 +230,240 @@
         <translation>Potenciostato</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3604"/>
+        <location filename="../ui/mainWindow.ui" line="3973"/>
         <source>Export</source>
         <translation>Exportar</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="191"/>
+        <location filename="../../src/windows/mainWindow.py" line="226"/>
         <source>Data (*.pt; *.cv)</source>
         <translation>Datos (*.pt; *.cv)</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="191"/>
+        <location filename="../../src/windows/mainWindow.py" line="226"/>
         <source>Select test to export</source>
         <translation>Seleccionar test a exportar</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="198"/>
+        <location filename="../../src/windows/mainWindow.py" line="233"/>
         <source>Export file</source>
         <translation>Archivo a exportar</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3607"/>
+        <location filename="../ui/mainWindow.ui" line="3976"/>
         <source>Export data</source>
         <translation>Exportar datos</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="198"/>
+        <location filename="../../src/windows/mainWindow.py" line="233"/>
         <source>(*.csv);;(*.xlsx)</source>
         <translation>(*.csv);;(*.xlsx)</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3478"/>
+        <location filename="../ui/mainWindow.ui" line="3847"/>
         <source>Device</source>
         <translation>Dispositivo</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3488"/>
+        <location filename="../ui/mainWindow.ui" line="3857"/>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="215"/>
+        <location filename="../../src/windows/mainWindow.py" line="250"/>
         <source>Data exported</source>
         <translation>Datos exportados</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2014"/>
+        <location filename="../ui/mainWindow.ui" line="2383"/>
         <source>Serial</source>
         <translation>Comunicación serie</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2090"/>
+        <location filename="../ui/mainWindow.ui" line="2459"/>
         <source>Circuit</source>
         <translation>Circuito</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2107"/>
+        <location filename="../ui/mainWindow.ui" line="2476"/>
         <source>Circuit params</source>
         <translation>Parámetros de circuito</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3226"/>
+        <location filename="../ui/mainWindow.ui" line="3595"/>
         <source>R2 (ohm):</source>
         <translation>R2 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3275"/>
+        <location filename="../ui/mainWindow.ui" line="3644"/>
         <source>R4 (ohm):</source>
         <translation>R4 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3389"/>
+        <location filename="../ui/mainWindow.ui" line="3758"/>
         <source>R6 (ohm):</source>
         <translation>R6 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2372"/>
+        <location filename="../ui/mainWindow.ui" line="2741"/>
         <source>OpAmp - (V):</source>
         <translation>OpAmp - (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2399"/>
+        <location filename="../ui/mainWindow.ui" line="2768"/>
         <source>R1 (ohm):</source>
         <translation>R1 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2406"/>
+        <location filename="../ui/mainWindow.ui" line="2775"/>
         <source>OpAmp HeadRoom (V):</source>
         <translation>OpAmp HeadRoom (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2413"/>
+        <location filename="../ui/mainWindow.ui" line="2782"/>
         <source>Vb2 (V):</source>
         <translation>Vb2 (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3239"/>
+        <location filename="../ui/mainWindow.ui" line="3608"/>
         <source>R3 (ohm):</source>
         <translation>R3 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3415"/>
+        <location filename="../ui/mainWindow.ui" line="3784"/>
         <source>R5 (ohm):</source>
         <translation>R5 (ohm):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2674"/>
+        <location filename="../ui/mainWindow.ui" line="3043"/>
         <source>Vb1 (V):</source>
         <translation>Vb1 (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2681"/>
+        <location filename="../ui/mainWindow.ui" line="3050"/>
         <source>OpAmp + (V):</source>
         <translation>OpAmp + (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="2688"/>
+        <location filename="../ui/mainWindow.ui" line="3057"/>
         <source>OpAmp BottomRoom (V):</source>
         <translation>OpAmp BottomRoom (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3103"/>
+        <location filename="../ui/mainWindow.ui" line="3472"/>
         <source>Board:</source>
         <translation>Placa:</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3134"/>
+        <location filename="../ui/mainWindow.ui" line="3503"/>
         <source>Voltage range (V):</source>
         <translation>Rango de voltaje (V):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3297"/>
+        <location filename="../ui/mainWindow.ui" line="3666"/>
         <source>Current range (uA):</source>
         <translation>Rango de corriente (uA):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="3081"/>
+        <location filename="../ui/mainWindow.ui" line="3450"/>
         <source>Calculator</source>
         <translation>Calculadora</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1335"/>
+        <location filename="../ui/mainWindow.ui" line="1567"/>
         <source>Square wave voltammetry</source>
         <translation>Voltamperometría de onda cuadrada</translation>
     </message>
     <message>
         <location filename="../ui/mainWindow.ui" line="1715"/>
         <source>Pulse amplitude (mV):</source>
-        <translation>Amplitud de pulso( mV):</translation>
+        <translation type="obsolete">Amplitud de pulso( mV):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1479"/>
+        <location filename="../ui/mainWindow.ui" line="1929"/>
         <source>Max curent (uA):</source>
         <translation>Corriente máxima (uA):</translation>
     </message>
     <message>
         <location filename="../ui/mainWindow.ui" line="1521"/>
         <source>Equil time (s):</source>
-        <translation>Tiempo de estabilización (s):</translation>
+        <translation type="obsolete">Tiempo de estabilización (s):</translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="1472"/>
+        <location filename="../ui/mainWindow.ui" line="1971"/>
         <source>Frequency (Hz):</source>
         <translation>Frequencia (Hz):</translation>
     </message>
     <message>
         <location filename="../ui/mainWindow.ui" line="1596"/>
         <source>Step size (mV):</source>
-        <translation>Alto de escalón (mV):</translation>
+        <translation type="obsolete">Alto de escalón (mV):</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1845"/>
+        <source>Red Limit (uA):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="2020"/>
+        <source>Yellow Limit (uA):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1626"/>
+        <source>Step size (V):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1723"/>
+        <source>Equil time (ms):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="1978"/>
+        <source>Pulse amplitude (V):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PotentiometryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="68"/>
+        <location filename="../../src/managers/cycles.py" line="76"/>
         <source>Time (s)</source>
         <translation>Tiempo (s)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="68"/>
+        <location filename="../../src/managers/cycles.py" line="76"/>
         <source>Voltage (V)</source>
         <translation>Voltaje (V)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="68"/>
+        <location filename="../../src/managers/cycles.py" line="76"/>
         <source>Current (uA)</source>
         <translation>Corriente (uA)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="214"/>
+        <location filename="../../src/managers/cycles.py" line="248"/>
         <source>Voltage</source>
         <translation>Voltaje</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="222"/>
+        <location filename="../../src/managers/cycles.py" line="256"/>
         <source>Current</source>
         <translation>Corriente</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="243"/>
+        <location filename="../../src/managers/cycles.py" line="277"/>
         <source>Save test data</source>
         <translation>Guardar datos de test</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="254"/>
+        <location filename="../../src/managers/cycles.py" line="288"/>
         <source>Data (*.pt)</source>
         <translation>Datos (*.pt)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="254"/>
+        <location filename="../../src/managers/cycles.py" line="288"/>
         <source>Load test data</source>
         <translation>Cargar datos de test</translation>
     </message>
@@ -504,32 +529,32 @@
 <context>
     <name>SquareWaveVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="603"/>
+        <location filename="../../src/managers/cycles.py" line="679"/>
         <source>Current (uA)</source>
         <translation>Corriente (uA)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="603"/>
+        <location filename="../../src/managers/cycles.py" line="679"/>
         <source>Voltage (V)</source>
         <translation>Voltaje (V)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="797"/>
+        <location filename="../../src/managers/cycles.py" line="900"/>
         <source>Voltage/Current</source>
         <translation>Voltaje/Corriente</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="813"/>
+        <location filename="../../src/managers/cycles.py" line="916"/>
         <source>Save test data</source>
         <translation>Guardar datos de test</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="824"/>
+        <location filename="../../src/managers/cycles.py" line="927"/>
         <source>Data (*.swv)</source>
         <translation>Datos (*.swv)</translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="824"/>
+        <location filename="../../src/managers/cycles.py" line="927"/>
         <source>Load test data</source>
         <translation>Cargar datos de test</translation>
     </message>

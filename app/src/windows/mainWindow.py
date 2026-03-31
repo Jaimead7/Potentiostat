@@ -70,6 +70,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ptTimeButton,
                 self.ptThresholdValue,
                 self.ptThresholdButton,
+                self.ptRedLimitValue,
+                self.ptRedLimitButton,
+                self.ptYellowLimitValue,
+                self.ptYellowLimitButton,
                 self.ptPlayButton,
                 self.ptSaveButton,
                 self.ptLoadButton,
@@ -91,6 +95,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cvPVButton,
                 self.cvStopVValue,
                 self.cvStopVButton,
+                self.cvRedLimitValue,
+                self.cvRedLimitButton,
+                self.cvYellowLimitValue,
+                self.cvYellowLimitButton,
                 self.cvPlayButton,
                 self.cvSaveButton,
                 self.cvLoadButton,
@@ -114,6 +122,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.swvMCButton,
                 self.swvETValue,
                 self.swvETButton,
+                self.swvRedLimitValue,
+                self.swvRedLimitButton,
+                self.swvYellowLimitValue,
+                self.swvYellowLimitButton,
                 self.swvPlayButton,
                 self.swvSaveButton,
                 self.swvLoadButton,
@@ -196,6 +208,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         while rcvStr.startswith(cmds.cyclicVoltammetry):
             rcvStr = rcvStr[len(cmds.cyclicVoltammetry):]
             self.cycles['cyclicVoltammetry'].processCmd(rcvStr)
+        while rcvStr.startswith(cmds.squareWaveVoltammetry):
+            rcvStr = rcvStr[len(cmds.squareWaveVoltammetry):]
+            self.cycles['squareWaveVoltammetry'].processCmd(rcvStr)
 
     def enableSend(self, flag: bool) -> None:
         self.serialManager.enableSend(flag)

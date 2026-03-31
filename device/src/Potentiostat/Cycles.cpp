@@ -412,6 +412,7 @@
     initTime = millis();
     while ((millis() - initTime) <= (equilTime)) {
       pCircuit->setWEVoltage(startVoltage);
+      delay(taskDelay);
     }
     rLed->blink(1, (taskDelay * 2) / 1000., 0.);
     gLed->blink(1, (taskDelay * 2) / 1000., 0.25);
