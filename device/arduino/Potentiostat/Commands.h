@@ -13,6 +13,8 @@
   #define   TASK_DELAY_CMD          String("$TD:")
   #define   START_VOLTAGE_CMD       String("$SRTV:")
   #define   STOP_VOLTAGE_CMD        String("$STPV:")
+  #define   RED_LIMIT_CMD           String("$RL:")
+  #define   YELLOW_LIMIT_CMD        String("$YL:")
   // Potentiometry commands
   #define   PT_CMD                  String("$PT")
   #define   VOLTAGE_SETPOINT_CMD    String("$VSP:")

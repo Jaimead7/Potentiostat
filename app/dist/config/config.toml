@@ -35,6 +35,8 @@ current = "$A:"
 taskDelay = "$TD:"
 startVoltage = "$SRTV:"
 stopVoltage = "$STPV:"
+redLimit = "$RL:"
+yellowLimit = "$YL:"
 potentiometry = "$PT"
 voltageSP = "$VSP:"
 duration = "$D:"
@@ -76,42 +78,49 @@ adcRes = 10
 
 [boards.esp32]
 vcc = 3.3
-pwmRes = 10
+pwmRes = 11
 adcRes = 12
 
 [circuit]
 r1 = 10000
-r2 = 510
+r2 = 330
 r3 = 1000
 r4 = 220
-r5 = 24000
-r6 = 12000
+r5 = 47000
+r6 = 15000
 vb1 = -5.0
 vb2 = -5.0
 opampVccP = 12.0
 opampVccN = -12.0
 opampHR = 1.5
-opampBR = 0.002
+opampBR = 0.0
 
 [cycles.potentiometry]
 taskDelay = 50
+redLimit = 50.0
+yellowLimit = 25.0
 voltageSP = 0.6
 duration = 120000
-threshold = 9.99
+threshold = 9.0
 
 [cycles.cyclicVoltammetry]
 taskDelay = 50
-cycles = 1
+redLimit = 50.0
+yellowLimit = 25.0
 slewRate = 100.0
+cycles = 1
 startVoltage = -0.5
-peakVoltage = 0.9
 stopVoltage = -0.5
+peakVoltage = 0.9
 
 [cycles.squareWaveVoltammetry]
+taskDelay = 50
+redLimit = 50.0
+yellowLimit = 25.0
 startVoltage = -0.2
 stopVoltage = 1.0
-stepSize = 5
-pulseAmplitude = 50
+stepSize = 0.005
+pulseAmplitude = 0.05
 frequency = 2.0
-maxCurrent = 1000
-equilTime = 5.0
+maxCurrent = 999.99
+equilTime = 5000

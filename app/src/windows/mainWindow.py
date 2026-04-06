@@ -17,7 +17,7 @@ from xlsxwriter.worksheet import Worksheet
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     strReceived = pyqtSignal(str, name= 'strReceived')
-    
+
     def __init__(self, *args, **kwargs) -> None:
         QMainWindow.__init__(self, *args, **kwargs)
         self.app: QCoreApplication = QApplication.instance()
@@ -70,6 +70,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.ptTimeButton,
                 self.ptThresholdValue,
                 self.ptThresholdButton,
+                self.ptRedLimitValue,
+                self.ptRedLimitButton,
+                self.ptYellowLimitValue,
+                self.ptYellowLimitButton,
                 self.ptPlayButton,
                 self.ptSaveButton,
                 self.ptLoadButton,
@@ -91,6 +95,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.cvPVButton,
                 self.cvStopVValue,
                 self.cvStopVButton,
+                self.cvRedLimitValue,
+                self.cvRedLimitButton,
+                self.cvYellowLimitValue,
+                self.cvYellowLimitButton,
                 self.cvPlayButton,
                 self.cvSaveButton,
                 self.cvLoadButton,
@@ -100,6 +108,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             'squareWaveVoltammetry': SquareWaveVoltammetryManager(
                 self,
                 self.swvButton,
+                self.swvTDValue,
+                self.swvTDButton,
                 self.swvStartVValue,
                 self.swvStartVButton,
                 self.swvStopVValue,
@@ -114,6 +124,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.swvMCButton,
                 self.swvETValue,
                 self.swvETButton,
+                self.swvRedLimitValue,
+                self.swvRedLimitButton,
+                self.swvYellowLimitValue,
+                self.swvYellowLimitButton,
                 self.swvPlayButton,
                 self.swvSaveButton,
                 self.swvLoadButton,
@@ -190,12 +204,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cmds: ConfigDict = MY_CFG.serial.commands
         while rcvStr.startswith(cmds.ok):
             rcvStr = rcvStr[len(cmds.ok):]
+        while rcvStr.startswith(cmds.circuit):
+            rcvStr = rcvStr[len(cmds.circuit):]
+            self.circuitManager.processCmd(rcvStr)
         while rcvStr.startswith(cmds.potentiometry):
             rcvStr = rcvStr[len(cmds.potentiometry):]
             self.cycles['potentiometry'].processCmd(rcvStr)
         while rcvStr.startswith(cmds.cyclicVoltammetry):
             rcvStr = rcvStr[len(cmds.cyclicVoltammetry):]
             self.cycles['cyclicVoltammetry'].processCmd(rcvStr)
+        while rcvStr.startswith(cmds.squareWaveVoltammetry):
+            rcvStr = rcvStr[len(cmds.squareWaveVoltammetry):]
+            self.cycles['squareWaveVoltammetry'].processCmd(rcvStr)
 
     def enableSend(self, flag: bool) -> None:
         self.serialManager.enableSend(flag)
@@ -215,7 +235,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QFileDialog.getOpenFileName(
                 caption = self.tr('Select test to export'),
                 directory = str(MY_APP['DATA']),
-                filter = self.tr(f'Data (*.pt; *.cv)')
+                filter = self.tr(f'Data (*.pt; *.cv; *.swv)')
             )[0]
         )
         exportFile = Path(

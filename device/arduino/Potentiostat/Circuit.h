@@ -43,17 +43,12 @@
       float       opAmpVccN =       DEFAULT_OPAMP_VCC_N;
       float       opAmpHeadroom =   DEFAULT_OPAMP_HR;
       float       opAmpBottomroom = DEFAULT_OPAMP_BR;
-      void        begin(
-        uint8_t   sendPin,
-        uint8_t   readPin
-      );
+      void        begin();
       void        setWEVoltage(float voltage);
       float       readWECurrent();
       void        readAndTransmit(String header);
       void        processCmd(String &cmd);
     private:
-      uint8_t     pwmPin;
-      uint8_t     adcPin;
       uint16_t    lastDutyCycle;
       float       ceVoltageToPWMVoltage(float voltage);
       float       pwmVoltageToCEVoltage(float pwmVoltage);

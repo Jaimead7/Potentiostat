@@ -9,17 +9,18 @@
 
     #define   BOARD_VCC         5
     // PWM
+    #define   PWM_PIN           10
     #define   PWM_RES           8
     #define   PWM_FREQ          TCCR1B & B11111000 | B00000001
     #define   PWM_MAX_VALUE     (pow(2, PWM_RES) - 1)
     // ADC
+    #define   ADC_PIN           A0
     #define   ADC_RES           10
     #define   ADC_MAX_VALUE     (pow(2, ADC_RES) - 1)
-
-    #define   PWM_PIN           10
-    #define   ADC_PIN           A0
-    #define   RED_LED_PIN       13
-    #define   GREEN_LED_PIN     11
+    // GPIO
+    #define   GREEN_LED_PIN     3
+    #define   YELLOW_LED_PIN    5
+    #define   RED_LED_PIN       6
 
   #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
 

@@ -29,6 +29,10 @@ class PotentiometryManager:
     durationButton: QPushButton
     thresholdValue: QDoubleSpinBox
     thresholdButton: QPushButton
+    redLimitValue: QDoubleSpinBox
+    redLimitButton: QPushButton
+    yellowLimitValue: QDoubleSpinBox
+    yellowLimitButton: QPushButton
     playButton: QPushButton
     saveButton: QPushButton
     loadButton: QPushButton
@@ -42,10 +46,12 @@ class PotentiometryManager:
         self.cmds: ConfigDict = MY_CFG.serial.commands
         self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
-        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False)
-        self.getVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False)
-        self.getDCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False)
-        self.getThCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True)
+        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False)
+        self.getVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False)
+        self.getDCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False)
+        self.getThCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False)
+        self.getRlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False)
+        self.getYlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True)
         self.plotTimer: QTimer = QTimer()
 
     def init(self) -> None:
@@ -58,6 +64,8 @@ class PotentiometryManager:
         self.voltageValue.setValue(self.cfg.voltageSP)
         self.durationValue.setValue(self.cfg.duration)
         self.thresholdValue.setValue(self.cfg.threshold)
+        self.redLimitValue.setValue(self.cfg.redLimit)
+        self.yellowLimitValue.setValue(self.cfg.yellowLimit)
         self.setPlot()
 
     def setPlot(self) -> None:
@@ -80,6 +88,8 @@ class PotentiometryManager:
         self.voltageButton.clicked.connect(lambda _: self._send(self.getVCmd()))
         self.durationButton.clicked.connect(lambda _: self._send(self.getDCmd()))
         self.thresholdButton.clicked.connect(lambda _: self._send(self.getThCmd()))
+        self.redLimitButton.clicked.connect(lambda _: self._send(self.getRlCmd()))
+        self.yellowLimitButton.clicked.connect(lambda _: self._send(self.getYlCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
         self.saveButton.clicked.connect(lambda _: self.saveButtonClicked())
         self.loadButton.clicked.connect(lambda _: self.loadButtonClicked())
@@ -92,6 +102,8 @@ class PotentiometryManager:
         self.voltageButton.setEnabled(flag)
         self.durationButton.setEnabled(flag)
         self.thresholdButton.setEnabled(flag)
+        self.redLimitButton.setEnabled(flag)
+        self.yellowLimitButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
         self.saveButton.setEnabled(flag)
 
@@ -100,14 +112,18 @@ class PotentiometryManager:
         tdFlag: bool = True,
         vFlag: bool = True,
         dFlag: bool = True,
-        thFlag: bool = True
+        thFlag: bool = True,
+        rlFlag: bool = True,
+        ylFlag: bool = True
     ) -> str:
         header: str = f'{self.cmds.potentiometry}'
         td: str = f'{self.cmds.taskDelay}{self.taskDelayValue.value()}' * tdFlag
         v: str = f'{self.cmds.voltageSP}{self.voltageValue.value()}' * vFlag
         d: str = f'{self.cmds.duration}{self.durationValue.value()}' * dFlag
         th: str = f'{self.cmds.threshold}{self.thresholdValue.value()}' * thFlag
-        return f'{header}{td}{v}{d}{th}'
+        rl: str = f'{self.cmds.redLimit}{self.redLimitValue.value()}' * rlFlag
+        yl: str = f'{self.cmds.yellowLimit}{self.yellowLimitValue.value()}' * ylFlag
+        return f'{header}{td}{v}{d}{th}{rl}{yl}'
 
     def playButtonClicked(self, checked: bool) -> None:
         self.playButton.setChecked(not checked)
@@ -125,7 +141,9 @@ class PotentiometryManager:
             self.cmds.taskDelay: self.saveTaskDelay,
             self.cmds.voltageSP: self.saveVoltageSP,
             self.cmds.duration: self.saveDuration,
-            self.cmds.threshold: self.saveThreshold
+            self.cmds.threshold: self.saveThreshold,
+            self.cmds.redLimit: self.saveRedLimit,
+            self.cmds.yellowLimit: self.saveYellowLimit
         }
         while rcvStr.startswith(tuple(options.keys())):
             for key in options.keys():
@@ -134,6 +152,8 @@ class PotentiometryManager:
         return rcvStr
 
     def processStart(self, rcvStr: str) -> str:
+        self.enableSend(False)
+        self.playButton.setEnabled(True)
         rcvStr = rcvStr[len(self.cmds.start):]
         self.playButton.setChecked(True)
         self.resetPlot()
@@ -143,6 +163,7 @@ class PotentiometryManager:
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
@@ -151,6 +172,7 @@ class PotentiometryManager:
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
@@ -201,6 +223,22 @@ class PotentiometryManager:
         rcvStr = rcvStr[len(value):]
         self.thresholdValue.setValue(float(value))
         self.cfg.threshold = float(value)
+        return rcvStr
+
+    def saveRedLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.redLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.redLimitValue.setValue(float(value))
+        self.cfg.redLimit = float(value)
+        return rcvStr
+
+    def saveYellowLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.yellowLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.yellowLimitValue.setValue(float(value))
+        self.cfg.yellowLimit = float(value)
         return rcvStr
 
     def resetPlot(self) -> None:
@@ -285,6 +323,10 @@ class CyclicVoltammetryManager:
     peakVoltageButton: QPushButton
     stopVoltageValue: QDoubleSpinBox
     stopVoltageButton: QPushButton
+    redLimitValue: QDoubleSpinBox
+    redLimitButton: QPushButton
+    yellowLimitValue: QDoubleSpinBox
+    yellowLimitButton: QPushButton
     playButton: QPushButton
     saveButton: QPushButton
     loadButton: QPushButton
@@ -298,12 +340,14 @@ class CyclicVoltammetryManager:
         self.cmds: ConfigDict = MY_CFG.serial.commands
         self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
-        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False)
-        self.getTCCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False)
-        self.getSRCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False)
-        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False)
-        self.getPeakVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False)
-        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True)
+        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False, False, False)
+        self.getTCCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False, False, False)
+        self.getSRCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False, False, False)
+        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False, False, False)
+        self.getPeakVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False, False, False)
+        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True, False, False)
+        self.getRlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, True, False)
+        self.getYlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, True)
         self.plotTimer: QTimer = QTimer()
 
     def init(self) -> None:
@@ -318,6 +362,8 @@ class CyclicVoltammetryManager:
         self.startVoltageValue.setValue(self.cfg.startVoltage)
         self.peakVoltageValue.setValue(self.cfg.peakVoltage)
         self.stopVoltageValue.setValue(self.cfg.stopVoltage)
+        self.redLimitValue.setValue(self.cfg.redLimit)
+        self.yellowLimitValue.setValue(self.cfg.yellowLimit)
         self.setPlot()
 
     def setPlot(self) -> None:
@@ -340,6 +386,8 @@ class CyclicVoltammetryManager:
         self.startVoltageButton.clicked.connect(lambda _: self._send(self.getStartVCmd()))
         self.peakVoltageButton.clicked.connect(lambda _: self._send(self.getPeakVCmd()))
         self.stopVoltageButton.clicked.connect(lambda _: self._send(self.getStopVCmd()))
+        self.redLimitButton.clicked.connect(lambda _: self._send(self.getRlCmd()))
+        self.yellowLimitButton.clicked.connect(lambda _: self._send(self.getYlCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
         self.saveButton.clicked.connect(lambda _: self.saveButtonClicked())
         self.loadButton.clicked.connect(lambda _: self.loadButtonClicked())
@@ -354,6 +402,8 @@ class CyclicVoltammetryManager:
         self.startVoltageButton.setEnabled(flag)
         self.peakVoltageButton.setEnabled(flag)
         self.stopVoltageButton.setEnabled(flag)
+        self.redLimitButton.setEnabled(flag)
+        self.yellowLimitButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
         self.saveButton.setEnabled(flag)
 
@@ -364,16 +414,20 @@ class CyclicVoltammetryManager:
         srlag: bool = True,
         startVFlag: bool = True,
         peakVFlag: bool = True,
-        stopVFlag: bool = True
+        stopVFlag: bool = True,
+        rlFlag: bool = True,
+        ylFlag: bool = True
     ) -> str:
         header: str = f'{self.cmds.cyclicVoltammetry}'
         td: str = f'{self.cmds.taskDelay}{self.taskDelayValue.value()}' * tdFlag
         tc: str = f'{self.cmds.totalCycle}{self.cyclesValue.value()}' * tcFlag
         sr: str = f'{self.cmds.slewRate}{self.slewRateValue.value()}' * srlag
         startV: str = f'{self.cmds.startVoltage}{self.startVoltageValue.value()}' * startVFlag
-        peakV: str = f'{self.cmds.peakVoltage}{self.peakVoltageValue.value()}' * peakVFlag
         stopV: str = f'{self.cmds.stopVoltage}{self.stopVoltageValue.value()}' * stopVFlag
-        return f'{header}{td}{tc}{sr}{startV}{peakV}{stopV}'
+        peakV: str = f'{self.cmds.peakVoltage}{self.peakVoltageValue.value()}' * peakVFlag
+        rl: str = f'{self.cmds.redLimit}{self.redLimitValue.value()}' * rlFlag
+        yl: str = f'{self.cmds.yellowLimit}{self.yellowLimitValue.value()}' * ylFlag
+        return f'{header}{td}{tc}{sr}{startV}{stopV}{peakV}{rl}{yl}'
 
     def playButtonClicked(self, checked: bool) -> None:
         self.playButton.setChecked(not checked)
@@ -393,7 +447,9 @@ class CyclicVoltammetryManager:
             self.cmds.slewRate: self.saveSlewRate,
             self.cmds.startVoltage: self.saveStartVoltage,
             self.cmds.peakVoltage: self.savePeakVoltage,
-            self.cmds.stopVoltage: self.saveStopVoltage
+            self.cmds.stopVoltage: self.saveStopVoltage,
+            self.cmds.redLimit: self.saveRedLimit,
+            self.cmds.yellowLimit: self.saveYellowLimit
         }
         while rcvStr.startswith(tuple(options.keys())):
             for key in options.keys():
@@ -402,6 +458,8 @@ class CyclicVoltammetryManager:
         return rcvStr
 
     def processStart(self, rcvStr: str) -> str:
+        self.enableSend(False)
+        self.playButton.setEnabled(True)
         rcvStr = rcvStr[len(self.cmds.start):]
         self.playButton.setChecked(True)
         self.resetPlot()
@@ -411,6 +469,7 @@ class CyclicVoltammetryManager:
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
@@ -419,6 +478,7 @@ class CyclicVoltammetryManager:
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
@@ -490,6 +550,22 @@ class CyclicVoltammetryManager:
         self.cfg.stopVoltage = float(value)
         return rcvStr
 
+    def saveRedLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.redLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.redLimitValue.setValue(float(value))
+        self.cfg.redLimit = float(value)
+        return rcvStr
+
+    def saveYellowLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.yellowLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.yellowLimitValue.setValue(float(value))
+        self.cfg.yellowLimit = float(value)
+        return rcvStr
+
     def resetPlot(self) -> None:
         self.measures: dict[str, list[Optional[int | float | complex]]] = {
             'cycle': [],
@@ -544,20 +620,26 @@ class CyclicVoltammetryManager:
 class SquareWaveVoltammetryManager:
     parent: MainWindow
     sendButton: QPushButton
+    taskDelayValue: QSpinBox
+    taskDelayButton: QPushButton
     startVoltageValue: QDoubleSpinBox
     startVoltageButton: QPushButton
     stopVoltageValue: QDoubleSpinBox
     stopVoltageButton: QPushButton
-    stepSizeValue: QSpinBox
+    stepSizeValue: QDoubleSpinBox
     stepSizeButton: QPushButton
-    pulseAmplitudeValue: QSpinBox
+    pulseAmplitudeValue: QDoubleSpinBox
     pulseAmplitudeButton: QPushButton
     frequencyValue: QDoubleSpinBox
     frequencyButton: QPushButton
-    maxCurrentValue: QSpinBox
+    maxCurrentValue: QDoubleSpinBox
     maxCurrentButton: QPushButton
-    equilTimeValue: QDoubleSpinBox
+    equilTimeValue: QSpinBox
     equilTimeButton: QPushButton
+    redLimitValue: QDoubleSpinBox
+    redLimitButton: QPushButton
+    yellowLimitValue: QDoubleSpinBox
+    yellowLimitButton: QPushButton
     playButton: QPushButton
     saveButton: QPushButton
     loadButton: QPushButton
@@ -571,13 +653,16 @@ class SquareWaveVoltammetryManager:
         self.cmds: ConfigDict = MY_CFG.serial.commands
         self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
-        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False, False)
-        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False, False)
-        self.getSSCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False, False)
-        self.getPACmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False, False)
-        self.getFQCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False, False)
-        self.getMCCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True, False)
-        self.getETCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, True)
+        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False, False, False)
+        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False, False, False, False, False)
+        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False, False)
+        self.getSSCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False, False, False, False, False)
+        self.getPACmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False, False, False, False, False)
+        self.getFQCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True, False, False, False, False)
+        self.getMCCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, True, False, False, False)
+        self.getETCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, True, False, False)
+        self.getRlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, True, False)
+        self.getYlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, True)
         self.plotTimer: QTimer = QTimer()
 
     def init(self) -> None:
@@ -586,6 +671,7 @@ class SquareWaveVoltammetryManager:
         self.setCallbacks()
 
     def setWidgets(self) -> None:
+        self.taskDelayValue.setValue(self.cfg.taskDelay)
         self.startVoltageValue.setValue(self.cfg.startVoltage)
         self.stopVoltageValue.setValue(self.cfg.stopVoltage)
         self.stepSizeValue.setValue(self.cfg.stepSize)
@@ -593,6 +679,8 @@ class SquareWaveVoltammetryManager:
         self.frequencyValue.setValue(self.cfg.frequency)
         self.maxCurrentValue.setValue(self.cfg.maxCurrent)
         self.equilTimeValue.setValue(self.cfg.equilTime)
+        self.redLimitValue.setValue(self.cfg.redLimit)
+        self.yellowLimitValue.setValue(self.cfg.yellowLimit)
         self.setPlot()
 
     def setPlot(self) -> None:
@@ -609,6 +697,7 @@ class SquareWaveVoltammetryManager:
 
     def setCallbacks(self) -> None:
         self.sendButton.clicked.connect(lambda _: self._send(self.getConfigCmd()))
+        self.taskDelayButton.clicked.connect(lambda _: self._send(self.getTDCmd()))
         self.startVoltageButton.clicked.connect(lambda _: self._send(self.getStartVCmd()))
         self.stopVoltageButton.clicked.connect(lambda _: self._send(self.getStopVCmd()))
         self.stepSizeButton.clicked.connect(lambda _: self._send(self.getSSCmd()))
@@ -616,6 +705,8 @@ class SquareWaveVoltammetryManager:
         self.frequencyButton.clicked.connect(lambda _: self._send(self.getFQCmd()))
         self.maxCurrentButton.clicked.connect(lambda _: self._send(self.getMCCmd()))
         self.equilTimeButton.clicked.connect(lambda _: self._send(self.getETCmd()))
+        self.redLimitButton.clicked.connect(lambda _: self._send(self.getRlCmd()))
+        self.yellowLimitButton.clicked.connect(lambda _: self._send(self.getYlCmd()))
         self.playButton.clicked.connect(lambda checked: self.playButtonClicked(checked))
         self.saveButton.clicked.connect(lambda _: self.saveButtonClicked())
         self.loadButton.clicked.connect(lambda _: self.loadButtonClicked())
@@ -624,6 +715,7 @@ class SquareWaveVoltammetryManager:
 
     def enableSend(self, flag: bool = True) -> None:
         self.sendButton.setEnabled(flag)
+        self.taskDelayButton.setEnabled(flag)
         self.startVoltageButton.setEnabled(flag)
         self.stopVoltageButton.setEnabled(flag)
         self.stepSizeButton.setEnabled(flag)
@@ -631,28 +723,36 @@ class SquareWaveVoltammetryManager:
         self.frequencyButton.setEnabled(flag)
         self.maxCurrentButton.setEnabled(flag)
         self.equilTimeButton.setEnabled(flag)
+        self.redLimitButton.setEnabled(flag)
+        self.yellowLimitButton.setEnabled(flag)
         self.playButton.setEnabled(flag)
         self.saveButton.setEnabled(flag)
 
     def getConfigCmd(
         self,
+        tdFlag: bool = True,
         startVFlag: bool = True,
         stopVFlag: bool = True,
         ssFlag: bool = True,
         paFlag: bool = True,
         fqFlag: bool = True,
         mcFlag: bool = True,
-        etFlag: bool = True
+        etFlag: bool = True,
+        rlFlag: bool = True,
+        ylFlag: bool = True
     ) -> str:
         header: str = f'{self.cmds.squareWaveVoltammetry}'
+        td: str = f'{self.cmds.taskDelay}{self.taskDelayValue.value()}' * tdFlag
         startV: str = f'{self.cmds.startVoltage}{self.startVoltageValue.value()}' * startVFlag
         stopV: str = f'{self.cmds.stopVoltage}{self.stopVoltageValue.value()}' * stopVFlag
-        ss: str = f'{self.cmds.taskDelay}{self.stepSizeValue.value()}' * ssFlag
-        pa: str = f'{self.cmds.totalCycle}{self.pulseAmplitudeValue.value()}' * paFlag
-        fq: str = f'{self.cmds.slewRate}{self.frequencyValue.value()}' * fqFlag
-        mc: str = f'{self.cmds.peakVoltage}{self.maxCurrentValue.value()}' * mcFlag
-        et: str = f'{self.cmds.peakVoltage}{self.equilTimeValue.value()}' * etFlag
-        return f'{header}{startV}{stopV}{ss}{pa}{fq}{mc}{et}'
+        ss: str = f'{self.cmds.stepSize}{self.stepSizeValue.value()}' * ssFlag
+        pa: str = f'{self.cmds.pulseAmplitude}{self.pulseAmplitudeValue.value()}' * paFlag
+        fq: str = f'{self.cmds.frequency}{self.frequencyValue.value()}' * fqFlag
+        mc: str = f'{self.cmds.maxCurrent}{self.maxCurrentValue.value()}' * mcFlag
+        et: str = f'{self.cmds.equilTime}{self.equilTimeValue.value()}' * etFlag
+        rl: str = f'{self.cmds.redLimit}{self.redLimitValue.value()}' * rlFlag
+        yl: str = f'{self.cmds.yellowLimit}{self.yellowLimitValue.value()}' * ylFlag
+        return f'{header}{td}{startV}{stopV}{ss}{pa}{fq}{mc}{et}{rl}{yl}'
 
     def playButtonClicked(self, checked: bool) -> None:
         self.playButton.setChecked(not checked)
@@ -666,14 +766,17 @@ class SquareWaveVoltammetryManager:
             self.cmds.start: self.processStart,
             self.cmds.stop: self.processStop,
             self.cmds.end: self.processEnd,
-            self.cmds.cycle: self.processMeasure,
+            self.cmds.timestamp: self.processMeasure,
+            self.cmds.taskDelay: self.saveTaskDelay,
             self.cmds.startVoltage: self.saveStartVoltage,
             self.cmds.stopVoltage: self.saveStopVoltage,
             self.cmds.stepSize: self.saveStepSize,
             self.cmds.pulseAmplitude: self.savePulseAmplitude,
             self.cmds.frequency: self.saveFrequency,
             self.cmds.maxCurrent: self.saveMaxCurrent,
-            self.cmds.equilTime: self.saveEquilTime
+            self.cmds.equilTime: self.saveEquilTime,
+            self.cmds.redLimit: self.saveRedLimit,
+            self.cmds.yellowLimit: self.saveYellowLimit
         }
         while rcvStr.startswith(tuple(options.keys())):
             for key in options.keys():
@@ -682,6 +785,8 @@ class SquareWaveVoltammetryManager:
         return rcvStr
 
     def processStart(self, rcvStr: str) -> str:
+        self.enableSend(False)
+        self.playButton.setEnabled(True)
         rcvStr = rcvStr[len(self.cmds.start):]
         self.playButton.setChecked(True)
         self.resetPlot()
@@ -691,6 +796,7 @@ class SquareWaveVoltammetryManager:
         return rcvStr
 
     def processStop(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
@@ -699,9 +805,12 @@ class SquareWaveVoltammetryManager:
         return rcvStr
 
     def processEnd(self, rcvStr: str) -> str:
+        self.enableSend(True)
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
+        self.loadButton.setEnabled(True)
+        self.closeButton.setEnabled(True)
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
@@ -726,6 +835,14 @@ class SquareWaveVoltammetryManager:
         self.measures['reverse_current'].append(float(rc))
         self.measures['step_voltage'].append((float(fv) + float(rv)) / 2)
         self.measures['diff_current'].append(float(dc))
+        return rcvStr
+
+    def saveTaskDelay(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.taskDelay):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.taskDelayValue.setValue(int(value))
+        self.cfg.taskDelay = int(value)
         return rcvStr
 
     def saveStartVoltage(self, rcvStr: str) -> str:
@@ -780,8 +897,24 @@ class SquareWaveVoltammetryManager:
         rcvStr = rcvStr[len(self.cmds.equilTime):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
-        self.equilTimeValue.setValue(float(value))
-        self.cfg.equilTime = float(value)
+        self.equilTimeValue.setValue(int(value))
+        self.cfg.equilTime = int(value)
+        return rcvStr
+
+    def saveRedLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.redLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.redLimitValue.setValue(float(value))
+        self.cfg.redLimit = float(value)
+        return rcvStr
+
+    def saveYellowLimit(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.yellowLimit):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.yellowLimitValue.setValue(float(value))
+        self.cfg.yellowLimit = float(value)
         return rcvStr
 
     def resetPlot(self) -> None:
