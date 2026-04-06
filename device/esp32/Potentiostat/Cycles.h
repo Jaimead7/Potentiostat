@@ -105,8 +105,6 @@
       uint32_t      equilTime =       5000;             // ms
       // Vars
       float         currentVoltage =  0.0;              // V
-      float         vStair =          0.0;              // V
-      float         vPulse =          0.0;              // V
       float         vFordward =       0.0;              // V
       float         iFordward =       0.0;              // uA
       float         vReverse =        0.0;              // V

@@ -94,7 +94,7 @@
         else if (cmd.substring(0, VB1_CMD.length()) == VB1_CMD) {
           cmd = cmd.substring(VB1_CMD.length());
           Vb1 = parseDecimal(cmd);
-          result += "$OK->" + CIR_CMD + VB1_CMD + String(Vb1) + "\n";
+          result += "$OK->" + CIR_CMD + VB1_CMD + String(Vb1, 3) + "\n";
         }
         else if (cmd.substring(0, VB2_CMD.length()) == VB2_CMD) {
           cmd = cmd.substring(VB2_CMD.length());
@@ -120,6 +120,10 @@
           cmd = cmd.substring(OPAMP_BR_CMD.length());
           opAmpBottomroom = parseDecimal(cmd);
           result += "$OK->" + CIR_CMD + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + "\n";
+        }
+        else if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
+          cmd = cmd.substring(PARAMS_CMD.length());
+          result += CIR_CMD + PARAMS_CMD + R1_CMD + String(R1) + R2_CMD + String(R2) + R3_CMD + String(R3) + R4_CMD + String(R4) + R5_CMD + String(R5) + R6_CMD + String(R6) + VB1_CMD + String(Vb1, 3) + VB2_CMD + String(Vb2, 3) + OPAMP_VCC_P_CMD + String(opAmpVccP, 3) + OPAMP_VCC_N_CMD + String(opAmpVccN, 3) + OPAMP_HR_CMD + String(opAmpHeadroom, 3) + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + "\n";
         }
         else {
           break;

@@ -127,6 +127,9 @@
   }
 
   void  Potentiometry::ledsResult() {
+    /*
+    Show result on the board leds
+    */
     float value = pCircuit->readWECurrent();
     if (value >= redLimit) {
       rLed->blink(float(stop * 3), 5., 0.);
@@ -465,8 +468,8 @@
     uint32_t now = millis();
     float elapsedTime = float(now - initTime);
     float msPeriod = (1. / frequency) * 1000.;
-    vStair = float(stepSize) * float(int(elapsedTime / msPeriod));
-    vPulse = float(pulseAmplitude) * float(int(elapsedTime / (msPeriod / 2)) % 2);
+    float vStair = float(stepSize) * float(int(elapsedTime / msPeriod));
+    float vPulse = float(pulseAmplitude) * float(int(elapsedTime / (msPeriod / 2)) % 2);
     if (currentVoltage < vStair + vPulse + startVoltage) {
       iReverse = pCircuit->readWECurrent();
       vReverse = currentVoltage;

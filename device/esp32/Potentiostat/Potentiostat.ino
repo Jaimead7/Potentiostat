@@ -22,17 +22,22 @@ void readSerial() {
     while (Serial.available() > 0) {
       serialInput = Serial.readString();
     }
-    if (serialInput.substring(0, CIR_CMD.length()) == CIR_CMD) {
-      myCircuit.processCmd(serialInput);
-    }
-    if (serialInput.substring(0, PT_CMD.length()) == PT_CMD) {
-      pt.processCmd(serialInput);
-    }
-    if (serialInput.substring(0, CV_CMD.length()) == CV_CMD) {
-      cv.processCmd(serialInput);
-    }
-    if (serialInput.substring(0, SWV_CMD.length()) == SWV_CMD) {
-      swv.processCmd(serialInput);
+    while (true) {
+      if (serialInput.substring(0, CIR_CMD.length()) == CIR_CMD) {
+        myCircuit.processCmd(serialInput);
+      }
+      else if (serialInput.substring(0, PT_CMD.length()) == PT_CMD) {
+        pt.processCmd(serialInput);
+      }
+      else if (serialInput.substring(0, CV_CMD.length()) == CV_CMD) {
+        cv.processCmd(serialInput);
+      }
+      else if (serialInput.substring(0, SWV_CMD.length()) == SWV_CMD) {
+        swv.processCmd(serialInput);
+      }
+      else {
+        break;
+      }
     }
   }
 }
