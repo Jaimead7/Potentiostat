@@ -97,12 +97,12 @@ class CircuitManager:
         self.r4Button.clicked.connect(lambda _: self._send(self.getR4Cmd()))
         self.r5Button.clicked.connect(lambda _: self._send(self.getR5Cmd()))
         self.r6Button.clicked.connect(lambda _: self._send(self.getR6Cmd()))
-        self.vb1Button.clicked.connect(lambda _: self.getVB1Cmd())
-        self.vb2Button.clicked.connect(lambda _: self.getVB2Cmd())
-        self.opampVccPButton.clicked.connect(lambda _: self.getOpampVccPCmd())
-        self.opampVccNButton.clicked.connect(lambda _: self.getOpampVccNCmd())
-        self.opampHRButton.clicked.connect(lambda _: self.getOpampHRCmd())
-        self.opampBRButton.clicked.connect(lambda _: self.getOpampBRCmd())
+        self.vb1Button.clicked.connect(lambda _: self._send(self.getVB1Cmd()))
+        self.vb2Button.clicked.connect(lambda _: self._send(self.getVB2Cmd()))
+        self.opampVccPButton.clicked.connect(lambda _: self._send(self.getOpampVccPCmd()))
+        self.opampVccNButton.clicked.connect(lambda _: self._send(self.getOpampVccNCmd()))
+        self.opampHRButton.clicked.connect(lambda _: self._send(self.getOpampHRCmd()))
+        self.opampBRButton.clicked.connect(lambda _: self._send(self.getOpampBRCmd()))
         self.boardSelector.currentIndexChanged.connect(lambda _: self.updateRanges())
         self.opampVccPValue.valueChanged.connect(lambda _: self.updateRanges())
         self.opampVccNValue.valueChanged.connect(lambda _: self.updateRanges())
@@ -161,13 +161,33 @@ class CircuitManager:
         opampBR: str = f'{self.cmds.opampBR}{self.opampBRValue.value()}' * opampBRFlag
         return f'{header}{r1}{r2}{r3}{r4}{r5}{r6}{vb1}{vb2}{opampVccP}{opampVccN}{opampHR}{opampBR}'
 
+    def processCmd(self, rcvStr: str) -> str:
+        options: dict = {
+            self.cmds.r1: self.saveR1,
+            self.cmds.r2: self.saveR2,
+            self.cmds.r3: self.saveR3,
+            self.cmds.r4: self.saveR4,
+            self.cmds.r5: self.saveR5,
+            self.cmds.r6: self.saveR6,
+            self.cmds.vb1: self.saveVB1,
+            self.cmds.vb2: self.saveVB2,
+            self.cmds.opampVccP: self.saveOpampVccP,
+            self.cmds.opampVccN: self.saveOpampVccN,
+            self.cmds.opampHR: self.saveOpampHR,
+            self.cmds.opampBR: self.saveOpampBR,
+        }
+        while rcvStr.startswith(tuple(options.keys())):
+            for key in options.keys():
+                if rcvStr.startswith(key):
+                    rcvStr = options[key](rcvStr)
+        return rcvStr
+
     def saveR1(self, rcvStr: str) -> str:
         rcvStr = rcvStr[len(self.cmds.r1):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
         self.r1Value.setValue(int(value))
         self.cfg.r1 = int(value)
-        self.parent.debug(self.tr(f"R1 set to {self.cfg.r1} ohm"))
         return rcvStr
         
     def saveR2(self, rcvStr: str) -> str:
@@ -176,7 +196,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.r2Value.setValue(int(value))
         self.cfg.r2 = int(value)
-        self.parent.debug(self.tr(f"R2 set to {self.cfg.r2} ohm"))
         return rcvStr
 
     def saveR3(self, rcvStr: str) -> str:
@@ -185,7 +204,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.r3Value.setValue(int(value))
         self.cfg.r3 = int(value)
-        self.parent.debug(self.tr(f"R3 set to {self.cfg.r3} ohm"))
         return rcvStr
 
     def saveR4(self, rcvStr: str) -> str:
@@ -194,7 +212,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.r4Value.setValue(int(value))
         self.cfg.r4 = int(value)
-        self.parent.debug(self.tr(f"R4 set to {self.cfg.r4} ohm"))
         return rcvStr
 
     def saveR5(self, rcvStr: str) -> str:
@@ -203,7 +220,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.r5Value.setValue(int(value))
         self.cfg.r5 = int(value)
-        self.parent.debug(self.tr(f"R5 set to {self.cfg.r5} ohm"))
         return rcvStr
 
     def saveR6(self, rcvStr: str) -> str:
@@ -212,7 +228,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.r6Value.setValue(int(value))
         self.cfg.r6 = int(value)
-        self.parent.debug(self.tr(f"R6 set to {self.cfg.r6} ohm"))
         return rcvStr
 
     def saveVB1(self, rcvStr: str) -> str:
@@ -221,7 +236,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.vb1Value.setValue(float(value))
         self.cfg.vb1 = float(value)
-        self.parent.debug(self.tr(f"Vb1 set to {self.cfg.vb1} V"))
         return rcvStr
 
     def saveVB2(self, rcvStr: str) -> str:
@@ -230,7 +244,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.vb2Value.setValue(float(value))
         self.cfg.vb2 = float(value)
-        self.parent.debug(self.tr(f"Vb2 set to {self.cfg.vb2} V"))
         return rcvStr
 
     def saveOpampVccP(self, rcvStr: str) -> str:
@@ -239,7 +252,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.opampVccPValue.setValue(float(value))
         self.cfg.opampVccP = float(value)
-        self.parent.debug(self.tr(f"OpampVcc+ set to {self.cfg.opampVccP} V"))
         return rcvStr
 
     def saveOpampVccN(self, rcvStr: str) -> str:
@@ -248,7 +260,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.opampVccNValue.setValue(float(value))
         self.cfg.opampVccN = float(value)
-        self.parent.debug(self.tr(f"OpampVcc- set to {self.cfg.opampVccN} V"))
         return rcvStr
 
     def saveOpampHR(self, rcvStr: str) -> str:
@@ -257,7 +268,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.opampHRValue.setValue(float(value))
         self.cfg.opampHR = float(value)
-        self.parent.debug(self.tr(f"OpampHeadRoom set to {self.cfg.opampHR} V"))
         return rcvStr
 
     def saveOpampBR(self, rcvStr: str) -> str:
@@ -266,7 +276,6 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.opampBRValue.setValue(float(value))
         self.cfg.opampBR = float(value)
-        self.parent.debug(self.tr(f"OpampBottomRoom set to {self.cfg.opampBR} V"))
         return rcvStr
         
     def opampLimits(self, voltage: float) -> float:

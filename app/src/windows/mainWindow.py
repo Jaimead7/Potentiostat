@@ -17,7 +17,7 @@ from xlsxwriter.worksheet import Worksheet
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     strReceived = pyqtSignal(str, name= 'strReceived')
-    
+
     def __init__(self, *args, **kwargs) -> None:
         QMainWindow.__init__(self, *args, **kwargs)
         self.app: QCoreApplication = QApplication.instance()
@@ -108,6 +108,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             'squareWaveVoltammetry': SquareWaveVoltammetryManager(
                 self,
                 self.swvButton,
+                self.swvTDValue,
+                self.swvTDButton,
                 self.swvStartVValue,
                 self.swvStartVButton,
                 self.swvStopVValue,
@@ -202,6 +204,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         cmds: ConfigDict = MY_CFG.serial.commands
         while rcvStr.startswith(cmds.ok):
             rcvStr = rcvStr[len(cmds.ok):]
+        while rcvStr.startswith(cmds.circuit):
+            rcvStr = rcvStr[len(cmds.circuit):]
+            self.circuitManager.processCmd(rcvStr)
         while rcvStr.startswith(cmds.potentiometry):
             rcvStr = rcvStr[len(cmds.potentiometry):]
             self.cycles['potentiometry'].processCmd(rcvStr)
@@ -230,7 +235,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QFileDialog.getOpenFileName(
                 caption = self.tr('Select test to export'),
                 directory = str(MY_APP['DATA']),
-                filter = self.tr(f'Data (*.pt; *.cv)')
+                filter = self.tr(f'Data (*.pt; *.cv; *.swv)')
             )[0]
         )
         exportFile = Path(

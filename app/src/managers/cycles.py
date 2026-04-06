@@ -423,11 +423,11 @@ class CyclicVoltammetryManager:
         tc: str = f'{self.cmds.totalCycle}{self.cyclesValue.value()}' * tcFlag
         sr: str = f'{self.cmds.slewRate}{self.slewRateValue.value()}' * srlag
         startV: str = f'{self.cmds.startVoltage}{self.startVoltageValue.value()}' * startVFlag
-        peakV: str = f'{self.cmds.peakVoltage}{self.peakVoltageValue.value()}' * peakVFlag
         stopV: str = f'{self.cmds.stopVoltage}{self.stopVoltageValue.value()}' * stopVFlag
+        peakV: str = f'{self.cmds.peakVoltage}{self.peakVoltageValue.value()}' * peakVFlag
         rl: str = f'{self.cmds.redLimit}{self.redLimitValue.value()}' * rlFlag
         yl: str = f'{self.cmds.yellowLimit}{self.yellowLimitValue.value()}' * ylFlag
-        return f'{header}{td}{tc}{sr}{startV}{peakV}{stopV}{rl}{yl}'
+        return f'{header}{td}{tc}{sr}{startV}{stopV}{peakV}{rl}{yl}'
 
     def playButtonClicked(self, checked: bool) -> None:
         self.playButton.setChecked(not checked)
@@ -620,6 +620,8 @@ class CyclicVoltammetryManager:
 class SquareWaveVoltammetryManager:
     parent: MainWindow
     sendButton: QPushButton
+    taskDelayValue: QSpinBox
+    taskDelayButton: QPushButton
     startVoltageValue: QDoubleSpinBox
     startVoltageButton: QPushButton
     stopVoltageValue: QDoubleSpinBox
@@ -651,15 +653,16 @@ class SquareWaveVoltammetryManager:
         self.cmds: ConfigDict = MY_CFG.serial.commands
         self.pltCfg: ConfigDict = MY_CFG.plot
         self._send: Callable = self.parent.sendCmd
-        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False, False, False, False)
-        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False, False, False, False)
-        self.getSSCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False)
-        self.getPACmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False, False, False, False)
-        self.getFQCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False, False, False, False)
-        self.getMCCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True, False, False, False)
-        self.getETCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, True, False, False)
-        self.getRlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, True, False)
-        self.getYlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, True)
+        self.getTDCmd: partial[str] = partial(self.getConfigCmd, True, False, False, False, False, False, False, False)
+        self.getStartVCmd: partial[str] = partial(self.getConfigCmd, False, True, False, False, False, False, False, False, False, False)
+        self.getStopVCmd: partial[str] = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False, False)
+        self.getSSCmd: partial[str] = partial(self.getConfigCmd, False, False, False, True, False, False, False, False, False, False)
+        self.getPACmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, True, False, False, False, False, False)
+        self.getFQCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, True, False, False, False, False)
+        self.getMCCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, True, False, False, False)
+        self.getETCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, True, False, False)
+        self.getRlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, True, False)
+        self.getYlCmd: partial[str] = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, True)
         self.plotTimer: QTimer = QTimer()
 
     def init(self) -> None:
@@ -668,6 +671,7 @@ class SquareWaveVoltammetryManager:
         self.setCallbacks()
 
     def setWidgets(self) -> None:
+        self.taskDelayValue.setValue(self.cfg.taskDelay)
         self.startVoltageValue.setValue(self.cfg.startVoltage)
         self.stopVoltageValue.setValue(self.cfg.stopVoltage)
         self.stepSizeValue.setValue(self.cfg.stepSize)
@@ -693,6 +697,7 @@ class SquareWaveVoltammetryManager:
 
     def setCallbacks(self) -> None:
         self.sendButton.clicked.connect(lambda _: self._send(self.getConfigCmd()))
+        self.taskDelayButton.clicked.connect(lambda _: self._send(self.getTDCmd()))
         self.startVoltageButton.clicked.connect(lambda _: self._send(self.getStartVCmd()))
         self.stopVoltageButton.clicked.connect(lambda _: self._send(self.getStopVCmd()))
         self.stepSizeButton.clicked.connect(lambda _: self._send(self.getSSCmd()))
@@ -710,6 +715,7 @@ class SquareWaveVoltammetryManager:
 
     def enableSend(self, flag: bool = True) -> None:
         self.sendButton.setEnabled(flag)
+        self.taskDelayButton.setEnabled(flag)
         self.startVoltageButton.setEnabled(flag)
         self.stopVoltageButton.setEnabled(flag)
         self.stepSizeButton.setEnabled(flag)
@@ -724,6 +730,7 @@ class SquareWaveVoltammetryManager:
 
     def getConfigCmd(
         self,
+        tdFlag: bool = True,
         startVFlag: bool = True,
         stopVFlag: bool = True,
         ssFlag: bool = True,
@@ -735,16 +742,17 @@ class SquareWaveVoltammetryManager:
         ylFlag: bool = True
     ) -> str:
         header: str = f'{self.cmds.squareWaveVoltammetry}'
+        td: str = f'{self.cmds.taskDelay}{self.taskDelayValue.value()}' * tdFlag
         startV: str = f'{self.cmds.startVoltage}{self.startVoltageValue.value()}' * startVFlag
         stopV: str = f'{self.cmds.stopVoltage}{self.stopVoltageValue.value()}' * stopVFlag
-        ss: str = f'{self.cmds.taskDelay}{self.stepSizeValue.value()}' * ssFlag
-        pa: str = f'{self.cmds.totalCycle}{self.pulseAmplitudeValue.value()}' * paFlag
-        fq: str = f'{self.cmds.slewRate}{self.frequencyValue.value()}' * fqFlag
-        mc: str = f'{self.cmds.peakVoltage}{self.maxCurrentValue.value()}' * mcFlag
-        et: str = f'{self.cmds.peakVoltage}{self.equilTimeValue.value()}' * etFlag
+        ss: str = f'{self.cmds.stepSize}{self.stepSizeValue.value()}' * ssFlag
+        pa: str = f'{self.cmds.pulseAmplitude}{self.pulseAmplitudeValue.value()}' * paFlag
+        fq: str = f'{self.cmds.frequency}{self.frequencyValue.value()}' * fqFlag
+        mc: str = f'{self.cmds.maxCurrent}{self.maxCurrentValue.value()}' * mcFlag
+        et: str = f'{self.cmds.equilTime}{self.equilTimeValue.value()}' * etFlag
         rl: str = f'{self.cmds.redLimit}{self.redLimitValue.value()}' * rlFlag
         yl: str = f'{self.cmds.yellowLimit}{self.yellowLimitValue.value()}' * ylFlag
-        return f'{header}{startV}{stopV}{ss}{pa}{fq}{mc}{et}{rl}{yl}'
+        return f'{header}{td}{startV}{stopV}{ss}{pa}{fq}{mc}{et}{rl}{yl}'
 
     def playButtonClicked(self, checked: bool) -> None:
         self.playButton.setChecked(not checked)
@@ -759,6 +767,7 @@ class SquareWaveVoltammetryManager:
             self.cmds.stop: self.processStop,
             self.cmds.end: self.processEnd,
             self.cmds.timestamp: self.processMeasure,
+            self.cmds.taskDelay: self.saveTaskDelay,
             self.cmds.startVoltage: self.saveStartVoltage,
             self.cmds.stopVoltage: self.saveStopVoltage,
             self.cmds.stepSize: self.saveStepSize,
@@ -800,6 +809,8 @@ class SquareWaveVoltammetryManager:
         rcvStr = rcvStr[len(self.cmds.stop):]
         self.playButton.setChecked(False)
         self.plotTimer.stop()
+        self.loadButton.setEnabled(True)
+        self.closeButton.setEnabled(True)
         return rcvStr
 
     def processMeasure(self, rcvStr: str) -> str:
@@ -824,7 +835,14 @@ class SquareWaveVoltammetryManager:
         self.measures['reverse_current'].append(float(rc))
         self.measures['step_voltage'].append((float(fv) + float(rv)) / 2)
         self.measures['diff_current'].append(float(dc))
-        print(self.measures['step_voltage'])
+        return rcvStr
+
+    def saveTaskDelay(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.taskDelay):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.taskDelayValue.setValue(int(value))
+        self.cfg.taskDelay = int(value)
         return rcvStr
 
     def saveStartVoltage(self, rcvStr: str) -> str:
@@ -879,8 +897,8 @@ class SquareWaveVoltammetryManager:
         rcvStr = rcvStr[len(self.cmds.equilTime):]
         value: str = rcvStr.split('$')[0]
         rcvStr = rcvStr[len(value):]
-        self.equilTimeValue.setValue(float(value))
-        self.cfg.equilTime = float(value)
+        self.equilTimeValue.setValue(int(value))
+        self.cfg.equilTime = int(value)
         return rcvStr
 
     def saveRedLimit(self, rcvStr: str) -> str:

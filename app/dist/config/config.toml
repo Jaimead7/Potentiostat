@@ -93,7 +93,7 @@ vb2 = -5.0
 opampVccP = 12.0
 opampVccN = -12.0
 opampHR = 1.5
-opampBR = 0.002
+opampBR = 0.0
 
 [cycles.potentiometry]
 taskDelay = 50
@@ -105,8 +105,8 @@ threshold = 9.0
 
 [cycles.cyclicVoltammetry]
 taskDelay = 50
-redLimit = 50
-yellowLimit = 25
+redLimit = 50.0
+yellowLimit = 25.0
 slewRate = 100.0
 cycles = 1
 startVoltage = -0.5
@@ -115,12 +115,12 @@ peakVoltage = 0.9
 
 [cycles.squareWaveVoltammetry]
 taskDelay = 50
-redLimit = 50
-yellowLimit = 25
+redLimit = 50.0
+yellowLimit = 25.0
 startVoltage = -0.2
 stopVoltage = 1.0
 stepSize = 0.005
 pulseAmplitude = 0.05
 frequency = 2.0
-maxCurrent = 1000
+maxCurrent = 999.99
 equilTime = 5000
