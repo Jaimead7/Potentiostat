@@ -10,6 +10,7 @@
   #define   TIMESTAMP_CMD           String("$TS:")
   #define   VOLTAGE_CMD             String("$V:")
   #define   CURRENT_CMD             String("$A:")
+  #define   FILTER_CURRENT_CMD      String("$FA:")
   #define   TASK_DELAY_CMD          String("$TD:")
   #define   START_VOLTAGE_CMD       String("$SRTV:")
   #define   STOP_VOLTAGE_CMD        String("$STPV:")
@@ -52,5 +53,7 @@
   #define   OPAMP_VCC_N_CMD         String("$OPAMP_VCC_N:")
   #define   OPAMP_HR_CMD            String("$OPAMP_HR:")
   #define   OPAMP_BR_CMD            String("$OPAMP_BR:")
+  #define   MEASURE_ERROR_CMD       String("$ME:")
+  #define   PROCESS_NOISE_CMD       String("$PN:")
 
 #endif  //#ifndef   COMMANDS_H
