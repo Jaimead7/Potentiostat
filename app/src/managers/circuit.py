@@ -41,6 +41,10 @@ class CircuitManager:
     opampHRButton: QPushButton
     opampBRValue: QDoubleSpinBox
     opampBRButton: QPushButton
+    meValue: QDoubleSpinBox
+    meButton: QPushButton
+    pnValue: QDoubleSpinBox
+    pnButton: QPushButton
     vRangeMinValue: QDoubleSpinBox
     vRangeMaxValue: QDoubleSpinBox
     cRangeMinValue: QDoubleSpinBox
@@ -52,18 +56,20 @@ class CircuitManager:
         self.cfg: ConfigDict = MY_CFG.circuit
         self.cmds: ConfigDict = MY_CFG.serial.commands
         self.boards: ConfigDict = MY_CFG.boards
-        self.getR1Cmd: Callable = partial(self.getConfigCmd, True, False, False, False, False, False, False, False, False, False, False, False)
-        self.getR2Cmd: Callable = partial(self.getConfigCmd, True, True, False, False, False, False, False, False, False, False, False, False)
-        self.getR3Cmd: Callable = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False, False, False, False)
-        self.getR4Cmd: Callable = partial(self.getConfigCmd, False, False, False, True, False, False, False, False, False, False, False, False)
-        self.getR5Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, True, False, False, False, False, False, False, False)
-        self.getR6Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, True, False, False, False, False, False, False)
-        self.getVB1Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, True, False, False, False, False, False)
-        self.getVB2Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, True, False, False, False, False)
-        self.getOpampVccPCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, True, False, False, False)
-        self.getOpampVccNCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, True, False, False)
-        self.getOpampHRCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, True, False)
-        self.getOpampBRCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, False, True)
+        self.getR1Cmd: Callable = partial(self.getConfigCmd, True, False, False, False, False, False, False, False, False, False, False, False, False, False)
+        self.getR2Cmd: Callable = partial(self.getConfigCmd, False, True, False, False, False, False, False, False, False, False, False, False, False, False)
+        self.getR3Cmd: Callable = partial(self.getConfigCmd, False, False, True, False, False, False, False, False, False, False, False, False, False, False)
+        self.getR4Cmd: Callable = partial(self.getConfigCmd, False, False, False, True, False, False, False, False, False, False, False, False, False, False)
+        self.getR5Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, True, False, False, False, False, False, False, False, False, False)
+        self.getR6Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, True, False, False, False, False, False, False, False, False)
+        self.getVB1Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, True, False, False, False, False, False, False, False)
+        self.getVB2Cmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, True, False, False, False, False, False, False)
+        self.getOpampVccPCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, True, False, False, False, False, False)
+        self.getOpampVccNCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, True, False, False, False, False)
+        self.getOpampHRCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, True, False, False, False)
+        self.getOpampBRCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, False, True, False, False)
+        self.getMECmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, False, False, True, False)
+        self.getPNCmd: Callable = partial(self.getConfigCmd, False, False, False, False, False, False, False, False, False, False, False, False, False, True)
         self._send: Callable = self.parent.sendCmd
 
     def init(self) -> None:
@@ -85,6 +91,8 @@ class CircuitManager:
         self.opampVccNValue.setValue(self.cfg.opampVccN)
         self.opampHRValue.setValue(self.cfg.opampHR)
         self.opampBRValue.setValue(self.cfg.opampBR)
+        self.meValue.setValue(self.cfg.measureError)
+        self.pnValue.setValue(self.cfg.processNoise)
         for board in self.boards.keys():
             self.boardSelector.addItem(board)
         self.boardSelector.setCurrentIndex(0)
@@ -103,6 +111,8 @@ class CircuitManager:
         self.opampVccNButton.clicked.connect(lambda _: self._send(self.getOpampVccNCmd()))
         self.opampHRButton.clicked.connect(lambda _: self._send(self.getOpampHRCmd()))
         self.opampBRButton.clicked.connect(lambda _: self._send(self.getOpampBRCmd()))
+        self.meButton.clicked.connect(lambda _: self._send(self.getMECmd()))
+        self.pnButton.clicked.connect(lambda _: self._send(self.getPNCmd()))
         self.boardSelector.currentIndexChanged.connect(lambda _: self.updateRanges())
         self.opampVccPValue.valueChanged.connect(lambda _: self.updateRanges())
         self.opampVccNValue.valueChanged.connect(lambda _: self.updateRanges())
@@ -130,6 +140,8 @@ class CircuitManager:
         self.opampVccNButton.setEnabled(flag)
         self.opampHRButton.setEnabled(flag)
         self.opampBRButton.setEnabled(flag)
+        self.meButton.setEnabled(flag)
+        self.pnButton.setEnabled(flag)
 
     def getConfigCmd(
         self,
@@ -145,6 +157,8 @@ class CircuitManager:
         opampVccNFlag: bool = True,
         opampHRFlag: bool = True,
         opampBRFlag: bool = True,
+        meFlag: bool = True,
+        pnFlag: bool = True,
     ) -> str:
         header: str = f'{self.cmds.circuit}'
         r1: str = f'{self.cmds.r1}{self.r1Value.value()}' * r1Flag
@@ -159,7 +173,9 @@ class CircuitManager:
         opampVccN: str = f'{self.cmds.opampVccN}{self.opampVccNValue.value()}' * opampVccNFlag
         opampHR: str = f'{self.cmds.opampHR}{self.opampHRValue.value()}' * opampHRFlag
         opampBR: str = f'{self.cmds.opampBR}{self.opampBRValue.value()}' * opampBRFlag
-        return f'{header}{r1}{r2}{r3}{r4}{r5}{r6}{vb1}{vb2}{opampVccP}{opampVccN}{opampHR}{opampBR}'
+        me: str = f'{self.cmds.measureError}{self.meValue.value()}' * meFlag
+        pn: str = f'{self.cmds.processNoise}{self.pnValue.value()}' * pnFlag
+        return f'{header}{r1}{r2}{r3}{r4}{r5}{r6}{vb1}{vb2}{opampVccP}{opampVccN}{opampHR}{opampBR}{me}{pn}'
 
     def processCmd(self, rcvStr: str) -> str:
         options: dict = {
@@ -175,6 +191,8 @@ class CircuitManager:
             self.cmds.opampVccN: self.saveOpampVccN,
             self.cmds.opampHR: self.saveOpampHR,
             self.cmds.opampBR: self.saveOpampBR,
+            self.cmds.measureError: self.saveME,
+            self.cmds.processNoise: self.savePN,
         }
         while rcvStr.startswith(tuple(options.keys())):
             for key in options.keys():
@@ -276,6 +294,22 @@ class CircuitManager:
         rcvStr = rcvStr[len(value):]
         self.opampBRValue.setValue(float(value))
         self.cfg.opampBR = float(value)
+        return rcvStr
+
+    def saveME(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.measureError):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.meValue.setValue(float(value))
+        self.cfg.measureError = float(value)
+        return rcvStr
+
+    def savePN(self, rcvStr: str) -> str:
+        rcvStr = rcvStr[len(self.cmds.processNoise):]
+        value: str = rcvStr.split('$')[0]
+        rcvStr = rcvStr[len(value):]
+        self.pnValue.setValue(float(value))
+        self.cfg.processNoise = float(value)
         return rcvStr
         
     def opampLimits(self, voltage: float) -> float:
