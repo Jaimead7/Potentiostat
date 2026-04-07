@@ -32,6 +32,7 @@ end = "$END"
 timestamp = "$TS:"
 voltage = "$V:"
 current = "$A:"
+filteredCurrent = "$FA:"
 taskDelay = "$TD:"
 startVoltage = "$SRTV:"
 stopVoltage = "$STPV:"
@@ -70,6 +71,8 @@ opampVccP = "$OPAMP_VCC_P:"
 opampVccN = "$OPAMP_VCC_N:"
 opampHR = "$OPAMP_HR:"
 opampBR = "$OPAMP_BR:"
+measureError = "$ME:"
+processNoise = "$PN:"
 
 [boards.arduino]
 vcc = 5.0
