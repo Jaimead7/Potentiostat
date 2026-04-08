@@ -102,7 +102,10 @@
     Check if the sample is on the sensor.
     If there is any sample, the current will flow.
     */
-    if (abs(pCircuit->readWECurrent()) > startThreshold) {
+    pCircuit->resetFilter();
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
+    if (abs(filtered) > startThreshold) {
       initTime = millis();
       started = true;
       Serial.println(PT_CMD + START_CMD);
@@ -113,15 +116,16 @@
     /*
     Show result on the board leds
     */
-    float value = pCircuit->readWECurrent();
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
     digitalWrite(GREEN_LED_PIN, LOW);
     digitalWrite(YELLOW_LED_PIN, LOW);
     digitalWrite(RED_LED_PIN, LOW);
-    if (value >= redLimit) {
+    if (filtered >= redLimit) {
       digitalWrite(RED_LED_PIN, HIGH);
       delay (6000);
       digitalWrite(RED_LED_PIN,LOW);
-    } else if (value >= yellowLimit) {
+    } else if (filtered >= yellowLimit) {
       digitalWrite(YELLOW_LED_PIN, HIGH);
       delay (6000);
       digitalWrite(YELLOW_LED_PIN, LOW);
@@ -234,11 +238,12 @@
     /*
     Set the conditions for the start of the cyclic voltammetry.
     */
+    pCircuit->resetFilter();
     currentCycle = 0;
     direction = 1;
-    lastVoltChange = millis();
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
+    lastVoltChange = millis();
   }
 
   void  CyclicVoltammetry::ledsResult() {
@@ -405,12 +410,17 @@
     /*
     Set the conditions for the start of the square wave voltammetry.
     */
+    pCircuit->resetFilter();
     if ((millis() - initTime) >= equilTime) {
       started = true;
       initTime = millis();
     }
     currentVoltage = startVoltage;
     pCircuit->setWEVoltage(currentVoltage);
+    vFordward = 0.0;
+    iFordward = 0.0;
+    vReverse = 0.0;
+    iReverse = 0.0;
   }
 
   void  SquareWaveVoltammetry::ledsResult() {
@@ -460,8 +470,10 @@
     float vStair = float(stepSize) * float(int(elapsedTime / msPeriod));
     float vPulse = float(pulseAmplitude) * float(int(elapsedTime / (msPeriod / 2)) % 2);
   
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
     if (currentVoltage > vStair + vPulse + startVoltage) {
-      iFordward = pCircuit->readWECurrent();
+      iFordward = filtered;
       vFordward = currentVoltage;
       Serial.print(SWV_CMD);
       Serial.print(TIMESTAMP_CMD);
@@ -484,7 +496,7 @@
       Serial.println();
     }
     if (currentVoltage < vStair + vPulse + startVoltage) {
-      iReverse = pCircuit->readWECurrent();
+      iReverse = filtered;
       vReverse = currentVoltage;
     }
     currentVoltage = vStair + vPulse + startVoltage;

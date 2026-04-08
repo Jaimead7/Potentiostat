@@ -6,7 +6,6 @@
 
     #include  <math.h>
     #include  <Arduino.h>
-    #include  <SimpleKalmanFilter.h>
 
     #define   BOARD_VCC         3.3
     // PWM
