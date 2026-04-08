@@ -186,11 +186,14 @@ class PotentiometryManager:
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
         current: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(current):]
+        filteredCurrent: str = rcvStr.split('$')[0][:-1]
+        rcvStr = rcvStr[len(filteredCurrent):]
         if len(self.measures['timestamp']) == 0:
             self.startTimestamp = int(ts)
         self.measures['timestamp'].append((int(ts) - self.startTimestamp) / 1000.0)
         self.measures['voltage'].append(float(voltage))
         self.measures['current'].append(float(current))
+        self.measures['filteredCurrent'].append(float(filteredCurrent))
         return rcvStr
 
     def saveTaskDelay(self, rcvStr: str) -> str:
@@ -245,7 +248,8 @@ class PotentiometryManager:
         self.measures: dict[str, list[Optional[int | float | complex]]] = {
             'timestamp': [],
             'voltage': [],
-            'current': []
+            'current': [],
+            'filteredCurrent': []
         }
         self.plot.clear()
         self.lines: dict[str, PlotCurveItem] = {
@@ -264,6 +268,14 @@ class PotentiometryManager:
                 color = self.pltCfg.colors[1],
                 pen = f'#{self.pltCfg.colors[1]}',
                 width = self.pltCfg.lineWidth
+            ),
+            'filteredCurrent' : self.plot.plot(
+                self.measures['timestamp'],
+                self.measures['filteredCurrent'],
+                name = self.tr('Filtered Current'),
+                color = self.pltCfg.colors[2],
+                pen = f'#{self.pltCfg.colors[2]}',
+                width = self.pltCfg.lineWidth
             )
         }
 
@@ -275,6 +287,10 @@ class PotentiometryManager:
         self.lines['current'].setData(
             self.measures['timestamp'],
             self.measures['current']
+        )
+        self.lines['filteredCurrent'].setData(
+            self.measures['timestamp'],
+            self.measures['filteredCurrent']
         )
 
     def saveButtonClicked(self) -> None:
@@ -494,12 +510,15 @@ class CyclicVoltammetryManager:
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
         current: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(current):]
+        filteredCurrent: str = rcvStr.split('$')[0][:-1]
+        rcvStr = rcvStr[len(filteredCurrent):]
         if len(self.measures['timestamp']) == 0:
             self.startTimestamp = int(ts)            
         self.measures['cycle'].append(int(cc))
         self.measures['timestamp'].append((int(ts) - self.startTimestamp) / 1000.0)
         self.measures['voltage'].append(float(voltage))
         self.measures['current'].append(float(current))
+        self.measures['filteredCurrent'].append(float(filteredCurrent))
         return rcvStr
 
     def saveTaskDelay(self, rcvStr: str) -> str:
@@ -571,22 +590,37 @@ class CyclicVoltammetryManager:
             'cycle': [],
             'timestamp': [],
             'voltage': [],
-            'current': []
+            'current': [],
+            'filteredCurrent': []
         }
         self.plot.clear()
-        self.line: PlotCurveItem = self.plot.plot(
-            self.measures['voltage'],
-            self.measures['current'],
-            name = self.tr('Voltage/Current'),
-            color = self.pltCfg.colors[0],
-            pen = f'#{self.pltCfg.colors[0]}',
-            width = self.pltCfg.lineWidth
-        )
+        self.lines: dict[str, PlotCurveItem] = {
+            'current' : self.plot.plot(
+                self.measures['voltage'],
+                self.measures['current'],
+                name = self.tr('Voltage/Current'),
+                color = self.pltCfg.colors[0],
+                pen = f'#{self.pltCfg.colors[0]}',
+                width = self.pltCfg.lineWidth
+            ),
+            'filteredCurrent' : self.plot.plot(
+                self.measures['voltage'],
+                self.measures['filteredCurrent'],
+                name = self.tr('Voltage/Filtered Current'),
+                color = self.pltCfg.colors[1],
+                pen = f'#{self.pltCfg.colors[1]}',
+                width = self.pltCfg.lineWidth
+            )
+        }
 
     def plotTimerTimeout(self) -> None:
-        self.line.setData(
+        self.lines['current'].setData(
             self.measures['voltage'],
             self.measures['current']
+        )
+        self.lines['filteredCurrent'].setData(
+            self.measures['voltage'],
+            self.measures['filteredCurrent']
         )
 
     def saveButtonClicked(self) -> None:
