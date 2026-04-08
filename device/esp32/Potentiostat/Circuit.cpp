@@ -28,14 +28,15 @@
     ledcWrite(PWM_PIN, dutyCycle);
   }
 
-  float Circuit::readWECurrent() {
+  void Circuit::readWECurrent(float& rawValue, float& filterValue) {
     /*
     Read the current (uA) on the WE.
     Positive values indicates that current is flowing from the WE to the CE (oxidation).
     Negative values indicates that current is flowing from the CE to the WE (reduction).
     */
     uint32_t  mV = analogReadMilliVolts(ADC_PIN);
-    return voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0;
+    rawValue = voltageToWECurrent(float_t(mV)/1000.0) * 1000000.0;
+    filterValue = adcFilter.updateEstimate(rawValue);
   }
 
   void Circuit::readAndTransmit(String header) {
@@ -47,8 +48,13 @@
     uint32_t currentDuty = ledcRead(PWM_PIN);
     Serial.print(-pwmVoltageToCEVoltage(dutyCycleToVoltage(currentDuty)), 3);
     Serial.print(",");
+    float raw, filtered;
+    readWECurrent(raw, filtered);
     Serial.print(CURRENT_CMD);
-    Serial.print(readWECurrent(), 3);
+    Serial.print(raw, 3);
+    Serial.print(",");
+    Serial.print(FILTER_CURRENT_CMD);
+    Serial.print(filtered, 3);
     Serial.println();
   }
 
@@ -121,9 +127,21 @@
           opAmpBottomroom = parseDecimal(cmd);
           result += "$OK->" + CIR_CMD + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + "\n";
         }
+        else if (cmd.substring(0, MEASURE_ERROR_CMD.length()) == MEASURE_ERROR_CMD) {
+          cmd = cmd.substring(MEASURE_ERROR_CMD.length());
+          measureError = parseDecimal(cmd);
+          resetFilter();
+          result += "$OK->" + CIR_CMD + MEASURE_ERROR_CMD + String(measureError, 3) + "\n";
+        }
+        else if (cmd.substring(0, PROCESS_NOISE_CMD.length()) == PROCESS_NOISE_CMD) {
+          cmd = cmd.substring(PROCESS_NOISE_CMD.length());
+          processNoise = parseDecimal(cmd);
+          resetFilter();
+          result += "$OK->" + CIR_CMD + PROCESS_NOISE_CMD + String(processNoise, 3) + "\n";
+        }
         else if (cmd.substring(0, PARAMS_CMD.length()) == PARAMS_CMD) {
           cmd = cmd.substring(PARAMS_CMD.length());
-          result += CIR_CMD + PARAMS_CMD + R1_CMD + String(R1) + R2_CMD + String(R2) + R3_CMD + String(R3) + R4_CMD + String(R4) + R5_CMD + String(R5) + R6_CMD + String(R6) + VB1_CMD + String(Vb1, 3) + VB2_CMD + String(Vb2, 3) + OPAMP_VCC_P_CMD + String(opAmpVccP, 3) + OPAMP_VCC_N_CMD + String(opAmpVccN, 3) + OPAMP_HR_CMD + String(opAmpHeadroom, 3) + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + "\n";
+          result += CIR_CMD + PARAMS_CMD + R1_CMD + String(R1) + R2_CMD + String(R2) + R3_CMD + String(R3) + R4_CMD + String(R4) + R5_CMD + String(R5) + R6_CMD + String(R6) + VB1_CMD + String(Vb1, 3) + VB2_CMD + String(Vb2, 3) + OPAMP_VCC_P_CMD + String(opAmpVccP, 3) + OPAMP_VCC_N_CMD + String(opAmpVccN, 3) + OPAMP_HR_CMD + String(opAmpHeadroom, 3) + OPAMP_BR_CMD + String(opAmpBottomroom, 3) + MEASURE_ERROR_CMD + String(measureError, 3) + PROCESS_NOISE_CMD + String(processNoise, 3) + "\n";
         }
         else {
           break;
@@ -131,6 +149,10 @@
       }
       Serial.print(result);
     }
+  }
+
+  void Circuit::resetFilter() {
+    adcFilter = SimpleKalmanFilter(measureError, measureError, processNoise);
   }
 
   /**************** PRIVATE ****************/

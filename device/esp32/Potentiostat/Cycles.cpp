@@ -38,11 +38,10 @@
         rLed->resetTime();
         delay(taskDelay);
       }
-      float result = pCircuit->readWECurrent();
       ledsResult();
-      stop = false;
       pCircuit->setWEVoltage(0.0);
-      Serial.println(PT_CMD + END_CMD + String(result, 3));
+      stop = false;
+      Serial.println(PT_CMD + END_CMD);
       vTaskSuspend(task);
     }
   }
@@ -113,11 +112,15 @@
     Check if the sample is on the sensor.
     If there is any sample, the current will flow.
     */
+    pCircuit->resetFilter();
     pCircuit->setWEVoltage(voltageSP);
     yLed->blink(2, (taskDelay * 2) / 1000., 0);
-    while (abs(pCircuit->readWECurrent()) < startThreshold && !stop) {
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
+    while (abs(filtered) < startThreshold && !stop) {
       yLed->resetTime();
       delay(taskDelay);
+      pCircuit->readWECurrent(raw, filtered);
     }
     initTime = millis();
     rLed->blink(1, (taskDelay * 2) / 1000., 0.);
@@ -130,10 +133,11 @@
     /*
     Show result on the board leds
     */
-    float value = pCircuit->readWECurrent();
-    if (value >= redLimit) {
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
+    if (filtered >= redLimit) {
       rLed->blink(float(stop * 3), 5., 0.);
-    } else if (value >= yellowLimit) {
+    } else if (filtered >= yellowLimit) {
       yLed->blink(float(stop * 3), 5., 0.);
     } else {
       gLed->blink(float(stop * 3), 5., 0.);
@@ -260,6 +264,7 @@
     /*
     Set the conditions for the start of the cyclic voltammetry.
     */
+    pCircuit->resetFilter();
     currentCycle = 0;
     direction = 1;
     rLed->blink(1, (taskDelay * 2) / 1000., 0.);
@@ -431,6 +436,7 @@
     /*
     Set the conditions for the start of the square wave voltammetry.
     */
+    pCircuit->resetFilter();
     currentVoltage = startVoltage;
     yLed->blink(2, equilTime, 0);
     initTime = millis();
@@ -470,12 +476,14 @@
     float msPeriod = (1. / frequency) * 1000.;
     float vStair = float(stepSize) * float(int(elapsedTime / msPeriod));
     float vPulse = float(pulseAmplitude) * float(int(elapsedTime / (msPeriod / 2)) % 2);
+    float raw, filtered;
+    pCircuit->readWECurrent(raw, filtered);
     if (currentVoltage < vStair + vPulse + startVoltage) {
-      iReverse = pCircuit->readWECurrent();
+      iReverse = filtered;
       vReverse = currentVoltage;
     }
     if (currentVoltage > vStair + vPulse + startVoltage) {
-      iFordward = pCircuit->readWECurrent();
+      iFordward = filtered;
       vFordward = currentVoltage;
     }
     currentVoltage = vStair + vPulse + startVoltage;

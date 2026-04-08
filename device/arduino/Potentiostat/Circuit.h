@@ -4,6 +4,7 @@
 
   #include  "Board.h"
   #include  "Commands.h"
+  #include  <SimpleKalmanFilter.h>
 
   #if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
 
@@ -25,6 +26,10 @@
     #define   DEFAULT_OPAMP_VCC_N   -12.0
     #define   DEFAULT_OPAMP_HR      1.5
     #define   DEFAULT_OPAMP_BR      0.002
+    // FILTER
+    #define   DEFAULT_MASURE_ERROR    100
+    #define   DEFAULT_ESTIMATE_ERROR  100
+    #define   DEFAULT_PROCESS_NOISE   1.0
 
   #endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
 
@@ -43,13 +48,21 @@
       float       opAmpVccN =       DEFAULT_OPAMP_VCC_N;
       float       opAmpHeadroom =   DEFAULT_OPAMP_HR;
       float       opAmpBottomroom = DEFAULT_OPAMP_BR;
+      SimpleKalmanFilter  adcFilter = SimpleKalmanFilter(
+        DEFAULT_MASURE_ERROR,
+        DEFAULT_ESTIMATE_ERROR,
+        DEFAULT_PROCESS_NOISE
+      );
       void        begin();
       void        setWEVoltage(float voltage);
-      float       readWECurrent();
+      void        readWECurrent(float& rawValue, float& filterValue);
       void        readAndTransmit(String header);
       void        processCmd(String &cmd);
+      void        resetFilter();
     private:
       uint16_t    lastDutyCycle;
+      float       measureError;
+      float       processNoise;
       float       ceVoltageToPWMVoltage(float voltage);
       float       pwmVoltageToCEVoltage(float pwmVoltage);
       float       voltageToWECurrent(float voltage);

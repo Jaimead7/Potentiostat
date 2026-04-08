@@ -4,6 +4,7 @@
 
   #include  "Board.h"
   #include  "Commands.h"
+  #include  <SimpleKalmanFilter.h>
 
   #if defined(ARDUINO_ESP32_DEV)
 
@@ -25,30 +26,43 @@
     #define   DEFAULT_OPAMP_VCC_N   -12.0
     #define   DEFAULT_OPAMP_HR      1.5
     #define   DEFAULT_OPAMP_BR      0.002
+    // FILTER
+    #define   DEFAULT_MASURE_ERROR    100
+    #define   DEFAULT_ESTIMATE_ERROR  100
+    #define   DEFAULT_PROCESS_NOISE   1.0
+    
 
   #endif  //#if defined(ARDUINO_ESP32_DEV)
 
   class Circuit {
     public:
       Circuit();
-      uint32_t    R1 =              DEFAULT_R1;
-      uint32_t    R2 =              DEFAULT_R2;
-      uint32_t    R3 =              DEFAULT_R3;
-      uint32_t    R4 =              DEFAULT_R4;
-      uint32_t    R5 =              DEFAULT_R5;
-      uint32_t    R6 =              DEFAULT_R6;
-      float       Vb1 =             DEFAULT_VB1;
-      float       Vb2 =             DEFAULT_VB2;
-      float       opAmpVccP =       DEFAULT_OPAMP_VCC_P;
-      float       opAmpVccN =       DEFAULT_OPAMP_VCC_N;
-      float       opAmpHeadroom =   DEFAULT_OPAMP_HR;
-      float       opAmpBottomroom = DEFAULT_OPAMP_BR;
+      uint32_t            R1 =              DEFAULT_R1;
+      uint32_t            R2 =              DEFAULT_R2;
+      uint32_t            R3 =              DEFAULT_R3;
+      uint32_t            R4 =              DEFAULT_R4;
+      uint32_t            R5 =              DEFAULT_R5;
+      uint32_t            R6 =              DEFAULT_R6;
+      float               Vb1 =             DEFAULT_VB1;
+      float               Vb2 =             DEFAULT_VB2;
+      float               opAmpVccP =       DEFAULT_OPAMP_VCC_P;
+      float               opAmpVccN =       DEFAULT_OPAMP_VCC_N;
+      float               opAmpHeadroom =   DEFAULT_OPAMP_HR;
+      float               opAmpBottomroom = DEFAULT_OPAMP_BR;
+      SimpleKalmanFilter  adcFilter = SimpleKalmanFilter(
+        DEFAULT_MASURE_ERROR,
+        DEFAULT_ESTIMATE_ERROR,
+        DEFAULT_PROCESS_NOISE
+      );
       void        begin();
       void        setWEVoltage(float voltage);
-      float       readWECurrent();
+      void        readWECurrent(float& rawValue, float& filterValue);
       void        readAndTransmit(String header);
       void        processCmd(String &cmd);
+      void        resetFilter();
     private:
+      float       measureError;
+      float       processNoise;
       float       ceVoltageToPWMVoltage(float voltage);
       float       pwmVoltageToCEVoltage(float pwmVoltage);
       float       voltageToWECurrent(float voltage);
