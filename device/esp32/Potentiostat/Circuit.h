@@ -4,6 +4,7 @@
 
   #include  "Board.h"
   #include  "Commands.h"
+  #include  <SimpleKalmanFilter.h>
 
   #if defined(ARDUINO_ESP32_DEV)
 
@@ -28,7 +29,7 @@
     // FILTER
     #define   DEFAULT_MASURE_ERROR    100
     #define   DEFAULT_ESTIMATE_ERROR  100
-    #define   DEFAULT_PROCESS_NOISE   0.01
+    #define   DEFAULT_PROCESS_NOISE   1.0
     
 
   #endif  //#if defined(ARDUINO_ESP32_DEV)

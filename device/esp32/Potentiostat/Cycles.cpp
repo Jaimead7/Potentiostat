@@ -38,12 +38,10 @@
         rLed->resetTime();
         delay(taskDelay);
       }
-      float raw, filtered;
-      pCircuit->readWECurrent(raw, filtered);
       ledsResult();
-      stop = false;
       pCircuit->setWEVoltage(0.0);
-      Serial.println(PT_CMD + END_CMD + String(filtered, 3));
+      stop = false;
+      Serial.println(PT_CMD + END_CMD);
       vTaskSuspend(task);
     }
   }
