@@ -55,7 +55,7 @@
       );
       void        begin();
       void        setWEVoltage(float voltage);
-      float       readWECurrent(float& rawValue, float& filterValue);
+      void        readWECurrent(float& rawValue, float& filterValue);
       void        readAndTransmit(String header);
       void        processCmd(String &cmd);
       void        resetFilter();
