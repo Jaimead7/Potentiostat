@@ -185,7 +185,7 @@ class PotentiometryManager:
         voltage: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
         current: str = rcvStr.split('$')[0][:-1]
-        rcvStr = rcvStr[len(current):]
+        rcvStr = rcvStr[len(current + self.cmds.filteredCurrent) + 1:]
         filteredCurrent: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(filteredCurrent):]
         if len(self.measures['timestamp']) == 0:
@@ -391,6 +391,7 @@ class CyclicVoltammetryManager:
             left= self.tr('Current (uA)'),
             bottom= self.tr('Voltage (V)')
         )
+        self.legend: LegendItem = self.plot.addLegend()
         self.plotView.addWidget(self.plot, 0, 0)
         self.resetPlot()
 
@@ -509,7 +510,7 @@ class CyclicVoltammetryManager:
         voltage: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(voltage + self.cmds.current) + 1:]
         current: str = rcvStr.split('$')[0][:-1]
-        rcvStr = rcvStr[len(current):]
+        rcvStr = rcvStr[len(current + self.cmds.filteredCurrent) + 1:]
         filteredCurrent: str = rcvStr.split('$')[0][:-1]
         rcvStr = rcvStr[len(filteredCurrent):]
         if len(self.measures['timestamp']) == 0:
@@ -598,7 +599,7 @@ class CyclicVoltammetryManager:
             'current' : self.plot.plot(
                 self.measures['voltage'],
                 self.measures['current'],
-                name = self.tr('Voltage/Current'),
+                name = self.tr('Raw'),
                 color = self.pltCfg.colors[0],
                 pen = f'#{self.pltCfg.colors[0]}',
                 width = self.pltCfg.lineWidth
@@ -606,7 +607,7 @@ class CyclicVoltammetryManager:
             'filteredCurrent' : self.plot.plot(
                 self.measures['voltage'],
                 self.measures['filteredCurrent'],
-                name = self.tr('Voltage/Filtered Current'),
+                name = self.tr('Filtered'),
                 color = self.pltCfg.colors[1],
                 pen = f'#{self.pltCfg.colors[1]}',
                 width = self.pltCfg.lineWidth

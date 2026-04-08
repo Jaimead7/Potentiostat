@@ -97,8 +97,8 @@ opampVccP = 12.0
 opampVccN = -12.0
 opampHR = 1.5
 opampBR = 0.0
-measureError = 100
-processNoise = 0.01
+measureError = 100.0
+processNoise = 1.0
 
 [cycles.potentiometry]
 taskDelay = 50
