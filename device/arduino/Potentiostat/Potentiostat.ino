@@ -1,11 +1,6 @@
 // Libraries
 #include  "Cycles.h"
 
-#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
-  #define   PWM_PIN           10
-  #define   ADC_PIN           A0
-#endif  //#if defined(ARDUINO_AVR_UNO) || defined(ARDUINO_AVR_MEGA2560)
-
 
 Circuit                 myCircuit = Circuit();
 Potentiometry           pt = Potentiometry(myCircuit);
@@ -46,9 +41,9 @@ void setup() {
   Serial.begin(115200);
   myCircuit.begin();
   Serial.println("Setup completed.");
-  pinMode(13, OUTPUT);  //RED LED
-  pinMode(12, OUTPUT);  //YELLOW LED
-  pinMode(11, OUTPUT);  //GREEN LED
+  pinMode(GREEN_LED_PIN, OUTPUT);  //RED LED
+  pinMode(YELLOW_LED_PIN, OUTPUT);  //YELLOW LED
+  pinMode(GREEN_LED_PIN, OUTPUT);  //GREEN LED
   delay(1000);
 }
 
