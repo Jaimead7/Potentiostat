@@ -4,33 +4,38 @@
 <context>
     <name>CyclicVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="374"/>
+        <location filename="../../src/managers/cycles.py" line="390"/>
         <source>Current (uA)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="374"/>
+        <location filename="../../src/managers/cycles.py" line="390"/>
         <source>Voltage (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="577"/>
-        <source>Voltage/Current</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../src/managers/cycles.py" line="593"/>
+        <location filename="../../src/managers/cycles.py" line="628"/>
         <source>Save test data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="604"/>
+        <location filename="../../src/managers/cycles.py" line="639"/>
         <source>Data (*.cv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="604"/>
+        <location filename="../../src/managers/cycles.py" line="639"/>
         <source>Load test data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="599"/>
+        <source>Raw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="607"/>
+        <source>Filtered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -42,22 +47,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="234"/>
+        <location filename="../../src/windows/mainWindow.py" line="238"/>
         <source>Select test to export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="241"/>
+        <location filename="../../src/windows/mainWindow.py" line="245"/>
         <source>Export file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="241"/>
+        <location filename="../../src/windows/mainWindow.py" line="245"/>
         <source>(*.csv);;(*.xlsx)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="258"/>
+        <location filename="../../src/windows/mainWindow.py" line="262"/>
         <source>Data exported</source>
         <translation type="unfinished"></translation>
     </message>
@@ -74,11 +79,6 @@
     <message>
         <location filename="../ui/mainWindow.ui" line="3965"/>
         <source>Device:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/mainWindow.ui" line="81"/>
-        <source>Potentiometry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -342,7 +342,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/windows/mainWindow.py" line="234"/>
+        <location filename="../../src/windows/mainWindow.py" line="238"/>
         <source>Data (*.pt; *.cv; *.swv)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -354,6 +354,11 @@
     <message>
         <location filename="../ui/mainWindow.ui" line="3179"/>
         <source>Process Noise:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="81"/>
+        <source>Potentiostatic amperometry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -375,28 +380,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="252"/>
+        <location filename="../../src/managers/cycles.py" line="256"/>
         <source>Voltage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="260"/>
+        <location filename="../../src/managers/cycles.py" line="264"/>
         <source>Current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="281"/>
+        <location filename="../../src/managers/cycles.py" line="297"/>
         <source>Save test data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="292"/>
+        <location filename="../../src/managers/cycles.py" line="308"/>
         <source>Data (*.pt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="292"/>
+        <location filename="../../src/managers/cycles.py" line="308"/>
         <source>Load test data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../src/managers/cycles.py" line="272"/>
+        <source>Filtered Current</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -461,32 +471,32 @@
 <context>
     <name>SquareWaveVoltammetryManager</name>
     <message>
-        <location filename="../../src/managers/cycles.py" line="691"/>
+        <location filename="../../src/managers/cycles.py" line="726"/>
         <source>Current (uA)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="691"/>
+        <location filename="../../src/managers/cycles.py" line="726"/>
         <source>Voltage (V)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="931"/>
+        <location filename="../../src/managers/cycles.py" line="966"/>
         <source>Voltage/Current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="947"/>
+        <location filename="../../src/managers/cycles.py" line="982"/>
         <source>Save test data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="958"/>
+        <location filename="../../src/managers/cycles.py" line="993"/>
         <source>Data (*.swv)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/managers/cycles.py" line="958"/>
+        <location filename="../../src/managers/cycles.py" line="993"/>
         <source>Load test data</source>
         <translation type="unfinished"></translation>
     </message>
