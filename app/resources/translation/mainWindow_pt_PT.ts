@@ -82,11 +82,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/mainWindow.ui" line="81"/>
-        <source>Potentiometry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ui/mainWindow.ui" line="362"/>
         <source>Duration (ms):</source>
         <translation type="unfinished"></translation>
@@ -359,6 +354,11 @@
     <message>
         <location filename="../ui/mainWindow.ui" line="3179"/>
         <source>Process Noise:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="81"/>
+        <source>Potentiostatic amperometry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

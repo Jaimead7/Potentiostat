@@ -127,7 +127,7 @@
     <message>
         <location filename="../ui/mainWindow.ui" line="81"/>
         <source>Potentiometry</source>
-        <translation>Potenciometría</translation>
+        <translation type="obsolete">Potenciometría</translation>
     </message>
     <message>
         <location filename="../ui/mainWindow.ui" line="362"/>
@@ -448,6 +448,11 @@
         <location filename="../ui/mainWindow.ui" line="3179"/>
         <source>Process Noise:</source>
         <translation>Ruido:</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainWindow.ui" line="81"/>
+        <source>Potentiostatic amperometry</source>
+        <translation>Amperometría</translation>
     </message>
 </context>
 <context>

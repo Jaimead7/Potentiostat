@@ -47,7 +47,7 @@
       </property>
       <widget class="QWidget" name="ptTab">
        <attribute name="title">
-        <string>Potentiometry</string>
+        <string>Potentiostatic amperometry</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_5">
         <item row="0" column="2">
@@ -78,7 +78,7 @@
               <item>
                <widget class="QLabel" name="sensor0Label">
                 <property name="text">
-                 <string>Potentiometry</string>
+                 <string>Potentiostatic amperometry</string>
                 </property>
                </widget>
               </item>

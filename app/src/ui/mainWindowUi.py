@@ -1507,14 +1507,14 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Potentiostat"))
-        self.sensor0Label.setText(_translate("MainWindow", "Potentiometry"))
+        self.sensor0Label.setText(_translate("MainWindow", "Potentiostatic amperometry"))
         self.label_17.setText(_translate("MainWindow", "Start threshold (uA):"))
         self.label_42.setText(_translate("MainWindow", "Red Limit (uA):"))
         self.label_4.setText(_translate("MainWindow", "Duration (ms):"))
         self.label_2.setText(_translate("MainWindow", "Task delay (ms):"))
         self.label_3.setText(_translate("MainWindow", "Voltage set point (V):"))
         self.label_43.setText(_translate("MainWindow", "Yellow Limit (uA):"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.ptTab), _translate("MainWindow", "Potentiometry"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.ptTab), _translate("MainWindow", "Potentiostatic amperometry"))
         self.sensor2Label.setText(_translate("MainWindow", "Cyclic voltammetry"))
         self.label_19.setText(_translate("MainWindow", "Start voltage (V):"))
         self.label_10.setText(_translate("MainWindow", "Total cycles:"))
